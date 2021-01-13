@@ -1,0 +1,77 @@
+---
+title: "Identity_Theft"
+author: "Karl Grindal"
+date: "2/23/2020"
+output: pdf_document
+---
+
+
+
+```{r}
+
+library(plyr)
+library(tidyr)
+library(dplyr)
+library(lubridate)
+
+# Case 1: Massachusetts Data Security Law
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+
+AllStateClean <- read.table(file="AllStateClean.txt", sep=";")
+
+CaseList <- c("BJ's Wholesale Club Inc", "CBR Systems Inc", "Ceridian HCM HLDG Inc", "CVS Caremark", "DSW Inc", "Equifax Inc", "Henry Schein Inc", 
+  "Lenovo (United States) Inc", "LexisNexis Risk & Information Analytics Group / Seisint Inc.", "LexisNexis Risk Solutions", "Life Is Good", "LifeLock Inc",
+  "LightYear Dealer Technologies LLC", "Microsoft", "Office Depot Inc - 2013", "Oracle Corp", "PayPal Inc", 
+  "Petco Animal Supplies Inc", "PLS Financial Services Inc", "RagingWire Data Centers Inc", "Snapchat Inc", "TJX Companies Inc", "Twitter Inc", 
+  "Uber Technologies Inc", "Upromise Investment Advisors LLC", "VTech Electronics North America LLC", "VTech Holdings Ltd", 
+  "Wyndham Vacation Resorts Inc", "Wyndham Hotels and Resorts LLC")
+
+AllStateClean$FTC_Case <- ifelse(grepl(paste(CaseList, collapse = "|"), AllStateClean$clean_name, ignore.case = T), 1, NA)
+
+FTC_Cases <- AllStateClean[AllStateClean$FTC_Case == 1,]
+
+FTC_Case1 <- subset(AllStateClean, AllStateClean$clean_name == "BJ's Wholesale Club Inc")
+FTC_Case2 <- subset(AllStateClean, AllStateClean$clean_name == "CBR Systems Inc")
+FTC_Case3 <- subset(AllStateClean, AllStateClean$clean_name == "Ceridian HCM HLDG Inc")
+FTC_Case4 <- subset(AllStateClean, AllStateClean$clean_name == "CVS Caremark")
+FTC_Case5 <- subset(AllStateClean, AllStateClean$clean_name == "DSW Inc")
+FTC_Case6 <- subset(AllStateClean, AllStateClean$clean_name == "Equifax Inc")
+FTC_Case7 <- subset(AllStateClean, AllStateClean$clean_name == "Henry Schein Inc")
+FTC_Case8 <- subset(AllStateClean, AllStateClean$clean_name == "Lenovo (United States) Inc")
+FTC_Case9 <- subset(AllStateClean, AllStateClean$clean_name == "LexisNexis Risk & Information Analytics Group / Seisint Inc.") # "LexisNexis Risk Solutions"
+FTC_Case10 <- subset(AllStateClean, AllStateClean$clean_name == "Life Is Good")
+FTC_Case11 <- subset(AllStateClean, AllStateClean$clean_name == "LifeLock Inc")
+FTC_Case12 <- subset(AllStateClean, AllStateClean$clean_name == "LightYear Dealer Technologies LLC")
+FTC_Case13 <- subset(AllStateClean, AllStateClean$clean_name == "Microsoft")
+FTC_Case14 <- subset(AllStateClean, AllStateClean$clean_name == "Office Depot Inc")
+FTC_Case15 <- subset(AllStateClean, AllStateClean$clean_name == "Oracle Corp")
+FTC_Case16 <- subset(AllStateClean, AllStateClean$clean_name == "PayPal Inc")
+FTC_Case17 <- subset(AllStateClean, AllStateClean$clean_name == "Petco Animal Supplies Inc")
+FTC_Case18 <- subset(AllStateClean, AllStateClean$clean_name == "PLS Financial Services Inc")
+FTC_Case19 <- subset(AllStateClean, AllStateClean$clean_name == "RagingWire Data Centers Inc")
+FTC_Case20 <- subset(AllStateClean, AllStateClean$clean_name == "Snapchat Inc")
+FTC_Case21 <- subset(AllStateClean, AllStateClean$clean_name == "TJX Companies Inc")
+FTC_Case22 <- subset(AllStateClean, AllStateClean$clean_name == "Twitter Inc")
+FTC_Case23 <- subset(AllStateClean, AllStateClean$clean_name == "Uber Technologies Inc")
+FTC_Case24 <- subset(AllStateClean, AllStateClean$clean_name == "Upromise Investment Advisors LLC")
+FTC_Case25 <- subset(AllStateClean, AllStateClean$clean_name == "VTech Electronics North America LLC") # "VTech Holdings Ltd",
+FTC_Case26 <- subset(AllStateClean, AllStateClean$clean_name == "Wyndham Vacation Resorts Inc")
+FTC_Case27 <- subset(AllStateClean, AllStateClean$clean_name == "Wyndham Hotels and Resorts LLC")
+
+
+
+
+FTC_Cases <- as.data.frame(rbind(FTC_Case1, FTC_Case2, FTC_Case3, FTC_Case4, FTC_Case5, FTC_Case6, FTC_Case7, FTC_Case8, 
+                                 FTC_Case9, FTC_Case10, FTC_Case11, 
+                                 FTC_Case12, FTC_Case13, FTC_Case14, FTC_Case15, FTC_Case16, FTC_Case17, FTC_Case18, 
+                                 FTC_Case19, FTC_Case20, FTC_Case21,
+                                 FTC_Case22, FTC_Case23, FTC_Case24, FTC_Case25,  FTC_Case26, FTC_Case27))
+
+
+#FTC_Cases <- factor(FTC_Cases)      
+# drops the levels that do not occur
+
+View(FTC_Cases)
+
+```
+

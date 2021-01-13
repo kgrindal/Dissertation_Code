@@ -1,0 +1,854 @@
+---
+title: "Breaches Dataset Cleaning"
+author: "Karl Grindal"
+date: "October 2, 2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse) # loads the core tidyverse packages: ggplot2, stringr, dplyr, plyr are needed
+library(plyr)
+library(lubridate) #assists with conversion of text into POIXct dates
+library(usmap) # used for map
+library(reshape2) # used for dcast
+# library(stringdist) computes distance metrics between strings
+# library(tm) only needed for text mining
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+
+```
+
+# Sources
+## State Sources
+
+```{r source data}
+## List of States and Sources
+#[] California: https://www.oag.ca.gov/privacy/databreach/list
+# Connecticut: Received incidents through a FOIA filed with the state
+#[] Delaware: https://attorneygeneral.delaware.gov/fraud/cpu/securitybreachnotification/database/
+#[] Hawaii: http://cca.hawaii.gov/ocp/security-breach-notices/
+# Idaho: Received incidents through a FOIA filed with the state
+# Indiana: https://www.in.gov/attorneygeneral/2874.htm
+#Iowa:
+# []  1) https://www.iowaattorneygeneral.gov/for-consumers/security-breach-notifications/2019
+#2) https://www.iowaattorneygeneral.gov/for-consumers/security-breach-notifications/2018-security-breach-notifications
+#3) https://www.iowaattorneygeneral.gov/for-consumers/security-breach-notifications/2017
+#4) https://www.iowaattorneygeneral.gov/for-consumers/security-breach-notifications/2016-security-breach-notifications
+#[] Maine:
+#1) 2010-2018 https://www.maine.gov/ag/docs/Data-Breach-Spreadsheet.xlsx 
+#2) 2018-present https://www.maine.gov/ag/docs/Maine_Attorney_General_Reporting_Form_Data.xx
+#[] Maryland: http://www.marylandattorneygeneral.gov/Pages/IdentityTheft/breachnotices.aspx
+# Massachusetts: PDF
+#[] Montana: https://dojmt.gov/consumer/consumers-known-data-breach-incidents/
+# New Hampshire: https://www.doj.nh.gov/consumer/security-breaches/a.htm
+#[] New Jersey (A): https://www.doj.nh.gov/consumer/security-breaches/a.htm
+# North Carolina: https://iapp.org/media/pdf/resource_center/North_Carolina_State_Data_Breaches.pdf
+# North Dakota: https://iapp.org/media/pdf/resource_center/North_Dakota_Data_Breaches_2018.pdf
+#[] Oregon: https://justice.oregon.gov/consumer/DataBreach/
+# South Carolina: Recieved incidents through a FOIA filed with the state
+# Rhode Island: Recieved incidents through a FOIA filed with the state
+#[] Vermont: https://ago.vermont.gov/data-security-breaches/
+#[] Virginia: https://iapp.org/media/pdf/resource_center/Virginia_Data_Breaches_2018.pdf
+#[] Washington: https://www.atg.wa.gov/data-breach-notifications
+#[] Wisconsin: https://datcp.wi.gov/Pages/Programs_Services/DataBreaches.aspx
+
+x <- c("California", "Connecticut", "Delaware", "Hawaii", "Idaho", "Indiana", "Iowa", "Maine", "Maryland", 
+         "Massachusetts", "Montana", "New Hampshire", "New Jersey", "New Mexico", "North Carolina", 
+         "North Dakota", "Oregon", "South Carolina", "Rhode Island", "Vermont", "Virginia", "Washington", "Wisconsin")
+x <- state.abb[match(x,state.name)]
+y<-match(x,statepop$abbr)
+y
+
+main_dat <- statepop[ ,-c(4) ]
+main_dat$havedata <- rep(0,nrow(main_dat)) # make new column
+main_dat$havedata <- replace(main_dat$havedata, y, 1) # replace
+
+all_states <- map_data("state")
+all_states
+main_dat$region <- tolower(main_dat$full)
+Total <- merge(all_states, main_dat, by="region")
+Total
+
+
+p <- ggplot()
+p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=havedata), colour="white") + scale_fill_gradient(low = "thistle2", high = "darkred", guide="colorbar")
+P1 <- p + theme_bw()  + labs(fill = "1=Report, 0=Does Not Report" 
+                            ,title = "States that Publicly List Data Breaches", x="", y="")
+P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+
+```
+
+
+## Import state datafiles
+```{r raw data}
+
+california <- read.csv(file="Raw_state_data/california_092020.csv",  header=TRUE, row.names=NULL,                      
+                       col.names= c("org_name","date_of_breach","breach_end", "breach_dates", 
+                                    "reported_date","source_url","letter_url"), na.strings=c(""," ","NA"))
+
+connecticut <- read.csv(file="Raw_state_data/connecticut_101819.csv",  header=TRUE, row.names=NULL,
+                        col.names= c("case_no","status","reported_date","ct_category","ct_subcategory","org_name",
+                                     "date_of_breach","affected_residents","state","breach_end","industry",
+                                     "credit_monitoring","notification","name_lost","address_lost","email_lost",
+                                     "SSN_breach","birth_lost","track1","track2","credit_debit"))
+
+delaware <- read.csv(file="Raw_state_data/delaware_091920.csv", col.names= 
+                       c("org_name","dba","date_of_breach","end_date","reported_date","affected_residents","letter_url"), 
+                     na.strings=c(""," ","NA"))
+
+hawaii <- read.csv(file="Raw_state_data/hawaii_092020.csv", col.names= 
+                     c("case_no", "org_name", "breach_type","affected_residents","letter_url","reported_date"), 
+                     na.strings=c(""," ","NA"))
+
+indiana <- read.csv(file="Raw_state_data/indiana_092020.csv", header=TRUE, col.names=
+                      c("id", "org_name","reported_date","date_of_breach","affected_residents","total_affected"), 
+                    na.strings=c(""," ","NA"))
+
+iowa <- read.csv(file="Raw_state_data/iowa_091920.csv", col.names=c("reported_date","org_name","letter_url"), na.strings=c(""," ","NA"))
+
+maine1 <- read.csv(file="Raw_state_data/maine_part1_062619.csv", header=TRUE,
+                  col.names=c("org_name", "address", "contact_info", "attorney", "breach_dates", "reported_date", "date_of_breach", 
+                              "breach_end", "discover_date", "info_type", "affected_residents"), na.strings=c(""," ","NA"))
+maine2 <- read.csv(file="Raw_state_data/maine_part2_092020.csv",
+                   col.names=c("reported_date", "org_name", "street_address", "city", 
+                               "state", "zip_code", "orgtype_educational", "orgtype_financialservices", 
+                               "orgtype_govinmaine", "orgtype_othergov", "orgtype_healthcare", 
+                               "orgtype_othercommercial", "orgtype_not_profit", "orgtype_POS_vendor", "submission_name",
+                               "submission_title", "submission_firm_name", "submission_telephone", 
+                               "submission_email", "submission_relationship", "total_affected", 
+                               "affected_residents",  "consumer_reporting_agencies_notified", "date_of_breach", 
+                               "discover_date", "loss_of_device", "internal_system_breach", "insider_wrongdoing", 
+                               "hacking_incident", "inadvertent_disclosure", "other_type", 
+                               "other_description", "SSN_breach", "drivers_license", "act_num", "written", "electronic", 
+                               "telephone", "substitute_notice", "notification_date", "has_attachment", 
+                               "date_prior_breach", "credit_monitoring", "credit_monitoring_duration", 
+                               "credit_monitoring_provider", "credit_monitoring_description"), na.strings=c(""," ","NA"))
+
+maryland <- read.csv(file="Raw_state_data/maryland_092020.csv", header=TRUE,
+                     col.names=c("id", "case_no","org_name","letter_url","reported_date","affected_residents","info_type","breach_type"),
+                     na.strings=c(""," ","NA"))
+
+massachusetts <- read.csv(file="Raw_state_data/massachusetts_092020.csv", header=TRUE,
+                          col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
+                                      "affected_residents", "SSN_breach", "act_num", "drivers_license", 
+                                      "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), na.strings=c(""," ","NA"))
+montana <- read.csv(file="Raw_state_data/montana_092020.csv", 
+                    col.names = c("org_name", "letter_url", "breach_start", "breach_end", "reported_date", 
+                                  "affected_residents"), na.strings=c(""," ","NA"))
+
+new_hampshire <- read.csv(file="Raw_state_data/new_hampshire_092020.csv", col.names = 
+                            c("org_name", "raw_text","messy_date","reported_date","letter_url","extra_name"), na.strings=c(""," ","NA"))
+
+new_jersey <- read.csv(file="Raw_state_data/new_jersey_061419.csv", col.names = 
+                            c("org_name","posted_date","breach_type","description","recommendation"), na.strings=c(""," 
+                            ","NA"))
+
+n_carolina <- read.csv(file="Raw_state_data/north_carolina.csv", row.names=NULL, header=TRUE, col.names = 
+                         c("org_name","org_type","reported_date","discover_date","breach_type","total_affected",
+                           "affected_residents"), na.strings=c(""," ","NA"))
+
+n_dakota <- read.csv(file="Raw_state_data/n_dakota_091920.csv", header=TRUE, 
+                     col.names=c("org_name","dba1", "date_of_breach","breach_end","reported_date","affected_residents","letter_url"), 
+                     na.strings=c(""," ","NA"))
+
+oregon <- read.csv(file="Raw_state_data/oregon_091920.csv", header=TRUE, 
+                   col.names=c("org_name","breach_start","breach_end","reported_date","discover_date","consumer_notification_date"), 
+                   na.strings=c(""," ","NA"))
+
+rhode_island <- read.csv(file="Raw_state_data/rhode_island_101220.csv", row.names=NULL, header=TRUE, col.names =
+                           c("Case No", "Unit", "Type", "Open.Date", "org_name", "title", "Primary"),
+                       na.strings=c(""," ","NA"))
+
+
+s_carolina <- read.csv(file="Raw_state_data/south_carolina_071519.csv", row.names=NULL, header=TRUE, col.names = 
+                         c("org_name","discover_date", 
+                           "reported_date","start_date","end_date","affected_residents","description","info_type","org_type"), 
+                       na.strings=c(""," ","NA"))
+
+vermont <- read.csv(file="Raw_state_data/vermont_091920.csv",
+                    col.names=c("letter_url","org_name","reported_date","updated_comment"), 
+                    na.strings=c(""," ","NA"))
+
+virginia <- read.csv(file="Raw_state_data/virginia_100820.csv", row.names=NULL, 
+                     col.names=c("id", "org_name", "reported_date"))
+
+washington <- read.csv(file="Raw_state_data/washington_091920.csv",
+                       col.names=c("org_name","letter_url","reported_date","date_of_breach","breach_end"), na.strings=c(""," ","NA"))
+
+wisconsin <- read.csv(file="Raw_state_data/wisconsin_092020.csv", 
+                      col.names=c("reported_date","breach_dates","date_of_breach","breach_end",
+                                  "org_name","info_type","affected","description"), 
+                      na.strings=c(""," ","NA"))
+
+```
+
+
+# Clean and integrate dataset
+
+## Clean state datafiles
+```{r}
+
+#Clean ct name of org
+connecticut$org_name <- gsub("\\s*\\([^\\)]+\\)","",as.character(connecticut$org_name))
+
+#Indiana remove unnecessary words from org name
+indiana_list <- c("-DataBreach", "-Data Breach", "-Databreach", "-dataBreach", "-SecurityBreach", "-Security Breach", "-SecuirtyBreach", 
+                  "-Breach Notification", "?DataBreach", "?Data Breach", "-Data Entry", " Data Facts Inc?")
+cut_indiana<- paste0("\\b(", paste0(indiana_list, collapse="|"), ")\\b")
+
+indiana$org_name <- gsub(cut_indiana, "", indiana$org_name)
+
+#Indiana add spaces in org_names
+indiana$org_name <- gsub("([a-z])([A-Z])", "\\1 \\2", indiana$org_name)
+
+# Maine 1 Had additional data that needed to be extracted in excel
+# =IF(ISNUMBER(SEARCH("discovered",E8)),TRIM(MID(E8,SEARCH("discovered",E8)+LEN("discovered"),255)),"") for date of discovery
+# =IF(ISNUMBER(SEARCH("-",E8)),TRIM(MID(E8,SEARCH("-",E8)+LEN("-"),255)),"") for date of breach end
+
+#Subsetting Maine2 because it has so many factors that it tracks.
+# maine2 <- subset(maine2, select = c(org_name, reported_date, total_affected, affected_residents, state, SSN_breach, drivers_license, act_num, credit_monitoring))
+
+#Maine 2 has a messy variables submitted for "Dates of Consumer Notification" so instead the Start Date of the Maine applicaiton form will be used as the reported date 
+
+#Massachusetts reasign "breach number" as "case number"
+names(massachusetts)[names(massachusetts)=="breach_no"] <- "case_no"
+
+#Montana rename breach start as date of breach
+names(montana)[names(montana)=="date_of_breach"] <- "breach_start"
+
+#New Hampshire has random dates listed in the org-name
+
+#New Jersey reasign "posted date" as "reported date"
+names(new_jersey)[names(new_jersey)=="posted_date"] <- "reported_date"
+
+#Rhode Island rename breach start as date of breach
+names(rhode_island)[names(rhode_island)=="Open.Date"] <- "reported_date"
+
+#South Carolina rename breach start as date of breach
+names(s_carolina)[names(s_carolina)=="start_date"] <- "date_of_breach"
+
+#Oregon date correction for date_of_breach TBD
+#Vermont date correction TBD
+vermont <- subset(vermont, select = -c(updated_comment))
+
+#Washington data required a seperation of start and end dates
+
+# wisconsin reassign "affected" as "residents_affected"
+names(wisconsin)[names(wisconsin)=="affected"] <- "residents_affected"
+
+# Wisconsin date correction
+# Created new column for "date_of_breach" in excel
+
+```
+
+## Add SSN / act num / drivers license / credit_debit
+```{r}
+connecticut$credit_monitoring <- str_replace_all(connecticut$credit_monitoring, "Y", "1")
+connecticut$credit_monitoring <- str_replace_all(connecticut$credit_monitoring, "N", "0")
+connecticut$notification <- str_replace_all(connecticut$notification, "Y", "1")
+connecticut$notification <- str_replace_all(connecticut$notification, "N", "0")
+connecticut$name_lost <- str_replace_all(connecticut$name_lost, "Y", "1")
+connecticut$name_lost <- str_replace_all(connecticut$name_lost, "N", "0")
+connecticut$address_lost <- str_replace_all(connecticut$address_lost, "Y", "1")
+connecticut$address_lost <- str_replace_all(connecticut$address_lost, "N", "0")
+connecticut$email_lost <- str_replace_all(connecticut$email_lost, "Y", "1")
+connecticut$email_lost <- str_replace_all(connecticut$email_lost, "N", "0")
+connecticut$SSN_breach <- str_replace_all(connecticut$SSN_breach, "Y", "1")
+connecticut$SSN_breach <- str_replace_all(connecticut$SSN_breach, "N", "0")
+connecticut$birth_lost <- str_replace_all(connecticut$birth_lost, "Y", "1")
+connecticut$birth_lost <- str_replace_all(connecticut$birth_lost, "N", "0")
+connecticut$track1 <- str_replace_all(connecticut$track1, "Y", "1")
+connecticut$track1 <- str_replace_all(connecticut$track1, "N", "0")
+connecticut$track2 <- str_replace_all(connecticut$track2, "Y", "1")
+connecticut$track2 <- str_replace_all(connecticut$track2, "N", "0")
+connecticut$credit_debit <- str_replace_all(connecticut$credit_debit, "Y", "1")
+connecticut$credit_debit <- str_replace_all(connecticut$credit_debit, "N", "0")
+
+massachusetts$credit_debit <- str_replace_all(massachusetts$credit_debit, "Yes", "1")
+massachusetts$credit_monitoring <- str_replace_all(massachusetts$credit_monitoring, "Yes", "1")
+massachusetts$encrypted <- str_replace_all(massachusetts$encrypted, "Yes", "1")
+massachusetts$mobile_device <- str_replace_all(massachusetts$mobile_device, "Yes", "1")
+massachusetts$SSN_breach <- str_replace_all(massachusetts$SSN_breach, "Yes", "1")
+
+maine2$SSN_breach <- str_replace_all(maine2$SSN_breach, "TRUE", "1")
+maine2$SSN_breach <- str_replace_all(maine2$SSN_breach, "FALSE", "0")
+maine2$drivers_license <- str_replace_all(maine2$drivers_license, "TRUE", "1")
+maine2$drivers_license <- str_replace_all(maine2$drivers_license, "FALSE", "0")
+
+ssn_words = c("SSN", "Social Security", "SS Nos", "SS#")
+maine1$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), maine1$info_type, ignore.case = T), 1, NA)
+maryland$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), maryland$info_type, ignore.case = T), 1, NA)
+s_carolina$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), s_carolina$info_type, ignore.case = T), 1, NA)
+wisconsin$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), wisconsin$info_type, ignore.case = T), 1, NA)
+
+# still need to remove false positives with "NO"
+
+maine1$drivers_license <- ifelse(grepl("driver", maine1$info_type, ignore.case = T), 1, NA)
+maryland$drivers_license <- ifelse(grepl("driver", maryland$info_type, ignore.case = T), 1, NA)
+s_carolina$drivers_license <- ifelse(grepl("driver", s_carolina$info_type, ignore.case = T), 1, NA)
+wisconsin$drivers_license <- ifelse(grepl("driver", wisconsin$info_type, ignore.case = T), 1, NA)
+
+# creating credit debit dummy variable
+card_words = c("payment card", "discover card", "credit card", "debit card")
+maine1$credit_debit <- ifelse(grepl(paste(card_words, collapse = "|"), maine1$info_type, ignore.case = T), 1, NA)
+maryland$credit_debit <- ifelse(grepl(paste(card_words, collapse = "|"), maryland$info_type, ignore.case = T), 1, NA)
+s_carolina$credit_debit <- ifelse(grepl(paste(card_words, collapse = "|"), s_carolina$info_type, ignore.case = T), 1, NA)
+wisconsin$credit_debit <- ifelse(grepl(paste(card_words, collapse = "|"), wisconsin$info_type, ignore.case = T), 1, NA)
+
+# credit monitoring
+maine2$credit_monitoring <- ifelse(grepl("credit monitoring", maine2$credit_monitoring, ignore.case = T), 1, NA)
+s_carolina$credit_monitoring <- ifelse(grepl("credit monitoring", s_carolina$description, ignore.case = T), 1, NA)
+wisconsin$credit_monitoring <- ifelse(grepl("credit monitoring", wisconsin$description, ignore.case = T), 1, NA)
+
+
+```
+
+## Integrate state datafiles
+
+```{r state column}
+california<-data.frame(State="California",california[])
+connecticut<-data.frame(State="Connecticut",connecticut[])
+delaware<-data.frame(State="Delaware",delaware[])
+hawaii<-data.frame(State="Hawaii",hawaii[])
+indiana<-data.frame(State="Indiana",indiana[])
+iowa<-data.frame(State="Iowa",iowa[])
+maine1<-data.frame(State="Maine",maine1[])
+maine2<-data.frame(State="Maine",maine2[])
+maryland<-data.frame(State="Maryland",maryland[])
+massachusetts<-data.frame(State="Massachusetts",massachusetts[])
+montana<-data.frame(State="Montana",montana[])
+new_hampshire<-data.frame(State="New_Hampshire",new_hampshire[])
+new_jersey<-data.frame(State="New_Jersey",new_jersey[])
+n_carolina<-data.frame(State="North_Carolina",n_carolina[])
+n_dakota<-data.frame(State="N_Dakota",n_dakota[])
+oregon<-data.frame(State="Oregon",oregon[])
+rhode_island<-data.frame(State="Rhode_Island",rhode_island[])
+s_carolina<-data.frame(State="South_Carolina",s_carolina[])
+vermont<-data.frame(State="Vermont",vermont[])
+virginia<-data.frame(State="Virginia",virginia[])
+washington<-data.frame(State="Washington",washington[])
+wisconsin<-data.frame(State="Wisconsin",wisconsin[])
+
+AllState<-rbind.fill(list(california, connecticut, delaware, hawaii, indiana, iowa, maine1, maine2, 
+                     maryland, massachusetts, montana, new_hampshire, new_jersey, n_dakota, 
+                     n_carolina, oregon, rhode_island, s_carolina, vermont, virginia, washington, 
+                     wisconsin))
+
+
+```
+
+## Doing Business As
+```{r}
+# Create DBA
+# dba1 covers a small number of cases included with North_Dakota
+AllState$org_name <- gsub("\n", "", AllState$org_name)
+
+dba_no <- grep("dba |d/b/a|DBA |D/B/A", AllState$org_name, ignore.case=FALSE)
+length(dba_no)
+
+AllState$dba2 <- NA
+dba2_no <- grep("dba ", AllState$org_name, ignore.case=FALSE)
+AllState$dba2[dba2_no] <- gsub('.*dba (.*)','\\1',AllState$org_name[dba2_no])
+
+AllState$dba3 <- NA
+dba3_no <- grep("DBA ", AllState$org_name, ignore.case=FALSE)
+AllState$dba3[dba3_no] <-   gsub('.*DBA (.*)','\\1',AllState$org_name[dba3_no])
+
+AllState$dba4 <- NA
+dba4_no <- grep("d/b/a", AllState$org_name, ignore.case=FALSE)
+AllState$dba4[dba4_no] <- gsub('.*d/b/a(.*)','\\1',AllState$org_name[dba4_no])
+
+AllState$dba5 <- NA
+dba5_no <- grep("D/B/A", AllState$org_name, ignore.case=FALSE)
+AllState$dba5[dba5_no] <- gsub('.*D/B/A(.*)','\\1',AllState$org_name[dba5_no])
+
+AllState$dba6 <- NA
+dba6_no <- grep("doing business as ", AllState$org_name, ignore.case=FALSE)
+AllState$dba6[dba6_no] <- gsub('.*doing business as (.*)','\\1',AllState$org_name[dba6_no])
+
+AllState$dba7 <- NA
+dba7_no <- grep(" dba", AllState$org_name, ignore.case=FALSE)
+dba7_no <- setdiff(dba7_no,dba2_no)
+AllState$dba7[dba7_no] <-   gsub('.* dba(.*)','\\1',AllState$org_name[dba7_no])
+
+AllState$dba8 <- NA
+dba8_no <- grep(" DBA", AllState$org_name, ignore.case=FALSE)
+dba8_no <- setdiff(dba8_no,dba3_no)
+AllState$dba8[dba8_no] <-   gsub('.* DBA(.*)','\\1',AllState$org_name[dba8_no])
+
+AllState$dba <- NA
+AllState$dba <- paste(AllState$dba1, AllState$dba2, AllState$dba3, AllState$dba4, 
+                       AllState$dba5, AllState$dba6, AllState$dba7, AllState$dba8)
+
+AllState$dba <- gsub("NA | NA","", AllState$dba)
+AllState$dba[AllState$dba == "NA"] <- NA
+AllState$dba <- trimws(AllState$dba)
+
+AllState = subset(AllState, select = -c(dba1,dba2,dba3,dba4,dba5,dba6,dba7,dba8))
+
+```
+# Conversion of total affected
+```{r}
+# conversion of affected into number
+grep("million", AllState$total_affected, value = TRUE)
+AllState$total_affected <-   gsub('143 million','143000000', AllState$total_affected)
+AllState$total_affected <-   gsub('1.1 million','1100000', AllState$total_affected)
+AllState$total_affected <-   gsub('4.6 million','4600000', AllState$total_affected)
+AllState$total_affected <-   gsub('15.1 million','15100000', AllState$total_affected)
+AllState$total_affected <-   gsub('2.6 million','2600000', AllState$total_affected)
+AllState$total_affected <-   gsub('Approximately 2.6 million worldwide','2600000', AllState$total_affected)
+AllState$total_affected <-   gsub('7.5 million','7500000', AllState$total_affected)
+AllState$total_affected <-   gsub('Approximately 6.1 million users','6100000', AllState$total_affected)
+AllState$total_affected <-   gsub('~22 million','22000000', AllState$total_affected)
+AllState$total_affected <-   gsub('6.8 million','6800000', AllState$total_affected)
+AllState$total_affected <-   gsub('11 million','11000000', AllState$total_affected)
+
+grep("Million", AllState$total_affected, value = TRUE)
+AllState$total_affected <-   gsub('24.2 million','24200000', AllState$total_affected)
+AllState$total_affected <-   gsub('1.9 million','1900000', AllState$total_affected)
+
+AllState$total_affected <-   gsub('~','',AllState$total_affected)
+AllState$total_affected <-   gsub('>','',AllState$total_affected)
+AllState$total_affected <-   gsub(',','',AllState$total_affected)
+count(is.na(AllState$total_affected)) # 44,199 are NA, 10141 are numbers
+
+
+#figure out how to fix millions
+AllState$total_affected <- as.numeric(as.character(AllState$total_affected))
+count(is.na(AllState$total_affected)) # 44,273 are NA, 10067 are numbers ... 74 fail to parse
+datavar <- AllState$total_affected
+datavar <- as.numeric(na.omit(datavar))
+
+# Descriptive statistics
+max(datavar) # 2e+09
+mean(datavar) # 463117.3
+median(datavar) # 581
+sd(datavar) # 22229445
+
+# Binning by Millions
+bins <- seq(0,2e+09,by=100000000)
+Scores <- cut(datavar, bins)
+table(Scores)
+
+# Binning by thousands under 1 Million
+bins2 <- seq(1,2000,by=25)
+Scores2 <- cut(datavar, bins2)
+tabscore2 <- table(Scores2)
+plot(tabscore2)
+
+
+```
+
+
+
+```{r}
+#conversion of text into dates
+AllState[,"date_of_breach"]<-mdy(AllState[,"date_of_breach"]) # 1315 failed to parse
+AllState[,"breach_end"]<-mdy(AllState[,"breach_end"]) # 106 failed to parse
+AllState[,"discover_date"]<-mdy(AllState[,"discover_date"]) # 815 failed to parse
+AllState[,"reported_date"]<-mdy(AllState[,"reported_date"]) # 267 failed to parse
+
+# Add years
+AllState$year <- year(AllState$reported_date)
+
+#Count of NA for reported date (557 reported NA as of 10/05/2020, includes Virginia 2012)
+the_na<-which(is.na(AllState$reported_date))
+count(AllState[the_na, ])
+FindingNA <- subset(AllState[the_na, ],)
+table(FindingNA$State)
+sum(table(FindingNA$State))
+
+# Overwriting AllState to remove na
+AllState <- AllState[!is.na(AllState$reported_date),]
+nrow(AllState)
+# Remove 
+
+supplementals = c("Update:", "Updated", "- Update", "\\(Update", "Supplement 1", "Supplement 2", "Supplemental 
+                  Notification", "Supplemental Incident", "Supplemental Information", "Inc. Supplement", 
+                  "\\(supplement", "supplement\\)", "(Amended)")
+
+supps <- grep(paste(supplementals, collapse = "|"), AllState$org_name, ignore.case = T)
+supps # 45
+AllState <- AllState[-c(supps),]
+
+#Count of Updates in org (45 removed in 10/05/2020)
+nrow(AllState) 
+
+AllState <- AllState[,c("State", "org_name", "dba", "year", "date_of_breach", "breach_end", "discover_date",
+                        "reported_date", "affected_residents", "total_affected", "case_no", "breach_type", "info_type", 
+                        "SSN_breach", "act_num", "name_lost","address_lost","email_lost", "drivers_license", 
+                        "credit_debit", "credit_monitoring", "encrypted", "mobile_device", "letter_url", 
+                        "state", "description")]
+
+# Clean Total Affected
+AllState$affected_residents <- gsub(",", "", AllState$affected_residents)
+AllState$total_affected <- gsub(",", "", AllState$total_affected)
+
+```
+
+
+## Integrate breach notification letters
+```{r}
+
+# LetterMerge <- read.csv(file="C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Notification_Letters/LetterMerge.csv",
+#          col.names=c("Num","filename","Test","PII","Social_Security","DOB","Credit","GovID","Account_Info","Tax",
+#                      "Med", "Encrypt",	"Forensics","Law","state"))
+
+# LetterMerge$letter_url <- LetterMerge$filename
+# LetterMerge$filename <- str_replace(LetterMerge$filename, ".PDF", "")
+# LetterMerge$filename <- str_replace(LetterMerge$filename, ".pdf", "")
+
+# Tropy <- read.csv(file="C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset/Tropy_DataBreach.csv", 
+#                   col.names=c("filename", "org_name", "breach reported", "dba", "lawfirm name", "A", "breach start", 
+#                               "breach end", "breach discovered", "residents affected", "total affected", 
+#                               "breach type", "hack type", "data encrypted", "credit monitoring", "monitoring provider",
+#                               "monitoring duration", "B", "law enforcement", "industry name", "state name", "Tags"))
+
+# BigTrope <- merge(Tropy, LetterMerge, by="filename", all.x = TRUE)
+# AllState_Tropy <- merge(AllState, BigTrope, by="letter_url")
+# View(AllState_Tropy)
+
+```
+
+
+
+
+# Identify date ranges of the states
+```{r}
+AllState<-AllState[order(AllState$reported_date),]
+
+# Find the Dates of the First and Last Incident
+earliestd<-do.call("rbind", as.list(by(AllState,AllState$State, head, n=1)))
+earliestd<-earliestd[,c("State","reported_date")]
+latestd<-do.call("rbind", as.list(by(AllState,AllState$State, tail, n=1)))
+latestd<-latestd[,c("State","reported_date")]
+date_range <- merge(earliestd,latestd,by="State")
+
+date_range$startyear <- year(date_range$reported_date.x)
+date_range$endyear <- year(date_range$reported_date.y)
+
+is.leapyear=function(year){
+  #http://en.wikipedia.org/wiki/Leap_year
+  return(((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
+}
+date_range$yeardays1 <- ifelse(is.leapyear(date_range$startyear),366,365)
+date_range$yeardays2 <- ifelse(is.leapyear(date_range$endyear),366,365)
+
+date_range$startperc <- 1-(as.numeric(format(date_range$reported_date.x, "%j"))/date_range$yeardays1)
+date_range$endperc <- as.numeric(format(date_range$reported_date.y, "%j"))/date_range$yeardays2
+date_range[order(date_range$reported_date.x),]
+
+
+```
+
+
+# Import clean names and sort
+
+```{r}
+
+AllState[grep('Â', AllState$org_name), "org_name"] <- gsub('Â', 'é', AllState[grep('Â', AllState$org_name), "org_name"])
+AllState$org_name <- str_trim(AllState$org_name)
+
+# write.csv(AllState, "Allstate_ToBeCleaned1.csv")
+
+clean_name <- read.csv("test3.csv", col.names=c("org_name","cleaned_name"), na.strings=c("","NA")) # changed clean_name2.csv to clean_name4.csv
+clean_name$org_name <- str_trim(clean_name$org_name)
+
+
+AllState$org_name <- gsub("\n", "", AllState$org_name)
+AllState<-AllState[order(AllState$org_name),]
+
+AllState <- merge(AllState, unique(clean_name), by="org_name",all.x= TRUE,all.y= FALSE)
+
+AllState <- AllState[,c("cleaned_name", "org_name", "dba", "year", "State", "date_of_breach", "breach_end","discover_date",
+                        "reported_date", "affected_residents", "total_affected", "case_no", "breach_type", "info_type", 
+                        "act_num", "drivers_license", "credit_debit", "SSN_breach", "credit_monitoring", "encrypted", 
+                        "mobile_device", "letter_url", "state", "description")]
+
+AllState<-as.data.frame(AllState[order(AllState$reported_date),])
+AllState<-AllState[order(AllState$cleaned_name),]
+
+which(AllState$cleaned_name==0) # 13 rows removed for unclear org name
+
+AllState <- AllState[-c(which(AllState$cleaned_name==0)),]
+
+# Prep AllState linebreaks for excel import
+AllState$org_name <- gsub("\n", "", AllState$org_name)
+AllState$breach_type <- gsub("\n", " ", AllState$breach_type)
+AllState$info_type <- gsub("\n", " ", AllState$info_type)
+
+# Prep AllState for ; delimited
+AllState$org_name <- gsub(";","--", AllState$org_name)
+AllState$date_of_breach <- gsub(";","--", AllState$date_of_breach)
+AllState$info_type <- gsub(";","--", AllState$info_type)
+AllState$letter_url <- gsub(";","--", AllState$letter_url)
+
+# Used to pull Letters
+url_list <- sort(unique(AllState$letter_url))
+write.csv(url_list, "url_list.csv")
+
+View(AllState)
+```
+
+
+# Identify hacks in dataset
+```{r}
+# creating a hacking thesaurus
+hackwords = c("compromis", "cyber", "hack", "intrusion", "phish", "malicious", "malware", "ransomware", "security", "spoof", "virus", "vulnerability")
+AllState$hack1 <- ifelse(grepl(paste(hackwords, collapse = "|"), AllState$breach_type, ignore.case = T), 1, NA)
+AllState$hack2 <- ifelse(grepl(paste(hackwords, collapse = "|"), AllState$description, ignore.case = T), 1, NA)
+AllState$hackt <- rowSums(AllState[,c("hack1","hack2")], na.rm=TRUE)
+AllState$hackt[AllState$hackt == 0] <- NA
+AllState$hackt[AllState$hackt != 0] <- 3
+AllState <- subset(AllState, select= -c(hack1, hack2))
+
+not_hackwords = c("drives","error","improper","inadvertent","laptop","letter","lost","paper","public","stole","theft")
+AllState$not_hack <- ifelse(grepl(paste(not_hackwords, collapse = "|"), AllState$breach_type, ignore.case = T), 1, NA)
+AllState$not_hack[AllState$not_hack == 0] <- NA
+
+AllState$hack <- rowSums(AllState[,c("hackt","not_hack")], na.rm=TRUE)
+AllState$hack[AllState$hack == 0] <- 2
+AllState <- subset(AllState, select= -c(hackt, not_hack))
+
+# 4 = Terms for both / 3 = Clear Hack / 2 Unsure / 1 = Not Hack
+table(AllState$hack)
+AllState[which(AllState$hack==4),]
+
+```
+
+# Assign incident code to breaches
+```{r}
+date_range = 14
+AllState$date1 <- ymd(AllState$reported_date - date_range)
+AllState$date2 <- ymd(AllState$reported_date + date_range)
+AllState$timerange <- interval(AllState$date1, AllState$date2)
+
+AllState$date3 <- c(AllState$date1[1],AllState$date1[1:(nrow(AllState)-1)])
+AllState$date3 <- as.POSIXct(AllState$date3, origin = "1970-01-01", tz = "GMT")    # in UTC
+AllState$date3 <- format(AllState$date3, "%y-%m-%d")
+AllState$date4 <- c(AllState$date2[1],AllState$date2[1:(nrow(AllState)-1)])
+AllState$date4 <- as.POSIXct(AllState$date4, origin = "1970-01-01", tz = "GMT")    # in UTC
+AllState$date4 <- format(AllState$date4, "%y-%m-%d")
+AllState$timerange2 <- interval(AllState$date3, AllState$date4)
+
+AllState$DateOverlap <- int_overlaps(AllState$timerange, AllState$timerange2)
+AllState$prior <- c("",as.vector(AllState$cleaned_name)[1:(nrow(AllState)-1)])
+
+AllState$namematch <- if_else(AllState$cleaned_name == AllState$prior, TRUE, FALSE)
+
+AllState$truematch <- (AllState$DateOverlap & AllState$namematch)
+AllState <- subset(AllState, select= -c(date1, date2, date3, date4, timerange, timerange2, DateOverlap, prior, namematch))
+
+AllState$incident_id <- NA
+
+nrow(AllState) # 56857
+sum(complete.cases(AllState$cleaned_name)) # 56827
+sum(!complete.cases(AllState$cleaned_name)) # 0
+sum(complete.cases(AllState$cleaned_name)) / nrow(AllState) # 100%
+
+```
+
+
+# Renumbering AllState1
+```{r}
+write.table(AllState, file = "AllStateFix.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+
+AllState1 <- AllState[1:sum(complete.cases(AllState$cleaned_name)),]
+
+j = 0
+for (i in 1:nrow(AllState1)){
+  if(AllState1$truematch[i] == "TRUE"){AllState1$incident_id[i] = j}
+  if(AllState1$truematch[i] == "FALSE"){AllState1$incident_id[i] = j+1}
+  j = AllState1$incident_id[i]
+  }
+
+AllState1$incident_id <- sprintf("%05d", AllState1$incident_id)
+AllState1 <- subset(AllState1, select= -c(truematch))
+AllState1$hack <- as.factor(AllState1$hack)
+View(AllState)
+
+
+```
+
+
+
+
+
+# Assign States to Columns
+```{r}
+BreachID <- AllState1
+BreachID <- dcast(BreachID, incident_id ~ State)
+BreachID <- merge(AllState1, BreachID)
+
+BreachID$California[which(BreachID$California==0)] = NA
+BreachID$Connecticut[which(BreachID$Connecticut==0)] = NA
+BreachID$Delaware[which(BreachID$Delaware==0)] = NA
+BreachID$Hawaii[which(BreachID$Hawaii==0)] = NA
+BreachID$Indiana[which(BreachID$Indiana==0)] = NA
+BreachID$Iowa[which(BreachID$Iowa==0)] = NA
+BreachID$Maine[which(BreachID$Maine==0)] = NA
+BreachID$Maryland[which(BreachID$Maryland==0)] = NA
+BreachID$Massachusetts[which(BreachID$Massachusetts==0)] = NA
+BreachID$Montana[which(BreachID$Montana==0)] = NA
+BreachID$New_Hampshire[which(BreachID$New_Hampshire==0)] = NA
+BreachID$New_Jersey[which(BreachID$New_Jersey==0)] = NA
+BreachID$N_Dakota[which(BreachID$N_Dakota==0)] = NA
+BreachID$North_Carolina[which(BreachID$North_Carolina==0)] = NA
+BreachID$Oregon[which(BreachID$Oregon==0)] = NA
+BreachID$Rhode_Island[which(BreachID$Rhode_Island==0)] = NA
+BreachID$South_Carolina[which(BreachID$South_Carolina==0)] = NA
+BreachID$Vermont[which(BreachID$Vermont==0)] = NA
+BreachID$Virginia[which(BreachID$Virginia==0)] = NA
+BreachID$Washington[which(BreachID$Washington==0)] = NA
+BreachID$Wisconsin[which(BreachID$Wisconsin==0)] = NA
+
+```
+
+
+# Organize by incidents
+```{r}
+
+AllStateClean <- ddply(BreachID, .(incident_id), 
+                             summarize, 
+            hack=paste(unique(hack[!is.na(hack)]),collapse=", "),                             
+            clean_name=paste(unique(cleaned_name[!is.na(cleaned_name)]),collapse=", "),
+            year=paste(unique(year[!is.na(year)]),collapse=", "),
+            date_of_breach= paste(unique(date_of_breach[!is.na(date_of_breach)]),collapse=", "),
+            breach_end= paste(unique(breach_end[!is.na(breach_end)]),collapse=", "),
+            discover_date=paste(unique(discover_date[!is.na(discover_date)]),collapse=", "),
+            reported_date=paste(unique(reported_date[!is.na(reported_date)]),collapse=", "),
+            total_affected= paste(unique(total_affected[!is.na(total_affected)]),collapse=", "),
+            SSN_breach= paste(unique(SSN_breach[!is.na(SSN_breach)]),collapse=", "),
+            drivers_license= paste(unique(drivers_license[!is.na(drivers_license)]),collapse=", "),
+            credit_debit= paste(unique(credit_debit[!is.na(credit_debit)]),collapse=", "),
+            credit_monitoring= paste(unique(credit_monitoring[!is.na(credit_monitoring)]),collapse=", "),
+            breach_type= paste(unique(breach_type[!is.na(breach_type)]),collapse=", "),
+            state= paste(unique(state[!is.na(state)]),collapse=", "),
+            letter_url= paste(unique(letter_url[!is.na(letter_url)]),collapse=", "),
+            California= paste(unique(California[!is.na(California)]),collapse=", "),
+            Connecticut= paste(unique(Connecticut[!is.na(Connecticut)]),collapse=", "),
+            Delaware= paste(unique(Delaware[!is.na(Delaware)]),collapse=", "),
+            Hawaii= paste(unique(Hawaii[!is.na(Hawaii)]),collapse=", "),
+            Indiana= paste(unique(Indiana[!is.na(Indiana)]),collapse=", "),
+            Iowa= paste(unique(Iowa[!is.na(Iowa)]),collapse=", "),
+            Maine= paste(unique(Maine[!is.na(Maine)]),collapse=", "),                                    
+            Maryland= paste(unique(Maryland[!is.na(Maryland)]),collapse=", "),              
+            Massachusetts= paste(unique(Massachusetts[!is.na(Massachusetts)]),collapse=", "),                    
+            Montana= paste(unique(Montana[!is.na(Montana)]),collapse=", "),         
+            New_Hampshire= paste(unique(New_Hampshire[!is.na(New_Hampshire)]),collapse=", "),                   
+            New_Jersey= paste(unique(New_Jersey[!is.na(New_Jersey)]),collapse=", "),   
+            N_Dakota= paste(unique(N_Dakota[!is.na(N_Dakota)]),collapse=", "),   
+            North_Carolina= paste(unique(North_Carolina[!is.na(North_Carolina)]),collapse=", "),   
+            Oregon= paste(unique(Oregon[!is.na(Oregon)]),collapse=", "), 
+            Rhode_Island= paste(unique(Rhode_Island[!is.na(Rhode_Island)]),collapse=", "), 
+            South_Carolina= paste(unique(South_Carolina[!is.na(South_Carolina)]),collapse=", "), 
+            Vermont= paste(unique(Vermont[!is.na(Vermont)]),collapse=", "), 
+            Virginia= paste(unique(Virginia[!is.na(Virginia)]),collapse=", "), 
+            Washington= paste(unique(Washington[!is.na(Washington)]),collapse=", "), 
+            Wisconsin= paste(unique(Wisconsin[!is.na(Wisconsin)]),collapse=", "))
+
+write.table(AllStateClean, file = "AllStateClean.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+
+View(AllStateClean)
+
+```
+
+# Subsets of State Data
+
+```{r}
+View(AllStateClean)
+AllStateClean$total_affected <- max(AllStateClean$total_affected)
+
+
+
+AllStateClean$hack_name <- tolower(AllStateClean$clean_name)
+AllStateClean$year <- substr(AllStateClean$year, start=1, stop=4)
+
+Incident_table <- table(AllStateClean$year)
+barplot(Incident_table, main="All Breach Incidents",
+   xlab="Years", ylab = "Number of Incidents", col = "darkred") 
+
+Unis <- AllStateClean[grepl( "university|college|school|education|institute of technology" , AllStateClean$hack_name), ]
+Unis_table <- table(Unis$year)
+barplot(Unis_table, main="University Breach Incidents",
+   xlab="Years", ylab = "Number of Incidents", col = "darkred") 
+
+Health <- AllStateClean[grepl( "hospital|clinic|doctor|medical|health" , AllStateClean$hack_name), ]
+Health_table <- table(Health$year)
+barplot(Health_table, main="Healthcare Breach Incidents",
+   xlab="Years", ylab = "Number of Incidents", col = "darkred") 
+
+Bank <- AllStateClean[grepl( "bank" , AllStateClean$hack_name), ]
+Bank_table <- table(Bank$year)
+barplot(Bank_table, main="Bank Breach Incidents",
+   xlab="Years", ylab = "Number of Incidents", col = "darkred")
+
+```
+
+
+# Frequency of state breach incidents by year
+```{r}
+
+AllStateClean$year <- substr(AllStateClean$year, start=1, stop=4)
+
+AllStateClean[AllStateClean==""]  <- NA
+
+AllStateClean$California[AllStateClean$California != 0] <- 1
+AllStateClean$Connecticut[AllStateClean$Connecticut != 0] <- 1
+AllStateClean$Delaware[AllStateClean$Delaware != 0] <- 1
+AllStateClean$Hawaii[AllStateClean$Hawaii != 0] <- 1
+AllStateClean$Indiana[AllStateClean$Indiana != 0] <- 1
+AllStateClean$Iowa[AllStateClean$Iowa != 0] <- 1
+AllStateClean$Maine[AllStateClean$Maine != 0] <- 1
+AllStateClean$Maryland[AllStateClean$Maryland != 0] <- 1
+AllStateClean$Massachusetts[AllStateClean$Massachusetts != 0] <- 1
+AllStateClean$Montana[AllStateClean$Montana != 0] <- 1
+AllStateClean$New_Hampshire[AllStateClean$New_Hampshire != 0] <- 1
+AllStateClean$New_Jersey[AllStateClean$New_Jersey != 0] <- 1
+AllStateClean$N_Dakota[AllStateClean$N_Dakota != 0] <- 1
+AllStateClean$North_Carolina[AllStateClean$North_Carolina != 0] <- 1
+AllStateClean$Oregon[AllStateClean$Oregon != 0] <- 1
+AllStateClean$Rhode_Island[AllStateClean$Rhode_Island != 0] <- 1
+AllStateClean$South_Carolina[AllStateClean$South_Carolina != 0] <- 1
+AllStateClean$Vermont[AllStateClean$Vermont != 0] <- 1
+AllStateClean$Virginia[AllStateClean$Virginia != 0] <- 1
+AllStateClean$Washington[AllStateClean$Washington != 0] <- 1
+AllStateClean$Wisconsin[AllStateClean$Wisconsin != 0] <- 1
+
+State_Incidents <- cbind(
+  table(AllStateClean$year,AllStateClean$North_Carolina),
+  table(AllStateClean$year,AllStateClean$New_Hampshire),
+  table(AllStateClean$year,AllStateClean$Hawaii),
+  table(AllStateClean$year,AllStateClean$Massachusetts),
+  table(AllStateClean$year,AllStateClean$South_Carolina),
+  table(AllStateClean$year,AllStateClean$Iowa),
+  table(AllStateClean$year,AllStateClean$Maine),
+  table(AllStateClean$year,AllStateClean$California),
+  table(AllStateClean$year,AllStateClean$Wisconsin),
+  table(AllStateClean$year,AllStateClean$Connecticut),
+  table(AllStateClean$year,AllStateClean$Virginia),
+  table(AllStateClean$year,AllStateClean$Indiana),
+  table(AllStateClean$year,AllStateClean$Maryland),
+  table(AllStateClean$year,AllStateClean$Montana),
+  table(AllStateClean$year,AllStateClean$Washington),
+  table(AllStateClean$year,AllStateClean$Oregon),
+  table(AllStateClean$year,AllStateClean$Rhode_Island),
+  table(AllStateClean$year,AllStateClean$Vermont),
+  table(AllStateClean$year,AllStateClean$New_Jersey),
+  table(AllStateClean$year,AllStateClean$Delaware),
+  table(AllStateClean$year,AllStateClean$N_Dakota))      
+        
+colnames(State_Incidents) <- c("North_Carolina","New_Hampshire","Hawaii","Massachusetts","South_Carolina","Iowa","Maine",
+                              "California","Wisconsin","Connecticut","Virginia","Indiana","Maryland","Montana","Washington",
+                              "Oregon","Rhode_Island","Vermont","New_Jersey","Delaware", "N_Dakota")
+
+t(State_Incidents)
+
+View(AllStateClean)
+
+```
+

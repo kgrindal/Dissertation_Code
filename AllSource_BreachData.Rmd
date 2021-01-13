@@ -1,0 +1,276 @@
+---
+title: "All_Source_BreachData"
+author: "Karl Grindal"
+date: "10/1/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(lubridate) #assists with conversion of text into POIXct dates
+library(ggplot2)
+library(reshape2)
+# library(tm)
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";", na.strings="")
+
+```
+
+## Clearinghouse data
+```{r}
+# independent datasets include the privacy rights clearinghouse and HHS
+
+
+clearinghouse <- read.csv(file="Raw_state_data/clearinghouse_092220.csv", col.names= c("reported_date", "clean_name", "city", "state", 
+                                                                                       "breach_type", "org_type", 
+                                                                                       "total_records", "description", "info_type",
+                                                                                       "source_url", "year", "lat", "long"))
+View(clearinghouse)
+
+# clearinghouse[,"reported_date"]<-dmy(clearinghouse[,"reported_date"])
+# as.POSIXlt(clearinghouse[,"reported_date"], "%Y-%m-%d")
+clearinghouse[,"reported_date"]<- mdy(clearinghouse[,"reported_date"])
+
+clearinghouse$source <- rep("Clearinghouse", nrow(clearinghouse))
+
+# Bar Chart of Clearinghouse Breaches
+clearinghouse$year <- year(clearinghouse$reported_date)
+ClearinghouseTable <- table(clearinghouse$state, clearinghouse$year)
+# ClearinghouseTable <- ClearinghouseTable[,-15] # remove the year 2019
+counts1 <- colSums (ClearinghouseTable, na.rm = FALSE, dims = 1)
+counts1
+
+barplot(counts1, main="Clearinghouse Breaches",
+   xlab="Years", ylab = "Number of Breach Incidents", col = "darkred") 
+
+clearinghouse$hack <- rep(0, nrow(clearinghouse))
+clearinghouse$hack <- ifelse(grepl("hack", clearinghouse$breach_type, ignore.case = T), 3, 1)
+
+# removes data for breaches that happened outside the United States
+USclearinghouse <-clearinghouse[-c(which(grepl("Beijing|Berlin|British Columbia|Buckinghamshire|Cheshire|Cublin|Grand Bahama|
+                                              Guangdong|Noord Holland|Ontario|Tokyo", clearinghouse$state))),]
+
+Hackclearinghouse <- subset(USclearinghouse, hack == 1)
+
+HackTable<-table(Hackclearinghouse$state, Hackclearinghouse$year)
+HackTable <- HackTable[,-16] # remove the year 2019
+
+counts1 <- colSums (HackTable, na.rm = FALSE, dims = 1)
+counts1
+
+barplot(counts1, main="Clearinghouse Reported Hacks",
+   xlab="Years", ylab = "Number of Reports", col = "darkred") 
+  
+```
+
+## HHS Portal
+```{r}
+
+hhs_portal <- read.csv(file="Raw_state_data/HHS_breachportal2.csv", 
+                       col.names= c("clean_name", "state", "covered_type", "total_affected", "reported_date", "breach_type", 
+                                    "data_location", "associate_present", "description", "list"))
+
+hhs_portal$source <- rep("HHS", nrow(hhs_portal))
+hhs_portal$org_type <- rep("MED", nrow(hhs_portal))
+
+# Conversion of text into dates
+hhs_portal[,"reported_date"]<-ymd(hhs_portal[,"reported_date"])
+
+# Bar Chart of HHS Breaches
+hhs_portal$year <- year(hhs_portal$reported_date)
+
+HHSBreachTable <- table(hhs_portal$state, hhs_portal$year)
+# HHSBreachTable <- HHSBreachTable[,-11] # remove the year 2019
+counts2 <- colSums (HHSBreachTable, na.rm = FALSE, dims = 1)
+counts2
+
+barplot(counts2, main="HHS Reported Breaches",
+   xlab="Years", ylab = "Number of Breach Incidents", col = "darkred") 
+
+state_initial <- read.csv(file="Raw_state_data/state_initial.csv", col.names= c("state", "Full_State"))
+hhs_portal$state <- state_initial$Full_State[match(hhs_portal$state, state_initial$state)]
+
+# Bar Chart of HHS Hacks
+unique(hhs_portal$breach_type) # verify categories of breach type
+
+hhs_portal$hack <- rep(0, nrow(hhs_portal))
+hhs_portal$hack <- ifelse(grepl("hack", hhs_portal$breach_type, ignore.case = T), 3, 1)
+hhs_hack <- subset(hhs_portal, hack == 1)
+
+HHStable <- table(hhs_hack$state, hhs_hack$year)
+HHStable <- HHStable[,-12] # remove the year 2019
+counts2 <- colSums (HHStable, na.rm = FALSE, dims = 1)
+counts2
+
+barplot(counts2, main="HHS Reported Hacks",
+   xlab="Years", ylab = "Number of Hacking Incidents", col = "darkred") 
+
+```
+
+
+# Integrate Clearinghouse and HHS Data with AllStates
+```{r}
+AllStateClean<-data.frame(source="State",AllStateClean[])
+AllStateClean$year <- substr(AllStateClean$year, start=1, stop=4)
+AllStateClean$reported_date <- substr(AllStateClean$reported_date, start=1, stop=10)
+
+AllSource<-rbind.fill(AllStateClean, USclearinghouse, hhs_portal)
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+AllSource$clean_name<-trim(AllSource$clean_name)
+
+# use this output to create clean name
+clean_name <- read.csv(file="test3.csv", col.names= c("org_name","clean_name"))
+
+AllSource <- merge(AllSource, clean_name, by=c("clean_name"), all.x = FALSE)
+
+AllSource <- AllSource[,c("incident_id", "hack", "clean_name", "year","date_of_breach", "breach_end", "discover_date", "reported_date",
+                          "total_affected", "SSN_breach", "drivers_license", "credit_debit", "city", "state", "org_type", 
+                          "credit_monitoring", "breach_type", "letter_url", "state", "description", "source", "California", 
+                          "Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", "Massachusetts", "Montana", 
+                          "New_Hampshire", "New_Jersey", "North_Carolina", "N_Dakota", "Oregon", "Rhode_Island", "South_Carolina", "Vermont", "Virginia",
+                          "Washington", "Wisconsin")] 
+
+AllSourceTable <- table(AllSource$source, AllSource$year)
+AllSourceTable <- AllSourceTable[,-16] # remove the year 2019
+counts3 <- colSums (AllSourceTable, na.rm = FALSE, dims = 1)
+
+AllSourceTable
+
+barplot(AllSourceTable, main="All Source Hacks",
+   xlab="Years", ylab = "Number of Incidents") 
+
+```
+
+
+```{r}
+AllSource<-AllSource[order(AllSource$reported_date),]
+AllSource<-AllSource[order(AllSource$clean_name),]
+
+nrow(AllSource)
+# There were 23,643 incidents before matching
+# There are now 83,564 incidents after matching 
+
+```
+
+
+# Assign incident code to breaches
+```{r}
+date_range = 30
+AllSource$reported_date <- ymd(AllSource$reported_date)
+AllSource$date1 <- ymd(AllSource$reported_date - date_range)
+AllSource$date2 <- ymd(AllSource$reported_date + date_range)
+AllSource$timerange <- interval(AllSource$date1, AllSource$date2)
+
+AllSource$date3 <- c(AllSource$date1[1],AllSource$date1[1:(nrow(AllSource)-1)])
+AllSource$date3 <- as.POSIXct(AllSource$date3, origin = "1970-01-01", tz = "GMT")    # in UTC
+AllSource$date3 <- format(AllSource$date3, "%y-%m-%d")
+AllSource$date4 <- c(AllSource$date2[1],AllSource$date2[1:(nrow(AllSource)-1)])
+AllSource$date4 <- as.POSIXct(AllSource$date4, origin = "1970-01-01", tz = "GMT")    # in UTC
+AllSource$date4 <- format(AllSource$date4, "%y-%m-%d")
+AllSource$timerange2 <- interval(AllSource$date3, AllSource$date4)
+
+AllSource$DateOverlap <- int_overlaps(AllSource$timerange, AllSource$timerange2)
+
+AllSource$prior <- c("",as.vector(AllSource$clean_name)[1:(nrow(AllSource)-1)])
+AllSource$namematch <- if_else(AllSource$clean_name == AllSource$prior, TRUE, FALSE)
+
+AllSource$truematch <- (AllSource$DateOverlap & AllSource$namematch)
+AllSource <- subset(AllSource, select= -c(date1, date2, date3, date4, timerange, timerange2, DateOverlap, prior, namematch))
+
+AllSource$incident_id2 <- NA
+
+j =1
+for (i in 1:nrow(AllSource)){
+  if(AllSource$truematch[i] == "TRUE"){AllSource$incident_id2[i] = j}
+  if(AllSource$truematch[i] == "FALSE"){AllSource$incident_id2[i] = j+1}
+  j = AllSource$incident_id2[i]
+  }
+
+AllSource$incident_id2 <- sprintf("%05d", AllSource$incident_id2)
+AllSource <- subset(AllSource, select= -c(truematch))
+
+```
+
+# Assign Source to Columns
+```{r}
+BreachID <- dcast(AllSource, incident_id2 ~ source)
+AllSource <- merge(AllSource, BreachID)
+
+AllSource$Clearinghouse[which(AllSource$Clearinghouse==0)] = NA
+AllSource$HHS[which(AllSource$HHS==0)] = NA
+AllSource$State[which(AllSource$State==0)] = NA
+
+```
+
+# Organize by incidents
+```{r}
+AllSourceClean <- ddply(AllSource, .(incident_id2), 
+                             summarize, 
+            hack=paste(unique(hack[!is.na(hack)]),collapse=", "),                             
+            cleaned_names=paste(unique(clean_name[!is.na(clean_name)]),collapse=", "),
+            year=paste(unique(year[!is.na(year)]),collapse=", "),
+            date_of_breach= paste(unique(date_of_breach[!is.na(date_of_breach)]),collapse=", "),
+            breach_end= paste(unique(breach_end[!is.na(breach_end)]),collapse=", "),
+            discover_date=paste(unique(discover_date[!is.na(discover_date)]),collapse=", "),
+            reported_date=paste(unique(reported_date[!is.na(reported_date)]),collapse=", "),
+            total_affected= paste(unique(total_affected[!is.na(total_affected)]),collapse=", "),
+            SSN_breach= paste(unique(SSN_breach[!is.na(SSN_breach)]),collapse=", "),
+            drivers_license= paste(unique(drivers_license[!is.na(drivers_license)]),collapse=", "),
+            credit_debit= paste(unique(credit_debit[!is.na(credit_debit)]),collapse=", "),
+            city= paste(unique(city[!is.na(city)]),collapse=", "), 
+            state= paste(unique(state[!is.na(state)]),collapse=", "), 
+            org_type= paste(unique(org_type[!is.na(org_type)]),collapse=", "),
+            credit_monitoring= paste(unique(credit_monitoring[!is.na(credit_monitoring)]),collapse=", "),
+            breach_type= paste(unique(breach_type[!is.na(breach_type)]),collapse=", "),
+            letter_url= paste(unique(letter_url[!is.na(letter_url)]),collapse=", "),
+            California= paste(unique(California[!is.na(California)]),collapse=", "),
+            Connecticut= paste(unique(Connecticut[!is.na(Connecticut)]),collapse=", "),
+            Delaware= paste(unique(Delaware[!is.na(Delaware)]),collapse=", "),
+            Hawaii= paste(unique(Hawaii[!is.na(Hawaii)]),collapse=", "),
+            Indiana= paste(unique(Indiana[!is.na(Indiana)]),collapse=", "),
+            Iowa= paste(unique(Iowa[!is.na(Iowa)]),collapse=", "),
+            Maine= paste(unique(Maine[!is.na(Maine)]),collapse=", "),                                    
+            Maryland= paste(unique(Maryland[!is.na(Maryland)]),collapse=", "),              
+            Massachusetts= paste(unique(Massachusetts[!is.na(Massachusetts)]),collapse=", "),                    
+            Montana= paste(unique(Montana[!is.na(Montana)]),collapse=", "),         
+            New_Hampshire= paste(unique(New_Hampshire[!is.na(New_Hampshire)]),collapse=", "),                   
+            New_Jersey= paste(unique(New_Jersey[!is.na(New_Jersey)]),collapse=", "),  
+            North_Carolina= paste(unique(North_Carolina[!is.na(North_Carolina)]),collapse=", "),   
+            N_Dakota= paste(unique(N_Dakota[!is.na(N_Dakota)]),collapse=", "),   
+            Oregon= paste(unique(Oregon[!is.na(Oregon)]),collapse=", "), 
+            Rhode_Island= paste(unique(Rhode_Island[!is.na(Rhode_Island)]),collapse=", "), 
+            South_Carolina= paste(unique(South_Carolina[!is.na(South_Carolina)]),collapse=", "), 
+            Vermont= paste(unique(Vermont[!is.na(Vermont)]),collapse=", "), 
+            Virginia= paste(unique(Virginia[!is.na(Virginia)]),collapse=", "), 
+            Washington= paste(unique(Washington[!is.na(Washington)]),collapse=", "), 
+            Wisconsin= paste(unique(Wisconsin[!is.na(Wisconsin)]),collapse=", "),
+            State= paste(unique(State[!is.na(State)]),collapse=", "),
+            Clearinghouse= paste(unique(Clearinghouse[!is.na(Clearinghouse)]),collapse=", "), 
+            HHS= paste(unique(HHS[!is.na(HHS)]),collapse=", "))
+
+write.table(AllSourceClean, file = "AllSourceClean.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+
+m <- nrow(AllSourceClean)
+m
+# There are 17,950 incidents after matching
+
+```
+
+
+
+
+
+
+
+
+
+
+
+

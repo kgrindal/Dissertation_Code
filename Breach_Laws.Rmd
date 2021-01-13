@@ -1,0 +1,162 @@
+---
+title: "Breach_Legislation"
+author: "Karl Grindal"
+date: "10/02/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(lubridate) #assists with conversion of text into POIXct dates
+library(tm)
+library(urbnmapr)
+library(ggplot2)
+library(stringdist)
+library(mice)
+library(usmap)
+library(fuzzyjoin)
+library(reshape2)
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+
+```
+
+
+
+```{r}
+
+# Source of Breach Laws
+
+breach_laws <- read.csv(file="Raw_state_data/Breach_Laws.csv", col.names= c("year","state","bill","status","description","url"))
+breach_laws$status <- gsub("Status: ", "", breach_laws$status)
+breach_laws$state <- tolower(breach_laws$state)
+
+passed_laws <- breach_laws[grepl( "Enacts|Enacted|Adopted|Signed by Governor" , breach_laws$status), ]
+
+View(breach_laws)
+# Data Cleaning
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+breach_laws$state<-trim(breach_laws$state)
+
+breach_laws$state<- gsub("massachusettsâ","massachusetts",breach_laws$state)
+breach_laws$state<- gsub("montanaâ","montana",breach_laws$state)
+breach_laws$state<- gsub("new jerseyâ","new jersey",breach_laws$state)
+breach_laws$state<- gsub("southâ  carolina","south carolina",breach_laws$state)
+
+
+```
+
+
+Create Bar Graphs
+```{r}
+#table of proposed legislation by state by year
+bill_table <- table(breach_laws$state,breach_laws$year)
+bill_table <- bill_table[,-10] # remove incomplete year
+counts <- colSums (bill_table, na.rm = FALSE, dims = 1)
+counts
+
+barplot(counts, main="State Data Breach Bills Proposed",
+   xlab="Years", ylab = "Number of Bills", col = "darkred") 
+
+#table of passed legislation by state by year
+law_table <- table(passed_laws$state, passed_laws$year)
+law_table <- law_table[,-10] # remove incomplete year
+
+count2 <- colSums (law_table, na.rm = FALSE, dims = 1)
+count2
+
+barplot(count2, main="State Data Breach Laws and Amendments Passed",
+   xlab="Years", ylab = "Number of Laws", col = "darkred")
+
+```
+
+
+Proposed Legislation by State
+```{r}
+#table of proposed legislation by state by year
+counts3 <- rowSums (bill_table, na.rm = FALSE, dims = 1)
+View(counts3)
+
+states<-sort(unique(breach_laws$state))
+
+
+```
+
+# Georgia Data
+
+```{r}
+Georgia<-subset(breach_laws, state=="georgia")
+head(Georgia, 5)
+
+```
+
+
+
+# Mapping the Number of Proposed Legislation
+```{r}
+# main_dat <- statepop[ ,-c(4)]
+# main_dat$full <- tolower(main_dat$full)
+# main_dat<-rename(main_dat, region = full)
+# all_states <- map_data("state")
+
+# Total <- merge(all_states, main_dat, by="region")
+# breach_laws <- rename(breach_laws, region = state)
+# Mapper <- merge(breach_laws, Total, by="region")
+
+# p <- ggplot()
+# p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=Mapper), colour="white") + scale_fill_gradient(low = "thistle2", high = "darkred", guide="colorbar")
+# P1 <- p + theme_bw()  + labs(fill = "1=High Legislation, 0=Low Legislation" 
+#                            ,title = "State Legislation", x="", y="")
+# P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+
+```
+
+
+
+# Data Breach Source
+```{r}
+#Source of dates:
+# https://www.itgovernanceusa.com/data-breach-notification-laws
+# https://www.beazley.com/prebuilt/databreach_2017/data/allstates.pdf
+
+first_laws <- read.csv(file="First_Breach_Laws.csv", 
+                        col.names= c("state","law","year","signed","effective","url"))
+
+View(first_laws)
+
+# Includes laws for DC and Puerto Rico
+
+first_law_yr <- table(first_laws$state, first_laws$year)
+
+count4 <- colSums(first_law_yr, na.rm = FALSE, dims = 1)
+
+ts(count4, frequency = 1, start = c(2002,1))
+
+barplot(count4, main="State Data Breach Laws",
+   xlab="Years", ylab = "First Law Passed", col = "darkred")
+
+sumfun<-function(x,start,end){
+  return(sum(x[start:end]))
+}
+
+first_law_tot <- c(count4[1],1,1,sumfun(count4,1,2),sumfun(count4,1,3),sumfun(count4,1,4),sumfun(count4,1,5),
+                   sumfun(count4,1,6),sumfun(count4,1,7),sumfun(count4,1,7),sumfun(count4,1,7),
+                   sumfun(count4,1,7),sumfun(count4,1,8),sumfun(count4,1,8),sumfun(count4,1,8),
+                   sumfun(count4,1,9),sumfun(count4,1,10))
+
+barplot(first_law_tot, main="Passage of Initial State Data Breach Law",
+   xlab="Years", ylab = "Number of Laws", col = "darkred")         
+
+
+
+```
+
+
+
+

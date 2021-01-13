@@ -1,0 +1,529 @@
+---
+title: "DescriptiveStats_BreachData"
+author: "Karl Grindal"
+date: "10/20/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(lubridate) #assists with conversion of text into POIXct dates
+library(ggplot2)
+library(reshape2)
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+# AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";")
+
+AllSourceClean <- read.table(file = "AllSourceClean.txt", header=TRUE, sep = ";")
+
+View(AllSourceClean)
+
+```
+
+# Table of Reported Breach Incidents
+```{r}
+AllSourceClean$year <- substr(AllSourceClean$year, start=1, stop=4)
+AllSourceCleanTable <- table(AllSourceClean$year)
+AllSourceCleanTable
+
+barplot(AllSourceCleanTable, main="Total Reported Incidents",
+   xlab="Years", ylab = "Number of Breach Incidents", col = "darkred") 
+
+```
+
+
+# Create State Factors and Count State Incidents
+```{r}
+
+AllSourceClean[AllSourceClean==""]  <- NA
+
+AllSourceClean$California[AllSourceClean$California != 0] <- 1
+AllSourceClean$Connecticut[AllSourceClean$Connecticut != 0] <- 1
+AllSourceClean$Delaware[AllSourceClean$Delaware != 0] <- 1
+AllSourceClean$Hawaii[AllSourceClean$Hawaii != 0] <- 1
+AllSourceClean$Indiana[AllSourceClean$Indiana != 0] <- 1
+AllSourceClean$Iowa[AllSourceClean$Iowa != 0] <- 1
+AllSourceClean$Maine[AllSourceClean$Maine != 0] <- 1
+AllSourceClean$Maryland[AllSourceClean$Maryland != 0] <- 1
+AllSourceClean$Massachusetts[AllSourceClean$Massachusetts != 0] <- 1
+AllSourceClean$Montana[AllSourceClean$Montana != 0] <- 1
+AllSourceClean$New_Hampshire[AllSourceClean$New_Hampshire != 0] <- 1
+AllSourceClean$New_Jersey[AllSourceClean$New_Jersey != 0] <- 1
+AllSourceClean$North_Carolina[AllSourceClean$North_Carolina != 0] <- 1
+AllSourceClean$N_Dakota[AllSourceClean$N_Dakota != 0] <- 1
+AllSourceClean$Oregon[AllSourceClean$Oregon != 0] <- 1
+AllSourceClean$Rhode_Island[AllSourceClean$Rhode_Island != 0] <- 1
+AllSourceClean$South_Carolina[AllSourceClean$South_Carolina != 0] <- 1
+AllSourceClean$Vermont[AllSourceClean$Vermont != 0] <- 1
+AllSourceClean$Virginia[AllSourceClean$Virginia != 0] <- 1
+AllSourceClean$Washington[AllSourceClean$Washington != 0] <- 1
+AllSourceClean$Wisconsin[AllSourceClean$Wisconsin != 0] <- 1
+
+
+```
+
+# Distribution of Breaches
+```{r}
+AllSourceClean$total_affected <- gsub("^(.*?),.*", "\\1", AllSourceClean$total_affected)
+# count(is.na(AllSourceClean$total_affected)) # 10,527 are NA, 7,423 are numbers
+
+#figure out how to fix millions
+AllSourceClean$total_affected <- as.numeric(as.character(AllSourceClean$total_affected))
+# count(is.na(AllSourceClean$total_affected)) # 10,527 are NA, 7,423 are numbers ... 0 fail to parse
+datavar <- AllSourceClean$total_affected
+datavar <- as.numeric(na.omit(datavar))
+
+# Descriptive statistics
+max(datavar) # 2e+09
+mean(datavar) # 519455.3
+median(datavar) # 596
+var(datavar) # 6.335979e+14
+sqrt(var(datavar)) # 25171370
+
+# Binning by Millions
+bins <- seq(0,2e+09,by=100000000)
+TotsAffected <- cut(datavar, bins)
+table(TotsAffected)
+
+# Binning by thousands under 1 Million
+bins2 <- seq(1,2000,by=25)
+TotsAffected2 <- cut(datavar, bins2)
+Freq2 <- table(TotsAffected2)
+plot(Freq2)
+
+# Binning by thousands under 1 Million
+bins3 <- seq(0,100,by=1)
+TotsAffected3 <- cut(datavar, bins3)
+Freq3 <- table(TotsAffected3)
+Freq3 <- data.frame(Freq3)
+plot(Freq3)
+
+# x_dexp <- seq(0, 2000000000, by = 20000000) 
+ggplot(AllSourceClean,aes(total_affected))+geom_histogram(bins=500)+xlim(0, 100)
+
+Mass <- subset(AllSourceClean, AllSourceClean$Massachusetts==1)
+
+Oregon <- subset(AllSourceClean, AllSourceClean$Oregon==1)
+View(Oregon)
+
+my.formula = y ~ a*exp(b*X)
+
+ggplot(Mass,aes(total_affected))+geom_histogram(bins=500)+xlim(0, 100000) + 
+  geom_function(fun = y ~ 1.631226*exp(1.471129e-09*x), colour = "red")
+  
+
+
+
+Oregon$total_affected
+
+data = Mass$total_affected
+data = sort(data,decreasing=TRUE)
+data <- data[data!=0] # removes 0 rows
+
+xmins = unique(data) # search over all unique values of data
+dat = numeric(length(xmins))
+z = sort(data)
+for (i in 1:length(xmins)){
+  xmin = xmins[i]                 # choose next xmin candidate
+  z1 = z[z>=xmin]                 # truncate data below this xmin value
+  n = length(z1)
+  a = 1+ n*(sum(log(z1/xmin)))^-1 # estimate alpha using direct MLE
+  cx = (n:1)/n                    # construct the empirical CDF
+  cf = (z1/xmin)^(-a+1)           # construct the fitted theoretical CDF
+  dat[i] = max(abs(cf-cx))        # compute the KS statistic
+  }
+
+D = min(dat[dat>0],na.rm=TRUE)                      # find smallest D value
+xmin = xmins[which(dat==D)] # find corresponding xmin value
+z = data[data>=xmin]
+z = sort(z)
+n = length(z)
+alpha = 1 + n*(sum(log(z/xmin)))^-1 # get corresponding alpha estimate
+
+alpha
+
+# FITTING AN EXPONENTIAL:
+dat2 = numeric(length(xmins))
+z = sort(data)
+for (i in 1:length(xmins))
+{xmin = xmins[i]                 # choose next xmin candidate
+  z2 = z[z>=xmin]                # truncate data below this xmin value
+  n = length(z2)
+  lambda = 1/(mean(z2)-xmin)     # estimate lambda using direct MLE
+  cx = (1:n)/n                   # construct the empirical CDF
+  cf = 1 -exp(lambda*(xmin-z2))  # construct the fitted theoretical CDF
+  dat2[i] = max(abs(cf-cx))      # compute the KS statistic
+  }
+
+D = min(dat2[dat2>0],na.rm=TRUE)  # find smallest D value 
+xmin = xmins[which(dat2==D)]      # find corresponding xmin value
+z = data[data>=xmin] 
+z = sort(z)
+n = length(z)
+lambda = 1/(mean(z)-xmin)
+
+testresult2 = numeric(2500)
+for (i in 1:2500){
+  expfit = rexp(length(z),lambda)   #randomly generate exponential data using the parameters we found
+  w1 = ks.test(expfit,z)     #using KS test to see how good the fit is
+if (w1$p.value > 0.10){
+  testresult2[i] = 1}
+  if (w1$p.value <= 0.10){
+    testresult2[i] = 0}
+}
+
+lambda
+sum(testresult2)
+```
+
+
+```{r}
+data = datavar
+data = sort(data,decreasing=TRUE)
+data <- data[data!=0] # removes 0 rows
+
+xmins = unique(data) # search over all unique values of data
+dat = numeric(length(xmins))
+z = sort(data)
+for (i in 1:length(xmins)){
+  xmin = xmins[i]                 # choose next xmin candidate
+  z1 = z[z>=xmin]                 # truncate data below this xmin value
+  n = length(z1)
+  a = 1+ n*(sum(log(z1/xmin)))^-1 # estimate alpha using direct MLE
+  cx = (n:1)/n                    # construct the empirical CDF
+  cf = (z1/xmin)^(-a+1)           # construct the fitted theoretical CDF
+  dat[i] = max(abs(cf-cx))        # compute the KS statistic
+  }
+
+D = min(dat[dat>0],na.rm=TRUE)                      # find smallest D value
+xmin = xmins[which(dat==D)] # find corresponding xmin value
+z = data[data>=xmin]
+z = sort(z)
+n = length(z)
+alpha = 1 + n*(sum(log(z/xmin)))^-1 # get corresponding alpha estimate
+
+alpha
+
+# https://www.stat.berkeley.edu/~aldous/Research/Ugrad/Willy_Lai.pdf
+
+dpowerlaw <-function(x, alpha=2, xmin=1, log=F) {
+  if (log)
+    log(alpha-1) -log(xmin) -alpha * log(x / xmin)
+  else
+    ((alpha -1) / xmin) * ((x / xmin) ^ (-alpha))
+  }
+
+ppowerlaw <-function(q, alpha=2, xmin=1, lower.tail=T, log.p = F) {
+  p <-(q / xmin) ^ (-alpha + 1)
+  if (lower.tail)
+    p <-1-p
+  if(log.p)
+  p <-log(p)
+  p
+}
+
+qpowerlaw <-function(p, alpha=2, xmin=1, lower.tail=T, log.p = F) {
+  if (!lower.tail)
+    p <-1-p
+  if (log.p)
+  p <-exp(p)
+  xmin * ((1 -p) ^ (-1 / (alpha -1)))
+  }  
+
+rpowerlaw <-function(n, alpha=2, xmin=1){
+  qpowerlaw(runif(n, 0, 1), alpha, xmin)
+}
+
+testresult = numeric(2500)
+for (i in 1:2500){
+  power = rpowerlaw(length(z),alpha,xmin) #randomly generate power law data using the parameters we found
+  w = ks.test(z,power)     #using KS test to see how good the fit is
+  if (w$p.value > 0.10){
+    testresult[i] = 1}
+  if (w$p.value <= 0.10){
+    testresult[i] = 0}}
+
+sum(testresult)
+
+# Power law distribution is not a good fit
+
+# FITTING AN EXPONENTIAL:
+dat2 = numeric(length(xmins))
+z = sort(data)
+for (i in 1:length(xmins))
+{xmin = xmins[i]                 # choose next xmin candidate
+  z2 = z[z>=xmin]                # truncate data below this xmin value
+  n = length(z2)
+  lambda = 1/(mean(z2)-xmin)     # estimate lambda using direct MLE
+  cx = (1:n)/n                   # construct the empirical CDF
+  cf = 1 -exp(lambda*(xmin-z2))  # construct the fitted theoretical CDF
+  dat2[i] = max(abs(cf-cx))      # compute the KS statistic
+  }
+
+D = min(dat2[dat2>0],na.rm=TRUE)  # find smallest D value 
+xmin = xmins[which(dat2==D)]      # find corresponding xmin value
+z = data[data>=xmin] 
+z = sort(z)
+n = length(z)
+lambda = 1/(mean(z)-xmin)
+
+testresult2 = numeric(2500)
+for (i in 1:2500){
+  expfit = rexp(length(z),lambda)   #randomly generate exponential data using the parameters we found
+  w1 = ks.test(expfit,z)     #using KS test to see how good the fit is
+if (w1$p.value > 0.10){
+  testresult2[i] = 1}
+  if (w1$p.value <= 0.10){
+    testresult2[i] = 0}
+}
+
+lambda
+sum(testresult2)
+# An exponential is a good fit 2496 of 2500
+  
+#REGULAR EXPONENTIAL TEST:
+lambda2 = 1/mean(data)
+lambda2
+testresult3 = numeric(length(data))
+for (i in 1:2500){
+  expfit = rexp(length(data),lambda2)   #randomly generate exponential data using the parameters we found
+  w2 = ks.test(expfit,data)     #using KS test to see how good the fit is
+  if (w2$p.value > 0.10){
+    testresult3[i] = 1}
+  if (w2$p.value <= 0.10){
+    testresult3[i] = 0}
+  }
+
+sum(testresult3)
+
+# exponential distribution is not a good fit
+
+# LOG NORMAL TEST W/ Xmin:
+dat3 = numeric(length(xmins))
+z = sort(data)
+
+for (i in 1:length(xmins)){
+  xmin = xmins[i]                             # choose next xmin candidate
+  z3 = z[z>=xmin]                             # truncate data below this xmin value
+  n = length(z3) 
+  mu = sum(log(z3))/length(z3)
+  sigmasq = sum((log(z3)-mu)^2)/length(z3)    # estimate lamda using direct MLE
+  cx = (1:n)/n                                # construct the empirical CDF
+  cf = pnorm((log(z3)-mu)/sqrt(sigmasq))      # construct the fitted theoretical CDF
+  dat3[i] = max(abs(cf-cx))                   # compute the KS statistic
+  }
+
+D = min(dat3[dat3>0],na.rm=TRUE)                      # find smallest D value
+xmin = xmins[which(dat3==D)]          # find corresponding xmin value
+z = data[data>=xmin] 
+z = sort(z)
+n = length(z)
+mu = sum(log(z))/length(z)
+sigmasq = sum((log(z)-mu)^2)/length(z)
+
+testresult4 = numeric(2500)
+
+for (i in 1:2500){
+  lognfit = rlnorm(length(data),mean=mu,sd=sqrt(sigmasq))   #randomly generate exponential data using the parameters we found
+  w3 = ks.test(lognfit,data)     #using KS test to see how good the fit is
+  if (w3$p.value > 0.10){
+    testresult4[i] = 1}
+  if (w3$p.value <= 0.10){
+    testresult4[i] = 0}
+  }
+
+sum(testresult4)
+# LOG NORMAL TEST W/ Xmin is not a good fit
+
+
+# REGULAR LOG NORMAL TEST:
+
+mu2 = sum(log(data[data>0]))/length(data[data>0])
+sigmasq2 = sum((log(data[data>0])-mu2)^2)/length(data[data>0])
+testresult5 = numeric(2500)
+
+  for (i in 1:2500){
+    lognfit = rlnorm(length(data),mean=mu2,sd=sqrt(sigmasq2))   #randomly generate exponential data using the parameters we found
+    w3 = ks.test(lognfit,data)     #using KS test to see how good the fit is
+    if (w3$p.value > 0.10){
+      testresult5[i] = 1}
+    if (w3$p.value <= 0.10){
+      testresult5[i] = 0}
+    }
+  
+sum(testresult5)
+# Regular Log Normal Test is not a good fit.
+
+```
+
+
+
+
+
+```{r}
+# View(AllSourceClean)
+StartCol <- 19 # starting column
+X <- array(AllSourceClean[StartCol:(StartCol+20)])
+X <- as.matrix(X)
+X[is.na(X)] <- 0
+class(X)<-"numeric"
+
+out <- crossprod(X)
+out
+diag(out) <- 0
+rownames(out) <- c("California", "Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", "Massachusetts", "Montana",                           
+                   "New_Hampshire", "New_Jersey", "North_Carolina", "N_Dakota", "Oregon", "Rhode_Island", "South_Carolina", "Vermont", "Virginia", 
+                   "Washington", "Wisconsin")
+
+out
+
+AllSourceClean$Statz <- rowSums(X, na.rm=T) 
+
+table(AllSourceClean$Statz,AllSourceClean$year)
+rowSums(table(AllSourceClean$Statz,AllSourceClean$year))
+
+barplot(table(AllSourceClean$Statz),
+        main="Number of States Reporting On Each Incident",
+        xlab="Years", ylab = "Number of Hacking Incidents")
+
+distribution2018 <- table(AllSourceClean$Statz,AllSourceClean$year)[,14]
+distribution2018
+
+barplot(distribution2018,
+        main="Number of States Reporting On Each Incident",
+        xlab="Years", ylab = "Number of Hacking Incidents")
+
+
+# AllSourceClean16 <- subset(AllSourceClean, year == 2016)
+# AllSourceClean17 <- subset(AllSourceClean, year == 2017)
+AllSourceClean18 <- subset(AllSourceClean, year == 2018)
+# AllSourceClean19 <- subset(AllSourceClean, year == 2019)
+
+X2 <- array(AllSourceClean18[StartCol:(StartCol+20)])
+X2 <- as.matrix(X2)
+X2[is.na(X2)] <- 0
+class(X2)<-"numeric"
+
+out2 <- crossprod(X2)
+diag(out2) <- 0
+rownames(out2) <- c("California", "Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", "Massachusetts", "Montana",                           
+                   "New_Hampshire", "New_Jersey", "North_Carolina", "N_Dakota", "Oregon", "Rhode_Island", "South_Carolina", "Vermont", "Virginia", 
+                   "Washington", "Wisconsin")
+
+colnames(out2) <- c("California", "Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", "Massachusetts", "Montana",                           
+                   "New_Hampshire", "New_Jersey", "North_Carolina", "N_Dakota", "Oregon", "Rhode_Island", "South_Carolina", "Vermont", "Virginia", 
+                   "Washington", "Wisconsin")
+
+out2
+
+```
+
+
+
+# Table of Reported Hacking Incidents
+```{r}
+AllSourceClean$hack_both <- ifelse(grepl(4, AllSourceClean$hack, ignore.case = T), 4, 0)
+AllSourceClean$hack_yes <- ifelse(grepl(3, AllSourceClean$hack, ignore.case = T), 3, 0)
+AllSourceClean$hack_no <- ifelse(grepl(1, AllSourceClean$hack, ignore.case = T), 2, 0)
+AllSourceClean$hack_maybe <- ifelse(grepl(2, AllSourceClean$hack, ignore.case = T), 1, 0)
+
+#Function to calculate the max of each rows
+maxFun<-function(x){max(na.omit(x))}
+
+#Apply the function to each row of the data.frame
+MAX<-apply(AllSourceClean[,c("hack_both","hack_yes","hack_no","hack_maybe")], 1, maxFun)# data being your data.frame
+
+#Add MAX column to your data.frame
+AllSourceClean$hack <- MAX
+AllSourceClean <- subset(AllSourceClean, select= -c(hack_both,hack_yes,hack_no,hack_maybe))
+
+AllSourceClean$hack <- gsub(2, 0, AllSourceClean$hack)
+AllSourceClean$hack <- gsub(1, 2, AllSourceClean$hack)
+AllSourceClean$hack <- gsub(0, 1, AllSourceClean$hack)
+
+# All incidents that have a hacking score of 3
+AllSource_hack <- subset(AllSourceClean, hack == 3)
+
+AllSourcetable <- table(AllSource_hack$state, AllSource_hack$year)
+counts4 <- colSums (AllSourcetable, na.rm = FALSE, dims = 1)
+sum(counts4)
+barplot(counts4, main="All Source Reported Hacks Certain",
+   xlab="Years", ylab = "Number of Hacking Incidents", col = "darkred") 
+
+# All incidents that have a hacking score 2 or Greater
+AllSource_hack2 <- subset(AllSourceClean, hack >= 2)
+
+write.table(AllSource_hack2, file = "AllSource_hack2.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+
+AllSourcetable2 <- table(AllSource_hack2$hack, AllSource_hack2$year)
+
+write.table(AllSource_hack2, file="AllSourceClean.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+
+AllSourcetable2
+
+barplot(AllSourcetable2,
+        main="All Source Reported Hacks Certain and Likely",
+        xlab="Years", ylab = "Number of Hacking Incidents",
+        col = c("darkred","gray"))
+
+```
+
+
+# Create AllSourceClean from Subset of Likely Hack
+```{r}
+
+countcol <- colSums(table(AllSource_hack2$State,AllSource_hack2$year))
+countcol
+
+write.table(AllSource_hack2, file = "AllSourceClean.txt", sep = ";", row.names = FALSE, col.names = TRUE)
+
+
+incident_table <- table(AllSourceClean$year)
+incident_table
+
+State_Incidents <- cbind(
+  table(AllSource_hack2$year,AllSource_hack2$North_Carolina),
+  table(AllSource_hack2$year,AllSource_hack2$New_Hampshire),
+  table(AllSource_hack2$year,AllSource_hack2$Hawaii),
+  table(AllSource_hack2$year,AllSource_hack2$Massachusetts),
+  table(AllSource_hack2$year,AllSource_hack2$South_Carolina),
+  table(AllSource_hack2$year,AllSource_hack2$Iowa),
+  table(AllSource_hack2$year,AllSource_hack2$Maine),
+  table(AllSource_hack2$year,AllSource_hack2$California),
+  table(AllSource_hack2$year,AllSource_hack2$Wisconsin),
+  table(AllSource_hack2$year,AllSource_hack2$Connecticut),
+  table(AllSource_hack2$year,AllSource_hack2$Virginia),
+  table(AllSource_hack2$year,AllSource_hack2$Indiana),
+  table(AllSource_hack2$year,AllSource_hack2$Maryland),
+  table(AllSource_hack2$year,AllSource_hack2$Montana),
+  table(AllSource_hack2$year,AllSource_hack2$Washington),
+  table(AllSource_hack2$year,AllSource_hack2$Oregon),
+  table(AllSource_hack2$year,AllSource_hack2$Rhode_Island),
+  table(AllSource_hack2$year,AllSource_hack2$Vermont),
+  table(AllSource_hack2$year,AllSource_hack2$New_Jersey),
+  table(AllSource_hack2$year,AllSource_hack2$Delaware),
+  table(AllSource_hack2$year,AllSource_hack2$N_Dakota))
+
+colnames(State_Incidents) <- c("North_Carolina","New_Hampshire","Hawaii","Massachusetts","South_Carolina","Iowa","Maine",
+                              "California","Wisconsin","Connecticut","Virginia","Indiana","Maryland","Montana","Washington",
+                              "Oregon", "Rhode_Island","Vermont","New_Jersey","Delaware","N_Dakota")
+
+t(State_Incidents)
+
+
+
+```
+
+
+
+# Extrapolation
+```{r}
+# Identify earliest date by state
+
+```
+
+
