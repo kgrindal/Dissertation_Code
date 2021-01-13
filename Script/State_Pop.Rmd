@@ -15,13 +15,13 @@ knitr::opts_chunk$set(echo = TRUE)
 # Install and load the R packages
 library(imputeTS)
 
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
-
 #Sources
 # National Intercensal Tables: 2000-2010
 # https://www.census.gov/data/tables/time-series/demo/popest/intercensal-2000-2010-national.html
 # National Population Totals and Components of Change: 2010-2019
 # https://www.census.gov/data/tables/time-series/demo/popest/2010s-national-total.html
+
+year_pop <- read.csv(file="Data/Other_data/state_pop.csv")
 
 year_pop <- read.csv(file="state_pop.csv")
 names(year_pop) <- c("States", "2000-04-01","2000-07-01","2001-07-01","2002-07-01", "2003-07-01","2004-07-01","2005-07-01",

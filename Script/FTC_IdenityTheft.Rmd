@@ -1,0 +1,72 @@
+---
+title: "Identity_Theft"
+author: "Karl Grindal"
+date: "2/23/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(plyr)
+library(dplyr)
+library(tidyverse)
+library(lubridate) #assists with conversion of text into POIXct dates
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/")
+
+FTC_Type <- read.csv(file="C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/FOIA_FTC_Response.csv", header=TRUE, 
+                          col.names=c("Year",	"Month",	"Theft Type",
+                                      "State Name",	"No of Reports"))
+
+FTC_State <- read.csv(file="C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/FOIA_FTC_State.csv", header=TRUE, 
+                          col.names=c("Year",	"Month", "State Name",	"No of Reports"))
+
+
+FTC_State
+
+
+pop <- read.csv("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset/populations.csv")
+pop <- t(as.data.frame(pop))
+colnames(pop) <- pop[1,]
+pop <- pop[-1,]
+rownames(pop) <- seq(1:nrow(pop))
+pop
+
+
+
+#Id_theft <- read.csv(file.choose())
+#View(Id_theft)
+
+# YearQuarter
+#trimws(Id_theft$Year)
+#trimws(Id_theft$Title.Quarter)
+#Id_theft$YearQuarter <- paste(Id_theft$Year,Id_theft$Title.Quarter)
+
+#Id_theft_sub <- Id_theft[which(Id_theft$Category == "Identity Theft"),]
+
+#library(dplyr)
+#Id_theft_sub <- arrange(Id_theft$State.Name)
+#View(Id_theft_sub)
+
+#library(reshape2)
+#Id_theft_sub_t <- dcast(Id_theft_sub, state.name ~ YearQuarter)
+
+#Id_theft_sub_t <- dcast(Id_theft_sub, state.name ~ YearQuarter,  value.var #= 
+#                          "Qtr.Category.Complaint.Count.Total", #fun.aggregate = sum)
+#View(Id_theft_sub_t)
+
+# "Qtr.Category.Complaint.Count"
+
+```
+
+
+
+```{r}
+
+
+
+
+
+```
+

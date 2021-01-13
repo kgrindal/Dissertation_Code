@@ -20,14 +20,13 @@ library(tseries)
 library(TTR)
 
 # Case 1: Massachusetts Data Security Law
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
 
 # massachusetts <- read.csv(file="Raw_state_data/massachusetts_092020.csv", header=TRUE,
 #                          col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
 #                                      "affected_residents", "SSN_breach", "act_num", "drivers_license", 
 #                                      "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), na.strings=c(""," ","NA"))
 
-AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";", na.strings="")
+AllStateClean <- read.csv(file = "AllStateClean.csv")
 
 massachusetts <- filter(AllStateClean,Massachusetts==1)
 
