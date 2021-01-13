@@ -1,0 +1,84 @@
+---
+title: "Population_Imputation"
+author: "Karl Grindal"
+date: "6/11/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Install and load the R packages
+library(imputeTS)
+
+setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
+
+#Sources
+# National Intercensal Tables: 2000-2010
+# https://www.census.gov/data/tables/time-series/demo/popest/intercensal-2000-2010-national.html
+# National Population Totals and Components of Change: 2010-2019
+# https://www.census.gov/data/tables/time-series/demo/popest/2010s-national-total.html
+
+year_pop <- read.csv(file="state_pop.csv")
+names(year_pop) <- c("States", "2000-04-01","2000-07-01","2001-07-01","2002-07-01", "2003-07-01","2004-07-01","2005-07-01",
+                               "2006-07-01","2007-07-01","2008-07-01", "2009-07-01","2010-04-01","2010-07-01","2011-07-01",
+                               "2012-07-01","2013-07-01","2014-07-01", "2015-07-01","2016-07-01","2017-07-01",
+                               "2018-07-01","2019-07-01")
+year_pop[2:ncol(year_pop)] <- sapply(year_pop[, 2:ncol(year_pop)], as.numeric)
+
+Months <- seq(as.Date("2000-04-01"), as.Date("2020-12-01"), by="months")
+Months <- as.Date(Months)
+Blank <- matrix(, nrow = 52, ncol = 249)
+Blank <- as.data.frame(Blank)
+names(Blank) <- Months
+
+States<- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
+"Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
+
+
+Populations <- cbind(States,Blank)
+
+Populations <- merge(year_pop,Populations,by=c("States","2000-04-01","2000-07-01","2001-07-01","2002-07-01", "2003-07-01","2004-07-01","2005-07-01",
+                               "2006-07-01","2007-07-01","2008-07-01", "2009-07-01","2010-04-01","2010-07-01","2011-07-01",
+                               "2012-07-01","2013-07-01","2014-07-01", "2015-07-01","2016-07-01","2017-07-01",
+                               "2018-07-01","2019-07-01"), all.x= T)
+
+MonthsList <- dput(as.character(Months))
+MonthsList <- c("States",MonthsList)
+MonthsList <- dput(as.character(MonthsList))
+
+Populations <- Populations[MonthsList]
+
+monthly_pop <- read.csv(file="MonthlyPop.csv",
+          col.names=c("Monthly","National_Pop")) # Imports estimates of United States monthly national population
+monthly_pop <- t(monthly_pop)
+colnames(monthly_pop) <- monthly_pop[1,]
+monthly_pop <- t(monthly_pop[-1,])
+States <- c("United States")
+monthly_pop <- cbind(States, monthly_pop)
+
+View(Populations)
+Populations <- rbind(Populations, monthly_pop)
+Populations <- t(Populations)
+colnames(Populations) <- Populations[1,]
+Populations <- Populations[-1,]
+
+Populations <- as.data.frame(Populations)
+
+for(i in names(Populations)){
+  x <- ts(as.numeric(levels(Populations[[i]]))[Populations[[i]]])
+  Populations[i] <- na_interpolation(x)
+  }
+
+Populations <-  round(Populations, digits = 0) # Rounds digits out to nearest whole person
+Populations <- t(Populations) # Flips the axis to look more like a time series
+View(Populations)
+
+write.csv(Populations,"Populations.csv")
+
+```
+
