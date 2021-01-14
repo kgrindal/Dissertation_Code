@@ -14,16 +14,14 @@ library(plyr)
 library(dplyr)
 library(tidyverse)
 library(lubridate) #assists with conversion of text into POIXct dates
-library(tm)
-library(urbnmapr)
-library(ggplot2)
-library(stringdist)
-library(mice)
-library(usmap)
+# library(tm)
+# library(urbnmapr)
+# library(ggplot2)
+# library(stringdist)
+# library(mice)
+# library(usmap)
 library(fuzzyjoin)
 library(reshape2)
-
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
 
 ```
 
@@ -33,7 +31,8 @@ setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_Br
 
 # Source of Breach Laws
 
-breach_laws <- read.csv(file="Raw_state_data/Breach_Laws.csv", col.names= c("year","state","bill","status","description","url"))
+breach_laws <- read.csv(here::here("Data","Other_data","Breach_Laws.csv"), 
+                             col.names= c("year","state","bill","status","description","url"))
 breach_laws$status <- gsub("Status: ", "", breach_laws$status)
 breach_laws$state <- tolower(breach_laws$state)
 
@@ -125,10 +124,10 @@ head(Georgia, 5)
 # https://www.itgovernanceusa.com/data-breach-notification-laws
 # https://www.beazley.com/prebuilt/databreach_2017/data/allstates.pdf
 
-first_laws <- read.csv(file="First_Breach_Laws.csv", 
+first_laws <- read.csv(here::here("Data","Other_data","First_Breach_Laws.csv"), 
                         col.names= c("state","law","year","signed","effective","url"))
 
-View(first_laws)
+# View(first_laws)
 
 # Includes laws for DC and Puerto Rico
 

@@ -21,9 +21,8 @@ library(imputeTS)
 # National Population Totals and Components of Change: 2010-2019
 # https://www.census.gov/data/tables/time-series/demo/popest/2010s-national-total.html
 
-year_pop <- read.csv(file="Data/Other_data/state_pop.csv")
+year_pop <- read.csv(here::here("Data","Other_data","state_pop.csv"))
 
-year_pop <- read.csv(file="state_pop.csv")
 names(year_pop) <- c("States", "2000-04-01","2000-07-01","2001-07-01","2002-07-01", "2003-07-01","2004-07-01","2005-07-01",
                                "2006-07-01","2007-07-01","2008-07-01", "2009-07-01","2010-04-01","2010-07-01","2011-07-01",
                                "2012-07-01","2013-07-01","2014-07-01", "2015-07-01","2016-07-01","2017-07-01",
@@ -53,7 +52,7 @@ MonthsList <- dput(as.character(MonthsList))
 
 Populations <- Populations[MonthsList]
 
-monthly_pop <- read.csv(file="MonthlyPop.csv",
+monthly_pop <- read.csv(here::here("Data","Other_data","MonthlyPop.csv"),
           col.names=c("Monthly","National_Pop")) # Imports estimates of United States monthly national population
 monthly_pop <- t(monthly_pop)
 colnames(monthly_pop) <- monthly_pop[1,]
@@ -68,6 +67,7 @@ colnames(Populations) <- Populations[1,]
 Populations <- Populations[-1,]
 
 Populations <- as.data.frame(Populations)
+View(Populations)
 
 for(i in names(Populations)){
   x <- ts(as.numeric(levels(Populations[[i]]))[Populations[[i]]])
@@ -78,7 +78,7 @@ Populations <-  round(Populations, digits = 0) # Rounds digits out to nearest wh
 Populations <- t(Populations) # Flips the axis to look more like a time series
 View(Populations)
 
-write.csv(Populations,"Populations.csv")
+# write.csv(Populations,here("Data","Other_data","Populations.csv")
 
 ```
 

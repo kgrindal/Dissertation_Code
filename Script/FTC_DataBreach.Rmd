@@ -8,17 +8,18 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+library(here)
 library(tidyverse) # loads the core tidyverse packages: ggplot2, stringr, dplyr, plyr are needed
 library(plyr)
 library(lubridate) #assists with conversion of text into POIXct dates
-library(usmap) # used for map
+# library(rtools)
+library(devtools)
+devtools::install_github("pdil/usmap") # used for map
 library(reshape2) # used for dcast
 library(stringr)
 library(data.table)
 
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Other_Variables")
-
-ByState <- read.csv("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Other_Variables/FTC_Complaints_byState.csv")
+ByState <- read.csv(here("Data","Other_data","FTC_Complaints_byState.csv"))
 
 ByState$Month <- sprintf("%02d", ByState$Month)
 ByState$Date <- paste(ByState$Year, ByState$Month, sep="/")
@@ -26,7 +27,7 @@ ByState$Date <- paste(ByState$Year, ByState$Month, sep="/")
 ByState <- select(ByState,"Date","Month","Year","Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", 
          "Massachusetts", "Montana", "North_Carolina", "North_Dakota", "Oregon", "South_Carolina", "Wisconsin")
 
-View(ByState)
+# View(ByState)
 ```
 
 # Sources
@@ -35,28 +36,28 @@ View(ByState)
 ```{r source data}
 ## List of States and Sources
 
-x <- c("Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", 
-         "Massachusetts", "Montana", "North Carolina", "North Dakota", "Oregon", "South Carolina", "Wisconsin")
-x <- state.abb[match(x,state.name)]
-y<-match(x,statepop$abbr)
-y
+# x <- c("Connecticut", "Delaware", "Hawaii", "Indiana", "Iowa", "Maine", "Maryland", 
+#          "Massachusetts", "Montana", "North Carolina", "North Dakota", "Oregon", "South Carolina", "Wisconsin")
+# x <- state.abb[match(x,state.name)]
+# y<-match(x,statepop$abbr)
+# y
+# 
+# main_dat <- statepop[ ,-c(4) ]
+# main_dat$havedata <- rep(0,nrow(main_dat)) # make new column
+# main_dat$havedata <- replace(main_dat$havedata, y, 1) # replace
+# 
+# all_states <- map_data("state")
+# all_states
+# main_dat$region <- tolower(main_dat$full)
+# Total <- merge(all_states, main_dat, by="region")
+# Total
 
-main_dat <- statepop[ ,-c(4) ]
-main_dat$havedata <- rep(0,nrow(main_dat)) # make new column
-main_dat$havedata <- replace(main_dat$havedata, y, 1) # replace
-
-all_states <- map_data("state")
-all_states
-main_dat$region <- tolower(main_dat$full)
-Total <- merge(all_states, main_dat, by="region")
-Total
-
-
-p <- ggplot()
-p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=havedata), colour="white") + scale_fill_gradient(low = "thistle2", high = "darkred", guide="colorbar")
-P1 <- p + theme_bw()  + labs(fill = "1=Report, 0=Does Not Report" 
-                            ,title = "States that Publicly List Data Breaches", x="", y="")
-P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+# p <- ggplot()
+# p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=havedata), colour="white") + 
+# scale_fill_gradient(low = "thistle2", high = "darkred", guide="colorbar")
+# P1 <- p + theme_bw()  + labs(fill = "1=Report, 0=Does Not Report" 
+#                             ,title = "States that Publicly List Data Breaches", x="", y="")
+# P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
 
 ```
 
@@ -64,28 +65,30 @@ P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(pan
 ## Import state datafiles
 ```{r raw data}
 
-connecticut <- read.csv(file="Raw_state_data/connecticut_101819.csv",  header=TRUE, row.names=NULL,
+connecticut <- read.csv(here::here("Data","Raw_state_data","connecticut_101819.csv"),  header=TRUE, row.names=NULL,
                         col.names= c("case_no","status","reported_date","ct_category","ct_subcategory","org_name",
                                      "date_of_breach","affected_residents","state","breach_end","industry",
                                      "credit_monitoring","notification","name_lost","address_lost","email_lost",
                                      "SSN_breach","birth_lost","track1","track2","credit_debit"))
 
-delaware <- read.csv(file="Raw_state_data/delaware_091920.csv", col.names= 
+delaware <- read.csv(here::here("Data","Raw_state_data","delaware_091920.csv"), col.names= 
                        c("org_name","dba","date_of_breach","end_date","reported_date","affected_residents","letter_url"), 
                      na.strings=c(""," ","NA"))
 
-hawaii <- read.csv(file="Raw_state_data/hawaii_092020.csv", col.names= 
+hawaii <- read.csv(here::here("Data","Raw_state_data","hawaii_092020.csv"), col.names= 
                      c("case_no", "org_name", "breach_type","affected_residents","letter_url","reported_date"), 
                      na.strings=c(""," ","NA"))
 
-indiana <- read.csv(file="Raw_state_data/indiana_092020.csv", header=TRUE, col.names=
+indiana <- read.csv(here::here("Data","Raw_state_data","indiana_092020.csv"), header=TRUE, col.names=
                       c("id", "org_name","reported_date","date_of_breach","affected_residents","total_affected"), 
                     na.strings=c(""," ","NA"))
 
-maine1 <- read.csv(file="Raw_state_data/maine_part1_062619.csv", header=TRUE,
-                  col.names=c("org_name", "address", "contact_info", "attorney", "breach_dates", "reported_date", "date_of_breach", 
+maine1 <- read.csv(here::here("Data","Raw_state_data","maine_part1_062619.csv"), header=TRUE,
+                  col.names=c("org_name", "address", "contact_info", "attorney", "breach_dates", "reported_date", 
+                              "date_of_breach", 
                               "breach_end", "discover_date", "info_type", "affected_residents"), na.strings=c(""," ","NA"))
-maine2 <- read.csv(file="Raw_state_data/maine_part2_092020.csv",
+
+maine2 <- read.csv(here::here("Data","Raw_state_data","maine_part2_092020.csv"),
                    col.names=c("reported_date", "org_name", "street_address", "city", 
                                "state", "zip_code", "orgtype_educational", "orgtype_financialservices", 
                                "orgtype_govinmaine", "orgtype_othergov", "orgtype_healthcare", 
@@ -100,33 +103,36 @@ maine2 <- read.csv(file="Raw_state_data/maine_part2_092020.csv",
                                "date_prior_breach", "credit_monitoring", "credit_monitoring_duration", 
                                "credit_monitoring_provider", "credit_monitoring_description"), na.strings=c(""," ","NA"))
 
-maryland <- read.csv(file="Raw_state_data/maryland_092020.csv", header=TRUE,
+maryland <- read.csv(here::here("Data","Raw_state_data","maryland_092020.csv"), header=TRUE,
                      col.names=c("id", "case_no","org_name","letter_url","reported_date","affected_residents","info_type","breach_type"),
                      na.strings=c(""," ","NA"))
 
-massachusetts <- read.csv(file="Raw_state_data/massachusetts_092020.csv", header=TRUE,
+massachusetts <- read.csv(here::here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
                           col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
                                       "affected_residents", "SSN_breach", "act_num", "drivers_license", 
-                                      "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), na.strings=c(""," ","NA"))
-montana <- read.csv(file="Raw_state_data/montana_092020.csv", 
+                                      "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), 
+                          na.strings=c(""," ","NA"))
+
+montana <- read.csv(here::here("Data","Raw_state_data","montana_092020.csv"), 
                     col.names = c("org_name", "letter_url", "breach_start", "breach_end", "reported_date", 
                                   "affected_residents"), na.strings=c(""," ","NA"))
 
 
-n_carolina <- read.csv(file="Raw_state_data/north_carolina.csv", row.names=NULL, header=TRUE, col.names = 
+n_carolina <- read.csv(here::here("Data","Raw_state_data","north_carolina.csv"), row.names=NULL, header=TRUE, col.names = 
                          c("org_name","org_type","reported_date","discover_date","breach_type","total_affected",
                            "affected_residents"), na.strings=c(""," ","NA"))
 
-n_dakota <- read.csv(file="Raw_state_data/n_dakota_091920.csv", header=TRUE, 
-                     col.names=c("org_name","dba1", "date_of_breach","breach_end","reported_date","affected_residents","letter_url"), 
+n_dakota <- read.csv(here::here("Data","Raw_state_data","n_dakota_091920.csv"), header=TRUE, 
+                     col.names=c("org_name","dba1","date_of_breach","breach_end","reported_date",
+                                 "affected_residents","letter_url"), 
                      na.strings=c(""," ","NA"))
 
-s_carolina <- read.csv(file="Raw_state_data/south_carolina_071519.csv", row.names=NULL, header=TRUE, col.names = 
-                         c("org_name","discover_date", 
-                           "reported_date","start_date","end_date","affected_residents","description","info_type","org_type"), 
-                       na.strings=c(""," ","NA"))
+s_carolina <- read.csv(here::here("Data","Raw_state_data","south_carolina_071519.csv"), row.names=NULL, header=TRUE, 
+                       col.names = c("org_name","discover_date", 
+                           "reported_date","start_date","end_date","affected_residents","description","info_type","org_type")
+                       , na.strings=c(""," ","NA"))
 
-wisconsin <- read.csv(file="Raw_state_data/wisconsin_092020.csv", 
+wisconsin <- read.csv(here::here("Data","Raw_state_data","wisconsin_092020.csv"), 
                       col.names=c("reported_date","breach_dates","date_of_breach","breach_end",
                                   "org_name","info_type","affected","description"), 
                       na.strings=c(""," ","NA"))
@@ -385,9 +391,7 @@ StateBreach <- StateBreach[-1, ]
 StateBreach[] <- lapply(StateBreach, function(x) type.convert(as.character(x)))
 View(StateBreach)
 
-
-df2 <- setNames(StateBreach[,1])
-df2
+# df2 <- setNames(StateBreach[,1])
 View(StateBreach)
 ```
 

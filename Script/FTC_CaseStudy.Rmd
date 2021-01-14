@@ -15,9 +15,8 @@ library(dplyr)
 library(lubridate)
 
 # Case 1: Massachusetts Data Security Law
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
 
-AllStateClean <- read.table(file="AllStateClean.txt", sep=";")
+AllStateClean <- read.csv(here::here("Data","Other_data","AllStateClean.txt"),sep=";")
 
 CaseList <- c("BJ's Wholesale Club Inc", "CBR Systems Inc", "Ceridian HCM HLDG Inc", "CVS Caremark", "DSW Inc", "Equifax Inc", "Henry Schein Inc", 
   "Lenovo (United States) Inc", "LexisNexis Risk & Information Analytics Group / Seisint Inc.", "LexisNexis Risk Solutions", "Life Is Good", "LifeLock Inc",

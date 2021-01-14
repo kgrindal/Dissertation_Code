@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+library(here)
 library(plyr)
 library(tidyr)
 library(dplyr)
@@ -21,12 +22,13 @@ library(TTR)
 
 # Case 1: Massachusetts Data Security Law
 
-# massachusetts <- read.csv(file="Raw_state_data/massachusetts_092020.csv", header=TRUE,
-#                          col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
-#                                      "affected_residents", "SSN_breach", "act_num", "drivers_license", 
-#                                      "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), na.strings=c(""," ","NA"))
+# massachusetts <- read.csv(here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
+#                           col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
+#                                       "affected_residents", "SSN_breach", "act_num", "drivers_license", 
+#                                       "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), 
+#                           na.strings=c(""," ","NA"))
 
-AllStateClean <- read.csv(file = "AllStateClean.csv")
+AllStateClean <- read.table(here("Data","Other_data","AllStateClean.txt"),sep=";")
 
 massachusetts <- filter(AllStateClean,Massachusetts==1)
 
@@ -38,8 +40,9 @@ massachusetts$reported_date <- substr(massachusetts$reported_date, start=1, stop
 
 View(massachusetts)
 
-new_hampshire <- read.csv(file="Raw_state_data/new_hampshire_092020.csv", col.names = 
-                            c("org_name", "raw_text","reported_date","clean_date","letter_url","name_processing"), na.strings=c(""," ","NA"))
+# new_hampshire <- read.csv(file="Raw_state_data/new_hampshire_092020.csv", col.names = 
+#                             c("org_name", "raw_text","reported_date","clean_date","letter_url","name_processing"), 
+#                           na.strings=c(""," ","NA"))
 
 new_hampshire <- filter(AllStateClean,New_Hampshire==1)
 

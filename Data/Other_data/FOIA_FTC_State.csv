@@ -1,0 +1,3381 @@
+﻿Year,Month,State Name,# of Reports
+2015,1,Alabama,311
+2015,1,Alaska,37
+2015,1,Arizona,474
+2015,1,Arkansas,149
+2015,1,California,"3,259"
+2015,1,Colorado,338
+2015,1,Connecticut,189
+2015,1,Delaware,46
+2015,1,District of Columbia,93
+2015,1,Florida,"2,735"
+2015,1,Georgia,"1,009"
+2015,1,Hawaii,46
+2015,1,Idaho,60
+2015,1,Illinois,955
+2015,1,Indiana,322
+2015,1,Iowa,97
+2015,1,Kansas,126
+2015,1,Kentucky,198
+2015,1,Louisiana,305
+2015,1,Maine,50
+2015,1,Maryland,443
+2015,1,Massachusetts,296
+2015,1,Michigan,818
+2015,1,Minnesota,222
+2015,1,Mississippi,198
+2015,1,Missouri,456
+2015,1,Montana,38
+2015,1,Nebraska,71
+2015,1,Nevada,247
+2015,1,New Hampshire,45
+2015,1,New Jersey,484
+2015,1,New Mexico,136
+2015,1,New York,"1,246"
+2015,1,North Carolina,548
+2015,1,North Dakota,18
+2015,1,Ohio,778
+2015,1,Oklahoma,228
+2015,1,Oregon,246
+2015,1,Pennsylvania,697
+2015,1,Puerto Rico,277
+2015,1,Rhode Island,47
+2015,1,South Carolina,286
+2015,1,South Dakota,19
+2015,1,Tennessee,431
+2015,1,Texas,"1,988"
+2015,1,Utah,139
+2015,1,Vermont,20
+2015,1,Virginia,487
+2015,1,Washington,429
+2015,1,West Virginia,99
+2015,1,Wisconsin,287
+2015,1,Wyoming,22
+2015,2,Alabama,650
+2015,2,Alaska,69
+2015,2,Arizona,814
+2015,2,Arkansas,318
+2015,2,California,"4,926"
+2015,2,Colorado,690
+2015,2,Connecticut,"1,060"
+2015,2,Delaware,130
+2015,2,District of Columbia,136
+2015,2,Florida,"5,089"
+2015,2,Georgia,"1,865"
+2015,2,Hawaii,75
+2015,2,Idaho,178
+2015,2,Illinois,"2,215"
+2015,2,Indiana,867
+2015,2,Iowa,280
+2015,2,Kansas,315
+2015,2,Kentucky,460
+2015,2,Louisiana,574
+2015,2,Maine,203
+2015,2,Maryland,"1,078"
+2015,2,Massachusetts,688
+2015,2,Michigan,"1,747"
+2015,2,Minnesota,560
+2015,2,Mississippi,415
+2015,2,Missouri,"3,210"
+2015,2,Montana,118
+2015,2,Nebraska,209
+2015,2,Nevada,368
+2015,2,New Hampshire,159
+2015,2,New Jersey,"1,291"
+2015,2,New Mexico,202
+2015,2,New York,"2,332"
+2015,2,North Carolina,"1,309"
+2015,2,North Dakota,73
+2015,2,Ohio,"2,298"
+2015,2,Oklahoma,711
+2015,2,Oregon,705
+2015,2,Pennsylvania,"1,726"
+2015,2,Puerto Rico,407
+2015,2,Rhode Island,120
+2015,2,South Carolina,565
+2015,2,South Dakota,58
+2015,2,Tennessee,928
+2015,2,Texas,"4,799"
+2015,2,Utah,289
+2015,2,Vermont,57
+2015,2,Virginia,"1,052"
+2015,2,Washington,"1,049"
+2015,2,West Virginia,150
+2015,2,Wisconsin,711
+2015,2,Wyoming,56
+2015,3,Alabama,757
+2015,3,Alaska,104
+2015,3,Arizona,"1,453"
+2015,3,Arkansas,522
+2015,3,California,"6,784"
+2015,3,Colorado,"1,198"
+2015,3,Connecticut,"2,210"
+2015,3,Delaware,209
+2015,3,District of Columbia,257
+2015,3,Florida,"6,532"
+2015,3,Georgia,"2,200"
+2015,3,Hawaii,130
+2015,3,Idaho,343
+2015,3,Illinois,"3,834"
+2015,3,Indiana,"1,245"
+2015,3,Iowa,624
+2015,3,Kansas,621
+2015,3,Kentucky,709
+2015,3,Louisiana,724
+2015,3,Maine,361
+2015,3,Maryland,"2,243"
+2015,3,Massachusetts,"1,555"
+2015,3,Michigan,"2,691"
+2015,3,Minnesota,917
+2015,3,Mississippi,456
+2015,3,Missouri,"6,973"
+2015,3,Montana,200
+2015,3,Nebraska,359
+2015,3,Nevada,497
+2015,3,New Hampshire,424
+2015,3,New Jersey,"1,772"
+2015,3,New Mexico,304
+2015,3,New York,"3,580"
+2015,3,North Carolina,"1,729"
+2015,3,North Dakota,124
+2015,3,Ohio,"3,151"
+2015,3,Oklahoma,895
+2015,3,Oregon,981
+2015,3,Pennsylvania,"2,514"
+2015,3,Puerto Rico,448
+2015,3,Rhode Island,255
+2015,3,South Carolina,723
+2015,3,South Dakota,100
+2015,3,Tennessee,"1,074"
+2015,3,Texas,"5,967"
+2015,3,Utah,344
+2015,3,Vermont,101
+2015,3,Virginia,"1,743"
+2015,3,Washington,"1,515"
+2015,3,West Virginia,321
+2015,3,Wisconsin,"1,719"
+2015,3,Wyoming,95
+2015,4,Alabama,824
+2015,4,Alaska,181
+2015,4,Arizona,"1,721"
+2015,4,Arkansas,576
+2015,4,California,"7,495"
+2015,4,Colorado,"1,480"
+2015,4,Connecticut,"1,899"
+2015,4,Delaware,266
+2015,4,District of Columbia,268
+2015,4,Florida,"7,267"
+2015,4,Georgia,"2,562"
+2015,4,Hawaii,140
+2015,4,Idaho,419
+2015,4,Illinois,"4,205"
+2015,4,Indiana,"1,083"
+2015,4,Iowa,824
+2015,4,Kansas,727
+2015,4,Kentucky,644
+2015,4,Louisiana,676
+2015,4,Maine,347
+2015,4,Maryland,"2,450"
+2015,4,Massachusetts,"2,262"
+2015,4,Michigan,"3,018"
+2015,4,Minnesota,"1,253"
+2015,4,Mississippi,418
+2015,4,Missouri,"6,653"
+2015,4,Montana,184
+2015,4,Nebraska,445
+2015,4,Nevada,501
+2015,4,New Hampshire,595
+2015,4,New Jersey,"2,109"
+2015,4,New Mexico,316
+2015,4,New York,"4,606"
+2015,4,North Carolina,"2,193"
+2015,4,North Dakota,147
+2015,4,Ohio,"3,163"
+2015,4,Oklahoma,921
+2015,4,Oregon,"1,106"
+2015,4,Pennsylvania,"2,824"
+2015,4,Puerto Rico,372
+2015,4,Rhode Island,390
+2015,4,South Carolina,905
+2015,4,South Dakota,149
+2015,4,Tennessee,"1,266"
+2015,4,Texas,"7,456"
+2015,4,Utah,521
+2015,4,Vermont,135
+2015,4,Virginia,"2,438"
+2015,4,Washington,"1,823"
+2015,4,West Virginia,253
+2015,4,Wisconsin,"2,368"
+2015,4,Wyoming,143
+2015,5,Alabama,337
+2015,5,Alaska,53
+2015,5,Arizona,735
+2015,5,Arkansas,211
+2015,5,California,"4,109"
+2015,5,Colorado,491
+2015,5,Connecticut,446
+2015,5,Delaware,80
+2015,5,District of Columbia,111
+2015,5,Florida,"3,342"
+2015,5,Georgia,"1,071"
+2015,5,Hawaii,59
+2015,5,Idaho,127
+2015,5,Illinois,"1,321"
+2015,5,Indiana,426
+2015,5,Iowa,147
+2015,5,Kansas,222
+2015,5,Kentucky,229
+2015,5,Louisiana,318
+2015,5,Maine,100
+2015,5,Maryland,789
+2015,5,Massachusetts,613
+2015,5,Michigan,"1,074"
+2015,5,Minnesota,359
+2015,5,Mississippi,222
+2015,5,Missouri,"1,068"
+2015,5,Montana,51
+2015,5,Nebraska,133
+2015,5,Nevada,285
+2015,5,New Hampshire,117
+2015,5,New Jersey,841
+2015,5,New Mexico,169
+2015,5,New York,"1,710"
+2015,5,North Carolina,787
+2015,5,North Dakota,35
+2015,5,Ohio,964
+2015,5,Oklahoma,341
+2015,5,Oregon,339
+2015,5,Pennsylvania,"1,017"
+2015,5,Puerto Rico,316
+2015,5,Rhode Island,123
+2015,5,South Carolina,362
+2015,5,South Dakota,33
+2015,5,Tennessee,553
+2015,5,Texas,"3,118"
+2015,5,Utah,196
+2015,5,Vermont,39
+2015,5,Virginia,793
+2015,5,Washington,649
+2015,5,West Virginia,100
+2015,5,Wisconsin,475
+2015,5,Wyoming,50
+2015,6,Alabama,362
+2015,6,Alaska,54
+2015,6,Arizona,655
+2015,6,Arkansas,192
+2015,6,California,"4,512"
+2015,6,Colorado,455
+2015,6,Connecticut,403
+2015,6,Delaware,84
+2015,6,District of Columbia,154
+2015,6,Florida,"3,166"
+2015,6,Georgia,"1,150"
+2015,6,Hawaii,87
+2015,6,Idaho,111
+2015,6,Illinois,"1,242"
+2015,6,Indiana,364
+2015,6,Iowa,157
+2015,6,Kansas,214
+2015,6,Kentucky,261
+2015,6,Louisiana,347
+2015,6,Maine,91
+2015,6,Maryland,791
+2015,6,Massachusetts,593
+2015,6,Michigan,"1,045"
+2015,6,Minnesota,334
+2015,6,Mississippi,197
+2015,6,Missouri,859
+2015,6,Montana,49
+2015,6,Nebraska,115
+2015,6,Nevada,274
+2015,6,New Hampshire,111
+2015,6,New Jersey,831
+2015,6,New Mexico,155
+2015,6,New York,"1,736"
+2015,6,North Carolina,713
+2015,6,North Dakota,41
+2015,6,Ohio,893
+2015,6,Oklahoma,309
+2015,6,Oregon,315
+2015,6,Pennsylvania,"1,037"
+2015,6,Puerto Rico,358
+2015,6,Rhode Island,106
+2015,6,South Carolina,397
+2015,6,South Dakota,34
+2015,6,Tennessee,489
+2015,6,Texas,"2,890"
+2015,6,Utah,188
+2015,6,Vermont,27
+2015,6,Virginia,717
+2015,6,Washington,570
+2015,6,West Virginia,82
+2015,6,Wisconsin,449
+2015,6,Wyoming,42
+2015,7,Alabama,358
+2015,7,Alaska,50
+2015,7,Arizona,678
+2015,7,Arkansas,202
+2015,7,California,"4,295"
+2015,7,Colorado,419
+2015,7,Connecticut,380
+2015,7,Delaware,66
+2015,7,District of Columbia,115
+2015,7,Florida,"3,096"
+2015,7,Georgia,"1,101"
+2015,7,Hawaii,81
+2015,7,Idaho,74
+2015,7,Illinois,"1,218"
+2015,7,Indiana,416
+2015,7,Iowa,126
+2015,7,Kansas,216
+2015,7,Kentucky,203
+2015,7,Louisiana,336
+2015,7,Maine,61
+2015,7,Maryland,637
+2015,7,Massachusetts,519
+2015,7,Michigan,994
+2015,7,Minnesota,353
+2015,7,Mississippi,215
+2015,7,Missouri,682
+2015,7,Montana,48
+2015,7,Nebraska,115
+2015,7,Nevada,266
+2015,7,New Hampshire,78
+2015,7,New Jersey,729
+2015,7,New Mexico,185
+2015,7,New York,"1,569"
+2015,7,North Carolina,651
+2015,7,North Dakota,29
+2015,7,Ohio,814
+2015,7,Oklahoma,267
+2015,7,Oregon,237
+2015,7,Pennsylvania,936
+2015,7,Puerto Rico,357
+2015,7,Rhode Island,84
+2015,7,South Carolina,324
+2015,7,South Dakota,30
+2015,7,Tennessee,430
+2015,7,Texas,"2,724"
+2015,7,Utah,158
+2015,7,Vermont,31
+2015,7,Virginia,621
+2015,7,Washington,542
+2015,7,West Virginia,82
+2015,7,Wisconsin,376
+2015,7,Wyoming,42
+2015,8,Alabama,310
+2015,8,Alaska,22
+2015,8,Arizona,574
+2015,8,Arkansas,166
+2015,8,California,"3,962"
+2015,8,Colorado,357
+2015,8,Connecticut,314
+2015,8,Delaware,77
+2015,8,District of Columbia,94
+2015,8,Florida,"2,787"
+2015,8,Georgia,948
+2015,8,Hawaii,55
+2015,8,Idaho,76
+2015,8,Illinois,"1,113"
+2015,8,Indiana,398
+2015,8,Iowa,120
+2015,8,Kansas,192
+2015,8,Kentucky,178
+2015,8,Louisiana,285
+2015,8,Maine,58
+2015,8,Maryland,581
+2015,8,Massachusetts,433
+2015,8,Michigan,935
+2015,8,Minnesota,285
+2015,8,Mississippi,170
+2015,8,Missouri,607
+2015,8,Montana,48
+2015,8,Nebraska,111
+2015,8,Nevada,262
+2015,8,New Hampshire,92
+2015,8,New Jersey,717
+2015,8,New Mexico,144
+2015,8,New York,"1,451"
+2015,8,North Carolina,581
+2015,8,North Dakota,28
+2015,8,Ohio,790
+2015,8,Oklahoma,243
+2015,8,Oregon,273
+2015,8,Pennsylvania,833
+2015,8,Puerto Rico,327
+2015,8,Rhode Island,79
+2015,8,South Carolina,316
+2015,8,South Dakota,31
+2015,8,Tennessee,434
+2015,8,Texas,"2,387"
+2015,8,Utah,138
+2015,8,Vermont,22
+2015,8,Virginia,546
+2015,8,Washington,547
+2015,8,West Virginia,83
+2015,8,Wisconsin,326
+2015,8,Wyoming,31
+2015,9,Alabama,300
+2015,9,Alaska,40
+2015,9,Arizona,551
+2015,9,Arkansas,157
+2015,9,California,"3,686"
+2015,9,Colorado,324
+2015,9,Connecticut,317
+2015,9,Delaware,68
+2015,9,District of Columbia,101
+2015,9,Florida,"2,779"
+2015,9,Georgia,890
+2015,9,Hawaii,69
+2015,9,Idaho,80
+2015,9,Illinois,"1,188"
+2015,9,Indiana,308
+2015,9,Iowa,129
+2015,9,Kansas,195
+2015,9,Kentucky,204
+2015,9,Louisiana,219
+2015,9,Maine,71
+2015,9,Maryland,507
+2015,9,Massachusetts,425
+2015,9,Michigan,861
+2015,9,Minnesota,288
+2015,9,Mississippi,194
+2015,9,Missouri,536
+2015,9,Montana,37
+2015,9,Nebraska,93
+2015,9,Nevada,224
+2015,9,New Hampshire,73
+2015,9,New Jersey,626
+2015,9,New Mexico,138
+2015,9,New York,"1,461"
+2015,9,North Carolina,568
+2015,9,North Dakota,19
+2015,9,Ohio,719
+2015,9,Oklahoma,218
+2015,9,Oregon,251
+2015,9,Pennsylvania,827
+2015,9,Puerto Rico,273
+2015,9,Rhode Island,72
+2015,9,South Carolina,283
+2015,9,South Dakota,20
+2015,9,Tennessee,384
+2015,9,Texas,"2,284"
+2015,9,Utah,145
+2015,9,Vermont,24
+2015,9,Virginia,560
+2015,9,Washington,484
+2015,9,West Virginia,84
+2015,9,Wisconsin,293
+2015,9,Wyoming,21
+2015,10,Alabama,324
+2015,10,Alaska,39
+2015,10,Arizona,620
+2015,10,Arkansas,194
+2015,10,California,"4,402"
+2015,10,Colorado,397
+2015,10,Connecticut,394
+2015,10,Delaware,63
+2015,10,District of Columbia,124
+2015,10,Florida,"2,889"
+2015,10,Georgia,"1,039"
+2015,10,Hawaii,66
+2015,10,Idaho,89
+2015,10,Illinois,"1,281"
+2015,10,Indiana,320
+2015,10,Iowa,118
+2015,10,Kansas,190
+2015,10,Kentucky,204
+2015,10,Louisiana,299
+2015,10,Maine,73
+2015,10,Maryland,598
+2015,10,Massachusetts,531
+2015,10,Michigan,980
+2015,10,Minnesota,332
+2015,10,Mississippi,176
+2015,10,Missouri,594
+2015,10,Montana,49
+2015,10,Nebraska,98
+2015,10,Nevada,272
+2015,10,New Hampshire,91
+2015,10,New Jersey,769
+2015,10,New Mexico,127
+2015,10,New York,"1,930"
+2015,10,North Carolina,637
+2015,10,North Dakota,30
+2015,10,Ohio,845
+2015,10,Oklahoma,259
+2015,10,Oregon,262
+2015,10,Pennsylvania,"1,005"
+2015,10,Puerto Rico,370
+2015,10,Rhode Island,86
+2015,10,South Carolina,342
+2015,10,South Dakota,30
+2015,10,Tennessee,407
+2015,10,Texas,"2,552"
+2015,10,Utah,181
+2015,10,Vermont,22
+2015,10,Virginia,591
+2015,10,Washington,569
+2015,10,West Virginia,91
+2015,10,Wisconsin,324
+2015,10,Wyoming,22
+2015,11,Alabama,238
+2015,11,Alaska,24
+2015,11,Arizona,435
+2015,11,Arkansas,128
+2015,11,California,"4,075"
+2015,11,Colorado,325
+2015,11,Connecticut,278
+2015,11,Delaware,53
+2015,11,District of Columbia,87
+2015,11,Florida,"2,232"
+2015,11,Georgia,761
+2015,11,Hawaii,41
+2015,11,Idaho,61
+2015,11,Illinois,972
+2015,11,Indiana,257
+2015,11,Iowa,107
+2015,11,Kansas,133
+2015,11,Kentucky,136
+2015,11,Louisiana,186
+2015,11,Maine,47
+2015,11,Maryland,496
+2015,11,Massachusetts,328
+2015,11,Michigan,801
+2015,11,Minnesota,255
+2015,11,Mississippi,145
+2015,11,Missouri,369
+2015,11,Montana,36
+2015,11,Nebraska,60
+2015,11,Nevada,201
+2015,11,New Hampshire,63
+2015,11,New Jersey,608
+2015,11,New Mexico,126
+2015,11,New York,"1,433"
+2015,11,North Carolina,488
+2015,11,North Dakota,15
+2015,11,Ohio,634
+2015,11,Oklahoma,177
+2015,11,Oregon,219
+2015,11,Pennsylvania,742
+2015,11,Puerto Rico,282
+2015,11,Rhode Island,71
+2015,11,South Carolina,285
+2015,11,South Dakota,28
+2015,11,Tennessee,378
+2015,11,Texas,"1,938"
+2015,11,Utah,145
+2015,11,Vermont,15
+2015,11,Virginia,432
+2015,11,Washington,430
+2015,11,West Virginia,78
+2015,11,Wisconsin,230
+2015,11,Wyoming,27
+2015,12,Alabama,248
+2015,12,Alaska,31
+2015,12,Arizona,486
+2015,12,Arkansas,119
+2015,12,California,"4,281"
+2015,12,Colorado,308
+2015,12,Connecticut,281
+2015,12,Delaware,46
+2015,12,District of Columbia,81
+2015,12,Florida,"2,433"
+2015,12,Georgia,791
+2015,12,Hawaii,47
+2015,12,Idaho,54
+2015,12,Illinois,"1,102"
+2015,12,Indiana,303
+2015,12,Iowa,112
+2015,12,Kansas,155
+2015,12,Kentucky,186
+2015,12,Louisiana,208
+2015,12,Maine,50
+2015,12,Maryland,456
+2015,12,Massachusetts,365
+2015,12,Michigan,851
+2015,12,Minnesota,274
+2015,12,Mississippi,150
+2015,12,Missouri,383
+2015,12,Montana,31
+2015,12,Nebraska,87
+2015,12,Nevada,232
+2015,12,New Hampshire,57
+2015,12,New Jersey,595
+2015,12,New Mexico,104
+2015,12,New York,"1,399"
+2015,12,North Carolina,535
+2015,12,North Dakota,24
+2015,12,Ohio,677
+2015,12,Oklahoma,173
+2015,12,Oregon,200
+2015,12,Pennsylvania,820
+2015,12,Puerto Rico,278
+2015,12,Rhode Island,66
+2015,12,South Carolina,280
+2015,12,South Dakota,20
+2015,12,Tennessee,356
+2015,12,Texas,"1,935"
+2015,12,Utah,148
+2015,12,Vermont,28
+2015,12,Virginia,477
+2015,12,Washington,467
+2015,12,West Virginia,74
+2015,12,Wisconsin,266
+2015,12,Wyoming,23
+2016,1,Alabama,329
+2016,1,Alaska,25
+2016,1,Arizona,575
+2016,1,Arkansas,164
+2016,1,California,"4,604"
+2016,1,Colorado,369
+2016,1,Connecticut,369
+2016,1,Delaware,75
+2016,1,District of Columbia,102
+2016,1,Florida,"2,878"
+2016,1,Georgia,"1,019"
+2016,1,Hawaii,47
+2016,1,Idaho,71
+2016,1,Illinois,"1,327"
+2016,1,Indiana,425
+2016,1,Iowa,126
+2016,1,Kansas,184
+2016,1,Kentucky,164
+2016,1,Louisiana,263
+2016,1,Maine,81
+2016,1,Maryland,506
+2016,1,Massachusetts,431
+2016,1,Michigan,"1,096"
+2016,1,Minnesota,305
+2016,1,Mississippi,190
+2016,1,Missouri,506
+2016,1,Montana,44
+2016,1,Nebraska,112
+2016,1,Nevada,326
+2016,1,New Hampshire,63
+2016,1,New Jersey,709
+2016,1,New Mexico,144
+2016,1,New York,"1,565"
+2016,1,North Carolina,695
+2016,1,North Dakota,24
+2016,1,Ohio,886
+2016,1,Oklahoma,228
+2016,1,Oregon,273
+2016,1,Pennsylvania,945
+2016,1,Puerto Rico,276
+2016,1,Rhode Island,74
+2016,1,South Carolina,366
+2016,1,South Dakota,36
+2016,1,Tennessee,459
+2016,1,Texas,"2,645"
+2016,1,Utah,174
+2016,1,Vermont,38
+2016,1,Virginia,532
+2016,1,Washington,589
+2016,1,West Virginia,89
+2016,1,Wisconsin,318
+2016,1,Wyoming,31
+2016,2,Alabama,545
+2016,2,Alaska,73
+2016,2,Arizona,"1,065"
+2016,2,Arkansas,352
+2016,2,California,"6,454"
+2016,2,Colorado,712
+2016,2,Connecticut,712
+2016,2,Delaware,162
+2016,2,District of Columbia,197
+2016,2,Florida,"4,571"
+2016,2,Georgia,"1,731"
+2016,2,Hawaii,82
+2016,2,Idaho,210
+2016,2,Illinois,"2,354"
+2016,2,Indiana,785
+2016,2,Iowa,368
+2016,2,Kansas,375
+2016,2,Kentucky,408
+2016,2,Louisiana,419
+2016,2,Maine,132
+2016,2,Maryland,"1,218"
+2016,2,Massachusetts,984
+2016,2,Michigan,"2,076"
+2016,2,Minnesota,865
+2016,2,Mississippi,385
+2016,2,Missouri,"1,755"
+2016,2,Montana,121
+2016,2,Nebraska,285
+2016,2,Nevada,514
+2016,2,New Hampshire,205
+2016,2,New Jersey,"1,207"
+2016,2,New Mexico,225
+2016,2,New York,"2,540"
+2016,2,North Carolina,"1,291"
+2016,2,North Dakota,72
+2016,2,Ohio,"1,793"
+2016,2,Oklahoma,554
+2016,2,Oregon,507
+2016,2,Pennsylvania,"1,761"
+2016,2,Puerto Rico,318
+2016,2,Rhode Island,167
+2016,2,South Carolina,600
+2016,2,South Dakota,73
+2016,2,Tennessee,823
+2016,2,Texas,"4,384"
+2016,2,Utah,347
+2016,2,Vermont,62
+2016,2,Virginia,"1,129"
+2016,2,Washington,995
+2016,2,West Virginia,166
+2016,2,Wisconsin,915
+2016,2,Wyoming,61
+2016,3,Alabama,685
+2016,3,Alaska,236
+2016,3,Arizona,"1,465"
+2016,3,Arkansas,429
+2016,3,California,"7,684"
+2016,3,Colorado,"1,071"
+2016,3,Connecticut,998
+2016,3,Delaware,246
+2016,3,District of Columbia,227
+2016,3,Florida,"4,949"
+2016,3,Georgia,"1,832"
+2016,3,Hawaii,111
+2016,3,Idaho,275
+2016,3,Illinois,"2,755"
+2016,3,Indiana,763
+2016,3,Iowa,418
+2016,3,Kansas,438
+2016,3,Kentucky,530
+2016,3,Louisiana,479
+2016,3,Maine,229
+2016,3,Maryland,"1,519"
+2016,3,Massachusetts,"1,339"
+2016,3,Michigan,"2,808"
+2016,3,Minnesota,"1,411"
+2016,3,Mississippi,376
+2016,3,Missouri,"1,947"
+2016,3,Montana,118
+2016,3,Nebraska,322
+2016,3,Nevada,515
+2016,3,New Hampshire,269
+2016,3,New Jersey,"1,525"
+2016,3,New Mexico,299
+2016,3,New York,"2,917"
+2016,3,North Carolina,"1,409"
+2016,3,North Dakota,94
+2016,3,Ohio,"1,862"
+2016,3,Oklahoma,596
+2016,3,Oregon,846
+2016,3,Pennsylvania,"2,230"
+2016,3,Puerto Rico,300
+2016,3,Rhode Island,208
+2016,3,South Carolina,691
+2016,3,South Dakota,85
+2016,3,Tennessee,865
+2016,3,Texas,"4,992"
+2016,3,Utah,464
+2016,3,Vermont,55
+2016,3,Virginia,"1,522"
+2016,3,Washington,"1,284"
+2016,3,West Virginia,164
+2016,3,Wisconsin,"1,021"
+2016,3,Wyoming,84
+2016,4,Alabama,530
+2016,4,Alaska,79
+2016,4,Arizona,"1,200"
+2016,4,Arkansas,316
+2016,4,California,"6,384"
+2016,4,Colorado,850
+2016,4,Connecticut,529
+2016,4,Delaware,361
+2016,4,District of Columbia,195
+2016,4,Florida,"3,862"
+2016,4,Georgia,"1,458"
+2016,4,Hawaii,102
+2016,4,Idaho,161
+2016,4,Illinois,"2,092"
+2016,4,Indiana,624
+2016,4,Iowa,275
+2016,4,Kansas,330
+2016,4,Kentucky,391
+2016,4,Louisiana,367
+2016,4,Maine,243
+2016,4,Maryland,"1,124"
+2016,4,Massachusetts,957
+2016,4,Michigan,"3,146"
+2016,4,Minnesota,898
+2016,4,Mississippi,255
+2016,4,Missouri,"1,013"
+2016,4,Montana,114
+2016,4,Nebraska,191
+2016,4,Nevada,392
+2016,4,New Hampshire,180
+2016,4,New Jersey,"1,286"
+2016,4,New Mexico,305
+2016,4,New York,"2,345"
+2016,4,North Carolina,"1,263"
+2016,4,North Dakota,73
+2016,4,Ohio,"1,309"
+2016,4,Oklahoma,447
+2016,4,Oregon,558
+2016,4,Pennsylvania,"1,765"
+2016,4,Puerto Rico,286
+2016,4,Rhode Island,204
+2016,4,South Carolina,512
+2016,4,South Dakota,75
+2016,4,Tennessee,610
+2016,4,Texas,"4,022"
+2016,4,Utah,327
+2016,4,Vermont,53
+2016,4,Virginia,"1,320"
+2016,4,Washington,"1,045"
+2016,4,West Virginia,144
+2016,4,Wisconsin,572
+2016,4,Wyoming,52
+2016,5,Alabama,254
+2016,5,Alaska,48
+2016,5,Arizona,634
+2016,5,Arkansas,171
+2016,5,California,"4,019"
+2016,5,Colorado,425
+2016,5,Connecticut,331
+2016,5,Delaware,151
+2016,5,District of Columbia,105
+2016,5,Florida,"2,460"
+2016,5,Georgia,903
+2016,5,Hawaii,54
+2016,5,Idaho,66
+2016,5,Illinois,"1,232"
+2016,5,Indiana,308
+2016,5,Iowa,117
+2016,5,Kansas,161
+2016,5,Kentucky,161
+2016,5,Louisiana,259
+2016,5,Maine,73
+2016,5,Maryland,512
+2016,5,Massachusetts,446
+2016,5,Michigan,"1,215"
+2016,5,Minnesota,320
+2016,5,Mississippi,179
+2016,5,Missouri,453
+2016,5,Montana,44
+2016,5,Nebraska,86
+2016,5,Nevada,273
+2016,5,New Hampshire,88
+2016,5,New Jersey,678
+2016,5,New Mexico,130
+2016,5,New York,"1,572"
+2016,5,North Carolina,644
+2016,5,North Dakota,24
+2016,5,Ohio,693
+2016,5,Oklahoma,188
+2016,5,Oregon,313
+2016,5,Pennsylvania,"1,011"
+2016,5,Puerto Rico,235
+2016,5,Rhode Island,80
+2016,5,South Carolina,337
+2016,5,South Dakota,40
+2016,5,Tennessee,422
+2016,5,Texas,"2,291"
+2016,5,Utah,180
+2016,5,Vermont,23
+2016,5,Virginia,536
+2016,5,Washington,599
+2016,5,West Virginia,73
+2016,5,Wisconsin,306
+2016,5,Wyoming,15
+2016,6,Alabama,235
+2016,6,Alaska,39
+2016,6,Arizona,567
+2016,6,Arkansas,124
+2016,6,California,"3,594"
+2016,6,Colorado,406
+2016,6,Connecticut,256
+2016,6,Delaware,85
+2016,6,District of Columbia,93
+2016,6,Florida,"2,249"
+2016,6,Georgia,850
+2016,6,Hawaii,62
+2016,6,Idaho,70
+2016,6,Illinois,"1,107"
+2016,6,Indiana,286
+2016,6,Iowa,102
+2016,6,Kansas,141
+2016,6,Kentucky,180
+2016,6,Louisiana,204
+2016,6,Maine,68
+2016,6,Maryland,456
+2016,6,Massachusetts,404
+2016,6,Michigan,939
+2016,6,Minnesota,293
+2016,6,Mississippi,136
+2016,6,Missouri,369
+2016,6,Montana,45
+2016,6,Nebraska,83
+2016,6,Nevada,273
+2016,6,New Hampshire,59
+2016,6,New Jersey,629
+2016,6,New Mexico,130
+2016,6,New York,"1,364"
+2016,6,North Carolina,565
+2016,6,North Dakota,30
+2016,6,Ohio,657
+2016,6,Oklahoma,181
+2016,6,Oregon,269
+2016,6,Pennsylvania,858
+2016,6,Puerto Rico,275
+2016,6,Rhode Island,70
+2016,6,South Carolina,268
+2016,6,South Dakota,22
+2016,6,Tennessee,356
+2016,6,Texas,"2,159"
+2016,6,Utah,160
+2016,6,Vermont,20
+2016,6,Virginia,462
+2016,6,Washington,484
+2016,6,West Virginia,56
+2016,6,Wisconsin,285
+2016,6,Wyoming,16
+2016,7,Alabama,217
+2016,7,Alaska,26
+2016,7,Arizona,508
+2016,7,Arkansas,138
+2016,7,California,"3,489"
+2016,7,Colorado,375
+2016,7,Connecticut,258
+2016,7,Delaware,58
+2016,7,District of Columbia,74
+2016,7,Florida,"2,090"
+2016,7,Georgia,754
+2016,7,Hawaii,50
+2016,7,Idaho,70
+2016,7,Illinois,"1,061"
+2016,7,Indiana,253
+2016,7,Iowa,103
+2016,7,Kansas,148
+2016,7,Kentucky,179
+2016,7,Louisiana,214
+2016,7,Maine,49
+2016,7,Maryland,384
+2016,7,Massachusetts,360
+2016,7,Michigan,787
+2016,7,Minnesota,244
+2016,7,Mississippi,144
+2016,7,Missouri,321
+2016,7,Montana,24
+2016,7,Nebraska,57
+2016,7,Nevada,251
+2016,7,New Hampshire,65
+2016,7,New Jersey,562
+2016,7,New Mexico,116
+2016,7,New York,"1,305"
+2016,7,North Carolina,577
+2016,7,North Dakota,15
+2016,7,Ohio,550
+2016,7,Oklahoma,199
+2016,7,Oregon,216
+2016,7,Pennsylvania,880
+2016,7,Puerto Rico,224
+2016,7,Rhode Island,64
+2016,7,South Carolina,266
+2016,7,South Dakota,36
+2016,7,Tennessee,315
+2016,7,Texas,"2,559"
+2016,7,Utah,136
+2016,7,Vermont,15
+2016,7,Virginia,478
+2016,7,Washington,471
+2016,7,West Virginia,67
+2016,7,Wisconsin,229
+2016,7,Wyoming,22
+2016,8,Alabama,272
+2016,8,Alaska,36
+2016,8,Arizona,605
+2016,8,Arkansas,155
+2016,8,California,"4,296"
+2016,8,Colorado,451
+2016,8,Connecticut,304
+2016,8,Delaware,78
+2016,8,District of Columbia,88
+2016,8,Florida,"2,610"
+2016,8,Georgia,968
+2016,8,Hawaii,75
+2016,8,Idaho,79
+2016,8,Illinois,"1,292"
+2016,8,Indiana,323
+2016,8,Iowa,129
+2016,8,Kansas,185
+2016,8,Kentucky,194
+2016,8,Louisiana,232
+2016,8,Maine,49
+2016,8,Maryland,526
+2016,8,Massachusetts,503
+2016,8,Michigan,"1,024"
+2016,8,Minnesota,345
+2016,8,Mississippi,165
+2016,8,Missouri,457
+2016,8,Montana,33
+2016,8,Nebraska,113
+2016,8,Nevada,430
+2016,8,New Hampshire,85
+2016,8,New Jersey,718
+2016,8,New Mexico,145
+2016,8,New York,"1,466"
+2016,8,North Carolina,621
+2016,8,North Dakota,37
+2016,8,Ohio,744
+2016,8,Oklahoma,223
+2016,8,Oregon,238
+2016,8,Pennsylvania,"1,022"
+2016,8,Puerto Rico,263
+2016,8,Rhode Island,80
+2016,8,South Carolina,283
+2016,8,South Dakota,36
+2016,8,Tennessee,412
+2016,8,Texas,"3,483"
+2016,8,Utah,176
+2016,8,Vermont,25
+2016,8,Virginia,622
+2016,8,Washington,542
+2016,8,West Virginia,63
+2016,8,Wisconsin,323
+2016,8,Wyoming,42
+2016,9,Alabama,216
+2016,9,Alaska,51
+2016,9,Arizona,613
+2016,9,Arkansas,124
+2016,9,California,"3,663"
+2016,9,Colorado,399
+2016,9,Connecticut,321
+2016,9,Delaware,65
+2016,9,District of Columbia,78
+2016,9,Florida,"2,342"
+2016,9,Georgia,878
+2016,9,Hawaii,54
+2016,9,Idaho,102
+2016,9,Illinois,"1,216"
+2016,9,Indiana,335
+2016,9,Iowa,150
+2016,9,Kansas,134
+2016,9,Kentucky,199
+2016,9,Louisiana,233
+2016,9,Maine,57
+2016,9,Maryland,547
+2016,9,Massachusetts,503
+2016,9,Michigan,"1,136"
+2016,9,Minnesota,293
+2016,9,Mississippi,141
+2016,9,Missouri,400
+2016,9,Montana,52
+2016,9,Nebraska,69
+2016,9,Nevada,262
+2016,9,New Hampshire,81
+2016,9,New Jersey,685
+2016,9,New Mexico,125
+2016,9,New York,"1,341"
+2016,9,North Carolina,729
+2016,9,North Dakota,28
+2016,9,Ohio,716
+2016,9,Oklahoma,197
+2016,9,Oregon,301
+2016,9,Pennsylvania,958
+2016,9,Puerto Rico,190
+2016,9,Rhode Island,78
+2016,9,South Carolina,313
+2016,9,South Dakota,33
+2016,9,Tennessee,387
+2016,9,Texas,"4,140"
+2016,9,Utah,160
+2016,9,Vermont,25
+2016,9,Virginia,614
+2016,9,Washington,554
+2016,9,West Virginia,73
+2016,9,Wisconsin,311
+2016,9,Wyoming,31
+2016,10,Alabama,259
+2016,10,Alaska,40
+2016,10,Arizona,583
+2016,10,Arkansas,136
+2016,10,California,"3,730"
+2016,10,Colorado,402
+2016,10,Connecticut,300
+2016,10,Delaware,80
+2016,10,District of Columbia,95
+2016,10,Florida,"2,266"
+2016,10,Georgia,870
+2016,10,Hawaii,43
+2016,10,Idaho,88
+2016,10,Illinois,"1,130"
+2016,10,Indiana,322
+2016,10,Iowa,152
+2016,10,Kansas,150
+2016,10,Kentucky,198
+2016,10,Louisiana,203
+2016,10,Maine,57
+2016,10,Maryland,531
+2016,10,Massachusetts,531
+2016,10,Michigan,"1,222"
+2016,10,Minnesota,332
+2016,10,Mississippi,147
+2016,10,Missouri,430
+2016,10,Montana,45
+2016,10,Nebraska,91
+2016,10,Nevada,269
+2016,10,New Hampshire,81
+2016,10,New Jersey,744
+2016,10,New Mexico,154
+2016,10,New York,"1,379"
+2016,10,North Carolina,737
+2016,10,North Dakota,32
+2016,10,Ohio,650
+2016,10,Oklahoma,208
+2016,10,Oregon,297
+2016,10,Pennsylvania,916
+2016,10,Puerto Rico,183
+2016,10,Rhode Island,60
+2016,10,South Carolina,273
+2016,10,South Dakota,28
+2016,10,Tennessee,340
+2016,10,Texas,"2,371"
+2016,10,Utah,134
+2016,10,Vermont,25
+2016,10,Virginia,569
+2016,10,Washington,652
+2016,10,West Virginia,67
+2016,10,Wisconsin,285
+2016,10,Wyoming,30
+2016,11,Alabama,260
+2016,11,Alaska,33
+2016,11,Arizona,504
+2016,11,Arkansas,125
+2016,11,California,"3,715"
+2016,11,Colorado,396
+2016,11,Connecticut,305
+2016,11,Delaware,68
+2016,11,District of Columbia,83
+2016,11,Florida,"2,238"
+2016,11,Georgia,851
+2016,11,Hawaii,61
+2016,11,Idaho,78
+2016,11,Illinois,"1,114"
+2016,11,Indiana,333
+2016,11,Iowa,112
+2016,11,Kansas,147
+2016,11,Kentucky,160
+2016,11,Louisiana,214
+2016,11,Maine,47
+2016,11,Maryland,495
+2016,11,Massachusetts,480
+2016,11,Michigan,"1,085"
+2016,11,Minnesota,358
+2016,11,Mississippi,130
+2016,11,Missouri,389
+2016,11,Montana,31
+2016,11,Nebraska,82
+2016,11,Nevada,252
+2016,11,New Hampshire,90
+2016,11,New Jersey,652
+2016,11,New Mexico,132
+2016,11,New York,"1,366"
+2016,11,North Carolina,669
+2016,11,North Dakota,24
+2016,11,Ohio,605
+2016,11,Oklahoma,177
+2016,11,Oregon,289
+2016,11,Pennsylvania,879
+2016,11,Puerto Rico,171
+2016,11,Rhode Island,65
+2016,11,South Carolina,261
+2016,11,South Dakota,20
+2016,11,Tennessee,348
+2016,11,Texas,"2,161"
+2016,11,Utah,168
+2016,11,Vermont,20
+2016,11,Virginia,554
+2016,11,Washington,568
+2016,11,West Virginia,75
+2016,11,Wisconsin,279
+2016,11,Wyoming,25
+2016,12,Alabama,239
+2016,12,Alaska,27
+2016,12,Arizona,488
+2016,12,Arkansas,123
+2016,12,California,"3,643"
+2016,12,Colorado,390
+2016,12,Connecticut,306
+2016,12,Delaware,63
+2016,12,District of Columbia,83
+2016,12,Florida,"2,213"
+2016,12,Georgia,819
+2016,12,Hawaii,56
+2016,12,Idaho,76
+2016,12,Illinois,"1,143"
+2016,12,Indiana,306
+2016,12,Iowa,100
+2016,12,Kansas,145
+2016,12,Kentucky,180
+2016,12,Louisiana,204
+2016,12,Maine,56
+2016,12,Maryland,492
+2016,12,Massachusetts,416
+2016,12,Michigan,"1,035"
+2016,12,Minnesota,309
+2016,12,Mississippi,142
+2016,12,Missouri,340
+2016,12,Montana,33
+2016,12,Nebraska,81
+2016,12,Nevada,280
+2016,12,New Hampshire,82
+2016,12,New Jersey,649
+2016,12,New Mexico,118
+2016,12,New York,"1,333"
+2016,12,North Carolina,670
+2016,12,North Dakota,13
+2016,12,Ohio,643
+2016,12,Oklahoma,174
+2016,12,Oregon,253
+2016,12,Pennsylvania,901
+2016,12,Puerto Rico,156
+2016,12,Rhode Island,69
+2016,12,South Carolina,322
+2016,12,South Dakota,24
+2016,12,Tennessee,409
+2016,12,Texas,"2,069"
+2016,12,Utah,146
+2016,12,Vermont,28
+2016,12,Virginia,524
+2016,12,Washington,559
+2016,12,West Virginia,83
+2016,12,Wisconsin,262
+2016,12,Wyoming,25
+2017,1,Alabama,255
+2017,1,Alaska,57
+2017,1,Arizona,588
+2017,1,Arkansas,162
+2017,1,California,"4,139"
+2017,1,Colorado,471
+2017,1,Connecticut,373
+2017,1,Delaware,85
+2017,1,District of Columbia,97
+2017,1,Florida,"2,533"
+2017,1,Georgia,"1,007"
+2017,1,Hawaii,63
+2017,1,Idaho,108
+2017,1,Illinois,"1,396"
+2017,1,Indiana,354
+2017,1,Iowa,135
+2017,1,Kansas,169
+2017,1,Kentucky,182
+2017,1,Louisiana,259
+2017,1,Maine,58
+2017,1,Maryland,552
+2017,1,Massachusetts,508
+2017,1,Michigan,"1,235"
+2017,1,Minnesota,333
+2017,1,Mississippi,160
+2017,1,Missouri,400
+2017,1,Montana,37
+2017,1,Nebraska,80
+2017,1,Nevada,281
+2017,1,New Hampshire,94
+2017,1,New Jersey,714
+2017,1,New Mexico,167
+2017,1,New York,"1,543"
+2017,1,North Carolina,832
+2017,1,North Dakota,28
+2017,1,Ohio,748
+2017,1,Oklahoma,224
+2017,1,Oregon,309
+2017,1,Pennsylvania,"1,057"
+2017,1,Puerto Rico,178
+2017,1,Rhode Island,83
+2017,1,South Carolina,374
+2017,1,South Dakota,28
+2017,1,Tennessee,440
+2017,1,Texas,"2,575"
+2017,1,Utah,185
+2017,1,Vermont,43
+2017,1,Virginia,627
+2017,1,Washington,626
+2017,1,West Virginia,80
+2017,1,Wisconsin,306
+2017,1,Wyoming,29
+2017,2,Alabama,336
+2017,2,Alaska,61
+2017,2,Arizona,827
+2017,2,Arkansas,226
+2017,2,California,"4,979"
+2017,2,Colorado,563
+2017,2,Connecticut,427
+2017,2,Delaware,107
+2017,2,District of Columbia,137
+2017,2,Florida,"2,870"
+2017,2,Georgia,"1,138"
+2017,2,Hawaii,70
+2017,2,Idaho,152
+2017,2,Illinois,"1,550"
+2017,2,Indiana,659
+2017,2,Iowa,247
+2017,2,Kansas,189
+2017,2,Kentucky,253
+2017,2,Louisiana,281
+2017,2,Maine,122
+2017,2,Maryland,886
+2017,2,Massachusetts,690
+2017,2,Michigan,"1,685"
+2017,2,Minnesota,438
+2017,2,Mississippi,213
+2017,2,Missouri,622
+2017,2,Montana,61
+2017,2,Nebraska,157
+2017,2,Nevada,370
+2017,2,New Hampshire,130
+2017,2,New Jersey,959
+2017,2,New Mexico,196
+2017,2,New York,"2,174"
+2017,2,North Carolina,"1,018"
+2017,2,North Dakota,54
+2017,2,Ohio,991
+2017,2,Oklahoma,278
+2017,2,Oregon,372
+2017,2,Pennsylvania,"1,344"
+2017,2,Puerto Rico,186
+2017,2,Rhode Island,241
+2017,2,South Carolina,506
+2017,2,South Dakota,51
+2017,2,Tennessee,635
+2017,2,Texas,"3,059"
+2017,2,Utah,280
+2017,2,Vermont,36
+2017,2,Virginia,720
+2017,2,Washington,718
+2017,2,West Virginia,98
+2017,2,Wisconsin,416
+2017,2,Wyoming,36
+2017,3,Alabama,432
+2017,3,Alaska,74
+2017,3,Arizona,"1,178"
+2017,3,Arkansas,268
+2017,3,California,"6,519"
+2017,3,Colorado,878
+2017,3,Connecticut,576
+2017,3,Delaware,162
+2017,3,District of Columbia,166
+2017,3,Florida,"3,356"
+2017,3,Georgia,"1,366"
+2017,3,Hawaii,96
+2017,3,Idaho,206
+2017,3,Illinois,"2,089"
+2017,3,Indiana,803
+2017,3,Iowa,278
+2017,3,Kansas,258
+2017,3,Kentucky,522
+2017,3,Louisiana,406
+2017,3,Maine,126
+2017,3,Maryland,"1,215"
+2017,3,Massachusetts,810
+2017,3,Michigan,"2,433"
+2017,3,Minnesota,512
+2017,3,Mississippi,242
+2017,3,Missouri,667
+2017,3,Montana,108
+2017,3,Nebraska,130
+2017,3,Nevada,436
+2017,3,New Hampshire,163
+2017,3,New Jersey,"1,087"
+2017,3,New Mexico,196
+2017,3,New York,"2,361"
+2017,3,North Carolina,"1,138"
+2017,3,North Dakota,52
+2017,3,Ohio,"1,234"
+2017,3,Oklahoma,406
+2017,3,Oregon,484
+2017,3,Pennsylvania,"1,542"
+2017,3,Puerto Rico,219
+2017,3,Rhode Island,230
+2017,3,South Carolina,461
+2017,3,South Dakota,62
+2017,3,Tennessee,699
+2017,3,Texas,"3,582"
+2017,3,Utah,325
+2017,3,Vermont,39
+2017,3,Virginia,991
+2017,3,Washington,871
+2017,3,West Virginia,124
+2017,3,Wisconsin,505
+2017,3,Wyoming,43
+2017,4,Alabama,343
+2017,4,Alaska,49
+2017,4,Arizona,933
+2017,4,Arkansas,221
+2017,4,California,"5,281"
+2017,4,Colorado,648
+2017,4,Connecticut,432
+2017,4,Delaware,104
+2017,4,District of Columbia,170
+2017,4,Florida,"2,877"
+2017,4,Georgia,"1,121"
+2017,4,Hawaii,99
+2017,4,Idaho,140
+2017,4,Illinois,"1,514"
+2017,4,Indiana,517
+2017,4,Iowa,205
+2017,4,Kansas,221
+2017,4,Kentucky,598
+2017,4,Louisiana,300
+2017,4,Maine,88
+2017,4,Maryland,844
+2017,4,Massachusetts,614
+2017,4,Michigan,"1,575"
+2017,4,Minnesota,433
+2017,4,Mississippi,214
+2017,4,Missouri,449
+2017,4,Montana,94
+2017,4,Nebraska,117
+2017,4,Nevada,335
+2017,4,New Hampshire,133
+2017,4,New Jersey,936
+2017,4,New Mexico,220
+2017,4,New York,"1,983"
+2017,4,North Carolina,932
+2017,4,North Dakota,42
+2017,4,Ohio,882
+2017,4,Oklahoma,290
+2017,4,Oregon,411
+2017,4,Pennsylvania,"1,108"
+2017,4,Puerto Rico,203
+2017,4,Rhode Island,125
+2017,4,South Carolina,373
+2017,4,South Dakota,48
+2017,4,Tennessee,542
+2017,4,Texas,"3,101"
+2017,4,Utah,236
+2017,4,Vermont,36
+2017,4,Virginia,737
+2017,4,Washington,751
+2017,4,West Virginia,95
+2017,4,Wisconsin,390
+2017,4,Wyoming,49
+2017,5,Alabama,301
+2017,5,Alaska,28
+2017,5,Arizona,681
+2017,5,Arkansas,171
+2017,5,California,"4,302"
+2017,5,Colorado,471
+2017,5,Connecticut,316
+2017,5,Delaware,90
+2017,5,District of Columbia,77
+2017,5,Florida,"2,379"
+2017,5,Georgia,"1,040"
+2017,5,Hawaii,71
+2017,5,Idaho,78
+2017,5,Illinois,"1,294"
+2017,5,Indiana,350
+2017,5,Iowa,122
+2017,5,Kansas,155
+2017,5,Kentucky,257
+2017,5,Louisiana,287
+2017,5,Maine,64
+2017,5,Maryland,636
+2017,5,Massachusetts,410
+2017,5,Michigan,"1,104"
+2017,5,Minnesota,358
+2017,5,Mississippi,156
+2017,5,Missouri,438
+2017,5,Montana,44
+2017,5,Nebraska,84
+2017,5,Nevada,312
+2017,5,New Hampshire,56
+2017,5,New Jersey,762
+2017,5,New Mexico,159
+2017,5,New York,"1,599"
+2017,5,North Carolina,734
+2017,5,North Dakota,43
+2017,5,Ohio,693
+2017,5,Oklahoma,237
+2017,5,Oregon,299
+2017,5,Pennsylvania,"1,121"
+2017,5,Puerto Rico,214
+2017,5,Rhode Island,90
+2017,5,South Carolina,365
+2017,5,South Dakota,23
+2017,5,Tennessee,469
+2017,5,Texas,"2,604"
+2017,5,Utah,168
+2017,5,Vermont,27
+2017,5,Virginia,607
+2017,5,Washington,557
+2017,5,West Virginia,64
+2017,5,Wisconsin,304
+2017,5,Wyoming,31
+2017,6,Alabama,292
+2017,6,Alaska,46
+2017,6,Arizona,629
+2017,6,Arkansas,142
+2017,6,California,"4,123"
+2017,6,Colorado,439
+2017,6,Connecticut,288
+2017,6,Delaware,79
+2017,6,District of Columbia,83
+2017,6,Florida,"2,488"
+2017,6,Georgia,925
+2017,6,Hawaii,64
+2017,6,Idaho,93
+2017,6,Illinois,"1,190"
+2017,6,Indiana,318
+2017,6,Iowa,114
+2017,6,Kansas,175
+2017,6,Kentucky,190
+2017,6,Louisiana,235
+2017,6,Maine,55
+2017,6,Maryland,542
+2017,6,Massachusetts,401
+2017,6,Michigan,906
+2017,6,Minnesota,320
+2017,6,Mississippi,158
+2017,6,Missouri,354
+2017,6,Montana,36
+2017,6,Nebraska,81
+2017,6,Nevada,269
+2017,6,New Hampshire,72
+2017,6,New Jersey,729
+2017,6,New Mexico,141
+2017,6,New York,"1,475"
+2017,6,North Carolina,725
+2017,6,North Dakota,32
+2017,6,Ohio,656
+2017,6,Oklahoma,196
+2017,6,Oregon,252
+2017,6,Pennsylvania,972
+2017,6,Puerto Rico,206
+2017,6,Rhode Island,77
+2017,6,South Carolina,379
+2017,6,South Dakota,28
+2017,6,Tennessee,445
+2017,6,Texas,"2,495"
+2017,6,Utah,145
+2017,6,Vermont,24
+2017,6,Virginia,582
+2017,6,Washington,574
+2017,6,West Virginia,80
+2017,6,Wisconsin,243
+2017,6,Wyoming,27
+2017,7,Alabama,258
+2017,7,Alaska,27
+2017,7,Arizona,607
+2017,7,Arkansas,150
+2017,7,California,"3,831"
+2017,7,Colorado,426
+2017,7,Connecticut,272
+2017,7,Delaware,91
+2017,7,District of Columbia,86
+2017,7,Florida,"2,223"
+2017,7,Georgia,914
+2017,7,Hawaii,59
+2017,7,Idaho,50
+2017,7,Illinois,"1,113"
+2017,7,Indiana,330
+2017,7,Iowa,120
+2017,7,Kansas,151
+2017,7,Kentucky,179
+2017,7,Louisiana,221
+2017,7,Maine,46
+2017,7,Maryland,493
+2017,7,Massachusetts,390
+2017,7,Michigan,818
+2017,7,Minnesota,282
+2017,7,Mississippi,133
+2017,7,Missouri,318
+2017,7,Montana,42
+2017,7,Nebraska,96
+2017,7,Nevada,256
+2017,7,New Hampshire,69
+2017,7,New Jersey,666
+2017,7,New Mexico,131
+2017,7,New York,"1,459"
+2017,7,North Carolina,638
+2017,7,North Dakota,28
+2017,7,Ohio,659
+2017,7,Oklahoma,170
+2017,7,Oregon,244
+2017,7,Pennsylvania,923
+2017,7,Puerto Rico,160
+2017,7,Rhode Island,76
+2017,7,South Carolina,335
+2017,7,South Dakota,33
+2017,7,Tennessee,411
+2017,7,Texas,"2,492"
+2017,7,Utah,144
+2017,7,Vermont,22
+2017,7,Virginia,569
+2017,7,Washington,477
+2017,7,West Virginia,76
+2017,7,Wisconsin,275
+2017,7,Wyoming,28
+2017,8,Alabama,298
+2017,8,Alaska,33
+2017,8,Arizona,621
+2017,8,Arkansas,169
+2017,8,California,"4,263"
+2017,8,Colorado,430
+2017,8,Connecticut,290
+2017,8,Delaware,95
+2017,8,District of Columbia,102
+2017,8,Florida,"2,450"
+2017,8,Georgia,952
+2017,8,Hawaii,62
+2017,8,Idaho,77
+2017,8,Illinois,"1,168"
+2017,8,Indiana,350
+2017,8,Iowa,132
+2017,8,Kansas,170
+2017,8,Kentucky,183
+2017,8,Louisiana,255
+2017,8,Maine,59
+2017,8,Maryland,527
+2017,8,Massachusetts,465
+2017,8,Michigan,888
+2017,8,Minnesota,312
+2017,8,Mississippi,132
+2017,8,Missouri,364
+2017,8,Montana,40
+2017,8,Nebraska,87
+2017,8,Nevada,373
+2017,8,New Hampshire,78
+2017,8,New Jersey,744
+2017,8,New Mexico,144
+2017,8,New York,"1,567"
+2017,8,North Carolina,716
+2017,8,North Dakota,26
+2017,8,Ohio,700
+2017,8,Oklahoma,222
+2017,8,Oregon,260
+2017,8,Pennsylvania,859
+2017,8,Puerto Rico,212
+2017,8,Rhode Island,64
+2017,8,South Carolina,341
+2017,8,South Dakota,33
+2017,8,Tennessee,414
+2017,8,Texas,"2,474"
+2017,8,Utah,169
+2017,8,Vermont,23
+2017,8,Virginia,612
+2017,8,Washington,556
+2017,8,West Virginia,83
+2017,8,Wisconsin,270
+2017,8,Wyoming,30
+2017,9,Alabama,294
+2017,9,Alaska,34
+2017,9,Arizona,634
+2017,9,Arkansas,150
+2017,9,California,"4,478"
+2017,9,Colorado,451
+2017,9,Connecticut,301
+2017,9,Delaware,99
+2017,9,District of Columbia,99
+2017,9,Florida,"2,027"
+2017,9,Georgia,920
+2017,9,Hawaii,83
+2017,9,Idaho,118
+2017,9,Illinois,"1,207"
+2017,9,Indiana,391
+2017,9,Iowa,132
+2017,9,Kansas,133
+2017,9,Kentucky,183
+2017,9,Louisiana,278
+2017,9,Maine,61
+2017,9,Maryland,572
+2017,9,Massachusetts,435
+2017,9,Michigan,887
+2017,9,Minnesota,374
+2017,9,Mississippi,170
+2017,9,Missouri,375
+2017,9,Montana,43
+2017,9,Nebraska,80
+2017,9,Nevada,612
+2017,9,New Hampshire,66
+2017,9,New Jersey,767
+2017,9,New Mexico,139
+2017,9,New York,"1,655"
+2017,9,North Carolina,703
+2017,9,North Dakota,50
+2017,9,Ohio,676
+2017,9,Oklahoma,237
+2017,9,Oregon,279
+2017,9,Pennsylvania,949
+2017,9,Puerto Rico,68
+2017,9,Rhode Island,84
+2017,9,South Carolina,357
+2017,9,South Dakota,26
+2017,9,Tennessee,395
+2017,9,Texas,"2,805"
+2017,9,Utah,212
+2017,9,Vermont,43
+2017,9,Virginia,577
+2017,9,Washington,689
+2017,9,West Virginia,80
+2017,9,Wisconsin,285
+2017,9,Wyoming,38
+2017,10,Alabama,301
+2017,10,Alaska,31
+2017,10,Arizona,599
+2017,10,Arkansas,145
+2017,10,California,"4,544"
+2017,10,Colorado,478
+2017,10,Connecticut,287
+2017,10,Delaware,100
+2017,10,District of Columbia,105
+2017,10,Florida,"3,144"
+2017,10,Georgia,"1,049"
+2017,10,Hawaii,72
+2017,10,Idaho,124
+2017,10,Illinois,"1,166"
+2017,10,Indiana,327
+2017,10,Iowa,142
+2017,10,Kansas,173
+2017,10,Kentucky,198
+2017,10,Louisiana,279
+2017,10,Maine,44
+2017,10,Maryland,542
+2017,10,Massachusetts,432
+2017,10,Michigan,930
+2017,10,Minnesota,316
+2017,10,Mississippi,154
+2017,10,Missouri,357
+2017,10,Montana,47
+2017,10,Nebraska,94
+2017,10,Nevada,433
+2017,10,New Hampshire,84
+2017,10,New Jersey,733
+2017,10,New Mexico,134
+2017,10,New York,"1,630"
+2017,10,North Carolina,684
+2017,10,North Dakota,41
+2017,10,Ohio,682
+2017,10,Oklahoma,214
+2017,10,Oregon,274
+2017,10,Pennsylvania,899
+2017,10,Puerto Rico,98
+2017,10,Rhode Island,77
+2017,10,South Carolina,365
+2017,10,South Dakota,24
+2017,10,Tennessee,426
+2017,10,Texas,"2,837"
+2017,10,Utah,232
+2017,10,Vermont,18
+2017,10,Virginia,572
+2017,10,Washington,526
+2017,10,West Virginia,82
+2017,10,Wisconsin,251
+2017,10,Wyoming,30
+2017,11,Alabama,242
+2017,11,Alaska,21
+2017,11,Arizona,526
+2017,11,Arkansas,149
+2017,11,California,"4,522"
+2017,11,Colorado,376
+2017,11,Connecticut,260
+2017,11,Delaware,87
+2017,11,District of Columbia,129
+2017,11,Florida,"2,451"
+2017,11,Georgia,"1,078"
+2017,11,Hawaii,78
+2017,11,Idaho,107
+2017,11,Illinois,"1,087"
+2017,11,Indiana,294
+2017,11,Iowa,122
+2017,11,Kansas,153
+2017,11,Kentucky,168
+2017,11,Louisiana,251
+2017,11,Maine,41
+2017,11,Maryland,466
+2017,11,Massachusetts,480
+2017,11,Michigan,981
+2017,11,Minnesota,327
+2017,11,Mississippi,165
+2017,11,Missouri,317
+2017,11,Montana,42
+2017,11,Nebraska,79
+2017,11,Nevada,276
+2017,11,New Hampshire,72
+2017,11,New Jersey,706
+2017,11,New Mexico,143
+2017,11,New York,"1,511"
+2017,11,North Carolina,624
+2017,11,North Dakota,36
+2017,11,Ohio,643
+2017,11,Oklahoma,232
+2017,11,Oregon,252
+2017,11,Pennsylvania,866
+2017,11,Puerto Rico,141
+2017,11,Rhode Island,89
+2017,11,South Carolina,331
+2017,11,South Dakota,21
+2017,11,Tennessee,350
+2017,11,Texas,"2,678"
+2017,11,Utah,200
+2017,11,Vermont,21
+2017,11,Virginia,540
+2017,11,Washington,491
+2017,11,West Virginia,67
+2017,11,Wisconsin,227
+2017,11,Wyoming,23
+2017,12,Alabama,260
+2017,12,Alaska,34
+2017,12,Arizona,508
+2017,12,Arkansas,129
+2017,12,California,"4,418"
+2017,12,Colorado,420
+2017,12,Connecticut,256
+2017,12,Delaware,113
+2017,12,District of Columbia,80
+2017,12,Florida,"2,352"
+2017,12,Georgia,"1,038"
+2017,12,Hawaii,71
+2017,12,Idaho,101
+2017,12,Illinois,"1,059"
+2017,12,Indiana,317
+2017,12,Iowa,122
+2017,12,Kansas,152
+2017,12,Kentucky,144
+2017,12,Louisiana,284
+2017,12,Maine,42
+2017,12,Maryland,483
+2017,12,Massachusetts,376
+2017,12,Michigan,"1,579"
+2017,12,Minnesota,322
+2017,12,Mississippi,169
+2017,12,Missouri,328
+2017,12,Montana,43
+2017,12,Nebraska,88
+2017,12,Nevada,260
+2017,12,New Hampshire,81
+2017,12,New Jersey,726
+2017,12,New Mexico,134
+2017,12,New York,"1,423"
+2017,12,North Carolina,679
+2017,12,North Dakota,35
+2017,12,Ohio,560
+2017,12,Oklahoma,199
+2017,12,Oregon,278
+2017,12,Pennsylvania,819
+2017,12,Puerto Rico,160
+2017,12,Rhode Island,65
+2017,12,South Carolina,322
+2017,12,South Dakota,26
+2017,12,Tennessee,359
+2017,12,Texas,"2,740"
+2017,12,Utah,157
+2017,12,Vermont,22
+2017,12,Virginia,520
+2017,12,Washington,521
+2017,12,West Virginia,72
+2017,12,Wisconsin,263
+2017,12,Wyoming,24
+2018,1,Alabama,339
+2018,1,Alaska,25
+2018,1,Arizona,653
+2018,1,Arkansas,173
+2018,1,California,"5,353"
+2018,1,Colorado,419
+2018,1,Connecticut,267
+2018,1,Delaware,86
+2018,1,District of Columbia,113
+2018,1,Florida,"2,648"
+2018,1,Georgia,"1,491"
+2018,1,Hawaii,74
+2018,1,Idaho,145
+2018,1,Illinois,"1,212"
+2018,1,Indiana,364
+2018,1,Iowa,122
+2018,1,Kansas,173
+2018,1,Kentucky,196
+2018,1,Louisiana,305
+2018,1,Maine,45
+2018,1,Maryland,591
+2018,1,Massachusetts,456
+2018,1,Michigan,"2,325"
+2018,1,Minnesota,332
+2018,1,Mississippi,199
+2018,1,Missouri,403
+2018,1,Montana,42
+2018,1,Nebraska,98
+2018,1,Nevada,383
+2018,1,New Hampshire,87
+2018,1,New Jersey,780
+2018,1,New Mexico,142
+2018,1,New York,"1,601"
+2018,1,North Carolina,846
+2018,1,North Dakota,27
+2018,1,Ohio,690
+2018,1,Oklahoma,254
+2018,1,Oregon,296
+2018,1,Pennsylvania,903
+2018,1,Puerto Rico,154
+2018,1,Rhode Island,82
+2018,1,South Carolina,437
+2018,1,South Dakota,38
+2018,1,Tennessee,440
+2018,1,Texas,"3,377"
+2018,1,Utah,188
+2018,1,Vermont,32
+2018,1,Virginia,599
+2018,1,Washington,597
+2018,1,West Virginia,82
+2018,1,Wisconsin,294
+2018,1,Wyoming,26
+2018,2,Alabama,408
+2018,2,Alaska,44
+2018,2,Arizona,707
+2018,2,Arkansas,194
+2018,2,California,"5,449"
+2018,2,Colorado,501
+2018,2,Connecticut,436
+2018,2,Delaware,92
+2018,2,District of Columbia,63
+2018,2,Florida,"2,803"
+2018,2,Georgia,"1,615"
+2018,2,Hawaii,90
+2018,2,Idaho,108
+2018,2,Illinois,"1,418"
+2018,2,Indiana,475
+2018,2,Iowa,168
+2018,2,Kansas,187
+2018,2,Kentucky,250
+2018,2,Louisiana,344
+2018,2,Maine,66
+2018,2,Maryland,692
+2018,2,Massachusetts,531
+2018,2,Michigan,"2,087"
+2018,2,Minnesota,415
+2018,2,Mississippi,270
+2018,2,Missouri,515
+2018,2,Montana,70
+2018,2,Nebraska,130
+2018,2,Nevada,430
+2018,2,New Hampshire,114
+2018,2,New Jersey,929
+2018,2,New Mexico,172
+2018,2,New York,"1,959"
+2018,2,North Carolina,954
+2018,2,North Dakota,35
+2018,2,Ohio,897
+2018,2,Oklahoma,354
+2018,2,Oregon,302
+2018,2,Pennsylvania,"1,179"
+2018,2,Puerto Rico,141
+2018,2,Rhode Island,64
+2018,2,South Carolina,476
+2018,2,South Dakota,34
+2018,2,Tennessee,684
+2018,2,Texas,"3,692"
+2018,2,Utah,225
+2018,2,Vermont,31
+2018,2,Virginia,681
+2018,2,Washington,628
+2018,2,West Virginia,104
+2018,2,Wisconsin,402
+2018,2,Wyoming,30
+2018,3,Alabama,536
+2018,3,Alaska,45
+2018,3,Arizona,915
+2018,3,Arkansas,203
+2018,3,California,"7,042"
+2018,3,Colorado,657
+2018,3,Connecticut,442
+2018,3,Delaware,127
+2018,3,District of Columbia,114
+2018,3,Florida,"3,475"
+2018,3,Georgia,"2,037"
+2018,3,Hawaii,86
+2018,3,Idaho,203
+2018,3,Illinois,"1,529"
+2018,3,Indiana,483
+2018,3,Iowa,191
+2018,3,Kansas,225
+2018,3,Kentucky,275
+2018,3,Louisiana,399
+2018,3,Maine,69
+2018,3,Maryland,986
+2018,3,Massachusetts,628
+2018,3,Michigan,"1,559"
+2018,3,Minnesota,455
+2018,3,Mississippi,335
+2018,3,Missouri,516
+2018,3,Montana,60
+2018,3,Nebraska,115
+2018,3,Nevada,568
+2018,3,New Hampshire,119
+2018,3,New Jersey,"1,063"
+2018,3,New Mexico,181
+2018,3,New York,"2,261"
+2018,3,North Carolina,"1,091"
+2018,3,North Dakota,38
+2018,3,Ohio,"1,041"
+2018,3,Oklahoma,376
+2018,3,Oregon,381
+2018,3,Pennsylvania,"1,450"
+2018,3,Puerto Rico,157
+2018,3,Rhode Island,88
+2018,3,South Carolina,484
+2018,3,South Dakota,54
+2018,3,Tennessee,617
+2018,3,Texas,"4,196"
+2018,3,Utah,391
+2018,3,Vermont,41
+2018,3,Virginia,799
+2018,3,Washington,737
+2018,3,West Virginia,108
+2018,3,Wisconsin,442
+2018,3,Wyoming,45
+2018,4,Alabama,432
+2018,4,Alaska,45
+2018,4,Arizona,836
+2018,4,Arkansas,208
+2018,4,California,"6,930"
+2018,4,Colorado,565
+2018,4,Connecticut,389
+2018,4,Delaware,124
+2018,4,District of Columbia,99
+2018,4,Florida,"3,280"
+2018,4,Georgia,"1,917"
+2018,4,Hawaii,96
+2018,4,Idaho,134
+2018,4,Illinois,"1,472"
+2018,4,Indiana,499
+2018,4,Iowa,171
+2018,4,Kansas,198
+2018,4,Kentucky,272
+2018,4,Louisiana,430
+2018,4,Maine,77
+2018,4,Maryland,787
+2018,4,Massachusetts,568
+2018,4,Michigan,"1,296"
+2018,4,Minnesota,405
+2018,4,Mississippi,266
+2018,4,Missouri,454
+2018,4,Montana,71
+2018,4,Nebraska,145
+2018,4,Nevada,572
+2018,4,New Hampshire,90
+2018,4,New Jersey,"1,023"
+2018,4,New Mexico,197
+2018,4,New York,"2,197"
+2018,4,North Carolina,"1,080"
+2018,4,North Dakota,38
+2018,4,Ohio,993
+2018,4,Oklahoma,325
+2018,4,Oregon,417
+2018,4,Pennsylvania,"1,169"
+2018,4,Puerto Rico,164
+2018,4,Rhode Island,91
+2018,4,South Carolina,506
+2018,4,South Dakota,54
+2018,4,Tennessee,593
+2018,4,Texas,"4,197"
+2018,4,Utah,282
+2018,4,Vermont,24
+2018,4,Virginia,745
+2018,4,Washington,745
+2018,4,West Virginia,105
+2018,4,Wisconsin,374
+2018,4,Wyoming,26
+2018,5,Alabama,388
+2018,5,Alaska,39
+2018,5,Arizona,751
+2018,5,Arkansas,187
+2018,5,California,"6,724"
+2018,5,Colorado,477
+2018,5,Connecticut,269
+2018,5,Delaware,104
+2018,5,District of Columbia,118
+2018,5,Florida,"3,130"
+2018,5,Georgia,"1,944"
+2018,5,Hawaii,98
+2018,5,Idaho,108
+2018,5,Illinois,"1,351"
+2018,5,Indiana,422
+2018,5,Iowa,145
+2018,5,Kansas,208
+2018,5,Kentucky,197
+2018,5,Louisiana,394
+2018,5,Maine,71
+2018,5,Maryland,669
+2018,5,Massachusetts,490
+2018,5,Michigan,866
+2018,5,Minnesota,332
+2018,5,Mississippi,258
+2018,5,Missouri,498
+2018,5,Montana,62
+2018,5,Nebraska,93
+2018,5,Nevada,589
+2018,5,New Hampshire,123
+2018,5,New Jersey,856
+2018,5,New Mexico,184
+2018,5,New York,"1,970"
+2018,5,North Carolina,896
+2018,5,North Dakota,46
+2018,5,Ohio,750
+2018,5,Oklahoma,240
+2018,5,Oregon,382
+2018,5,Pennsylvania,"1,092"
+2018,5,Puerto Rico,199
+2018,5,Rhode Island,66
+2018,5,South Carolina,498
+2018,5,South Dakota,36
+2018,5,Tennessee,529
+2018,5,Texas,"3,896"
+2018,5,Utah,243
+2018,5,Vermont,34
+2018,5,Virginia,672
+2018,5,Washington,680
+2018,5,West Virginia,86
+2018,5,Wisconsin,321
+2018,5,Wyoming,32
+2018,6,Alabama,401
+2018,6,Alaska,37
+2018,6,Arizona,738
+2018,6,Arkansas,160
+2018,6,California,"5,798"
+2018,6,Colorado,504
+2018,6,Connecticut,292
+2018,6,Delaware,125
+2018,6,District of Columbia,92
+2018,6,Florida,"2,874"
+2018,6,Georgia,"1,818"
+2018,6,Hawaii,77
+2018,6,Idaho,114
+2018,6,Illinois,"1,335"
+2018,6,Indiana,387
+2018,6,Iowa,112
+2018,6,Kansas,179
+2018,6,Kentucky,175
+2018,6,Louisiana,358
+2018,6,Maine,82
+2018,6,Maryland,701
+2018,6,Massachusetts,407
+2018,6,Michigan,788
+2018,6,Minnesota,311
+2018,6,Mississippi,241
+2018,6,Missouri,423
+2018,6,Montana,63
+2018,6,Nebraska,100
+2018,6,Nevada,484
+2018,6,New Hampshire,141
+2018,6,New Jersey,830
+2018,6,New Mexico,149
+2018,6,New York,"1,827"
+2018,6,North Carolina,808
+2018,6,North Dakota,45
+2018,6,Ohio,827
+2018,6,Oklahoma,231
+2018,6,Oregon,338
+2018,6,Pennsylvania,"1,054"
+2018,6,Puerto Rico,143
+2018,6,Rhode Island,87
+2018,6,South Carolina,492
+2018,6,South Dakota,53
+2018,6,Tennessee,531
+2018,6,Texas,"3,689"
+2018,6,Utah,198
+2018,6,Vermont,25
+2018,6,Virginia,554
+2018,6,Washington,594
+2018,6,West Virginia,67
+2018,6,Wisconsin,252
+2018,6,Wyoming,16
+2018,7,Alabama,444
+2018,7,Alaska,40
+2018,7,Arizona,775
+2018,7,Arkansas,182
+2018,7,California,"5,865"
+2018,7,Colorado,511
+2018,7,Connecticut,282
+2018,7,Delaware,123
+2018,7,District of Columbia,93
+2018,7,Florida,"3,061"
+2018,7,Georgia,"1,936"
+2018,7,Hawaii,92
+2018,7,Idaho,94
+2018,7,Illinois,"1,332"
+2018,7,Indiana,376
+2018,7,Iowa,131
+2018,7,Kansas,157
+2018,7,Kentucky,186
+2018,7,Louisiana,457
+2018,7,Maine,73
+2018,7,Maryland,712
+2018,7,Massachusetts,472
+2018,7,Michigan,794
+2018,7,Minnesota,310
+2018,7,Mississippi,243
+2018,7,Missouri,358
+2018,7,Montana,51
+2018,7,Nebraska,87
+2018,7,Nevada,454
+2018,7,New Hampshire,107
+2018,7,New Jersey,777
+2018,7,New Mexico,148
+2018,7,New York,"1,825"
+2018,7,North Carolina,902
+2018,7,North Dakota,31
+2018,7,Ohio,841
+2018,7,Oklahoma,206
+2018,7,Oregon,287
+2018,7,Pennsylvania,"1,063"
+2018,7,Puerto Rico,119
+2018,7,Rhode Island,76
+2018,7,South Carolina,488
+2018,7,South Dakota,36
+2018,7,Tennessee,530
+2018,7,Texas,"3,699"
+2018,7,Utah,234
+2018,7,Vermont,23
+2018,7,Virginia,684
+2018,7,Washington,578
+2018,7,West Virginia,81
+2018,7,Wisconsin,267
+2018,7,Wyoming,33
+2018,8,Alabama,482
+2018,8,Alaska,45
+2018,8,Arizona,756
+2018,8,Arkansas,194
+2018,8,California,"6,387"
+2018,8,Colorado,571
+2018,8,Connecticut,274
+2018,8,Delaware,119
+2018,8,District of Columbia,77
+2018,8,Florida,"3,197"
+2018,8,Georgia,"2,129"
+2018,8,Hawaii,72
+2018,8,Idaho,111
+2018,8,Illinois,"1,351"
+2018,8,Indiana,403
+2018,8,Iowa,142
+2018,8,Kansas,194
+2018,8,Kentucky,198
+2018,8,Louisiana,479
+2018,8,Maine,57
+2018,8,Maryland,695
+2018,8,Massachusetts,526
+2018,8,Michigan,881
+2018,8,Minnesota,295
+2018,8,Mississippi,226
+2018,8,Missouri,462
+2018,8,Montana,74
+2018,8,Nebraska,98
+2018,8,Nevada,518
+2018,8,New Hampshire,121
+2018,8,New Jersey,965
+2018,8,New Mexico,191
+2018,8,New York,"1,984"
+2018,8,North Carolina,945
+2018,8,North Dakota,38
+2018,8,Ohio,910
+2018,8,Oklahoma,209
+2018,8,Oregon,352
+2018,8,Pennsylvania,"1,115"
+2018,8,Puerto Rico,160
+2018,8,Rhode Island,92
+2018,8,South Carolina,608
+2018,8,South Dakota,38
+2018,8,Tennessee,571
+2018,8,Texas,"3,679"
+2018,8,Utah,218
+2018,8,Vermont,22
+2018,8,Virginia,722
+2018,8,Washington,607
+2018,8,West Virginia,73
+2018,8,Wisconsin,271
+2018,8,Wyoming,29
+2018,9,Alabama,417
+2018,9,Alaska,47
+2018,9,Arizona,715
+2018,9,Arkansas,163
+2018,9,California,"5,806"
+2018,9,Colorado,459
+2018,9,Connecticut,244
+2018,9,Delaware,123
+2018,9,District of Columbia,78
+2018,9,Florida,"3,184"
+2018,9,Georgia,"2,132"
+2018,9,Hawaii,95
+2018,9,Idaho,112
+2018,9,Illinois,"1,239"
+2018,9,Indiana,329
+2018,9,Iowa,124
+2018,9,Kansas,145
+2018,9,Kentucky,181
+2018,9,Louisiana,439
+2018,9,Maine,60
+2018,9,Maryland,724
+2018,9,Massachusetts,482
+2018,9,Michigan,791
+2018,9,Minnesota,303
+2018,9,Mississippi,202
+2018,9,Missouri,366
+2018,9,Montana,70
+2018,9,Nebraska,94
+2018,9,Nevada,458
+2018,9,New Hampshire,119
+2018,9,New Jersey,856
+2018,9,New Mexico,161
+2018,9,New York,"1,910"
+2018,9,North Carolina,910
+2018,9,North Dakota,28
+2018,9,Ohio,794
+2018,9,Oklahoma,209
+2018,9,Oregon,327
+2018,9,Pennsylvania,"1,037"
+2018,9,Puerto Rico,145
+2018,9,Rhode Island,68
+2018,9,South Carolina,577
+2018,9,South Dakota,28
+2018,9,Tennessee,601
+2018,9,Texas,"3,349"
+2018,9,Utah,180
+2018,9,Vermont,23
+2018,9,Virginia,643
+2018,9,Washington,528
+2018,9,West Virginia,88
+2018,9,Wisconsin,244
+2018,9,Wyoming,30
+2018,10,Alabama,450
+2018,10,Alaska,45
+2018,10,Arizona,655
+2018,10,Arkansas,197
+2018,10,California,"6,550"
+2018,10,Colorado,468
+2018,10,Connecticut,302
+2018,10,Delaware,162
+2018,10,District of Columbia,101
+2018,10,Florida,"3,650"
+2018,10,Georgia,"2,369"
+2018,10,Hawaii,64
+2018,10,Idaho,86
+2018,10,Illinois,"1,404"
+2018,10,Indiana,396
+2018,10,Iowa,145
+2018,10,Kansas,195
+2018,10,Kentucky,202
+2018,10,Louisiana,596
+2018,10,Maine,52
+2018,10,Maryland,695
+2018,10,Massachusetts,613
+2018,10,Michigan,916
+2018,10,Minnesota,313
+2018,10,Mississippi,240
+2018,10,Missouri,468
+2018,10,Montana,72
+2018,10,Nebraska,114
+2018,10,Nevada,502
+2018,10,New Hampshire,148
+2018,10,New Jersey,"1,034"
+2018,10,New Mexico,148
+2018,10,New York,"2,337"
+2018,10,North Carolina,997
+2018,10,North Dakota,52
+2018,10,Ohio,886
+2018,10,Oklahoma,245
+2018,10,Oregon,368
+2018,10,Pennsylvania,"1,126"
+2018,10,Puerto Rico,140
+2018,10,Rhode Island,103
+2018,10,South Carolina,603
+2018,10,South Dakota,36
+2018,10,Tennessee,593
+2018,10,Texas,"3,842"
+2018,10,Utah,237
+2018,10,Vermont,16
+2018,10,Virginia,711
+2018,10,Washington,578
+2018,10,West Virginia,83
+2018,10,Wisconsin,281
+2018,10,Wyoming,30
+2018,11,Alabama,501
+2018,11,Alaska,47
+2018,11,Arizona,674
+2018,11,Arkansas,155
+2018,11,California,"5,940"
+2018,11,Colorado,487
+2018,11,Connecticut,329
+2018,11,Delaware,147
+2018,11,District of Columbia,93
+2018,11,Florida,"3,295"
+2018,11,Georgia,"2,289"
+2018,11,Hawaii,96
+2018,11,Idaho,76
+2018,11,Illinois,"1,323"
+2018,11,Indiana,393
+2018,11,Iowa,90
+2018,11,Kansas,137
+2018,11,Kentucky,195
+2018,11,Louisiana,473
+2018,11,Maine,40
+2018,11,Maryland,748
+2018,11,Massachusetts,601
+2018,11,Michigan,805
+2018,11,Minnesota,313
+2018,11,Mississippi,194
+2018,11,Missouri,388
+2018,11,Montana,82
+2018,11,Nebraska,90
+2018,11,Nevada,420
+2018,11,New Hampshire,205
+2018,11,New Jersey,993
+2018,11,New Mexico,176
+2018,11,New York,"2,224"
+2018,11,North Carolina,"1,034"
+2018,11,North Dakota,44
+2018,11,Ohio,848
+2018,11,Oklahoma,215
+2018,11,Oregon,369
+2018,11,Pennsylvania,"1,271"
+2018,11,Puerto Rico,90
+2018,11,Rhode Island,102
+2018,11,South Carolina,647
+2018,11,South Dakota,42
+2018,11,Tennessee,616
+2018,11,Texas,"3,621"
+2018,11,Utah,237
+2018,11,Vermont,22
+2018,11,Virginia,685
+2018,11,Washington,509
+2018,11,West Virginia,98
+2018,11,Wisconsin,268
+2018,11,Wyoming,20
+2018,12,Alabama,429
+2018,12,Alaska,45
+2018,12,Arizona,678
+2018,12,Arkansas,178
+2018,12,California,"5,817"
+2018,12,Colorado,529
+2018,12,Connecticut,336
+2018,12,Delaware,182
+2018,12,District of Columbia,112
+2018,12,Florida,"3,185"
+2018,12,Georgia,"2,201"
+2018,12,Hawaii,81
+2018,12,Idaho,81
+2018,12,Illinois,"1,327"
+2018,12,Indiana,367
+2018,12,Iowa,111
+2018,12,Kansas,143
+2018,12,Kentucky,193
+2018,12,Louisiana,526
+2018,12,Maine,53
+2018,12,Maryland,746
+2018,12,Massachusetts,608
+2018,12,Michigan,838
+2018,12,Minnesota,289
+2018,12,Mississippi,223
+2018,12,Missouri,369
+2018,12,Montana,80
+2018,12,Nebraska,117
+2018,12,Nevada,440
+2018,12,New Hampshire,191
+2018,12,New Jersey,"1,157"
+2018,12,New Mexico,151
+2018,12,New York,"2,119"
+2018,12,North Carolina,"1,010"
+2018,12,North Dakota,53
+2018,12,Ohio,783
+2018,12,Oklahoma,241
+2018,12,Oregon,365
+2018,12,Pennsylvania,"1,268"
+2018,12,Puerto Rico,98
+2018,12,Rhode Island,71
+2018,12,South Carolina,523
+2018,12,South Dakota,37
+2018,12,Tennessee,505
+2018,12,Texas,"3,791"
+2018,12,Utah,280
+2018,12,Vermont,22
+2018,12,Virginia,700
+2018,12,Washington,591
+2018,12,West Virginia,77
+2018,12,Wisconsin,312
+2018,12,Wyoming,21
+2019,1,Alabama,203
+2019,1,Alaska,10
+2019,1,Arizona,261
+2019,1,Arkansas,64
+2019,1,California,"2,361"
+2019,1,Colorado,139
+2019,1,Connecticut,124
+2019,1,Delaware,42
+2019,1,District of Columbia,33
+2019,1,Florida,"1,259"
+2019,1,Georgia,801
+2019,1,Hawaii,32
+2019,1,Idaho,27
+2019,1,Illinois,490
+2019,1,Indiana,117
+2019,1,Iowa,32
+2019,1,Kansas,58
+2019,1,Kentucky,65
+2019,1,Louisiana,148
+2019,1,Maine,18
+2019,1,Maryland,284
+2019,1,Massachusetts,212
+2019,1,Michigan,240
+2019,1,Minnesota,111
+2019,1,Mississippi,79
+2019,1,Missouri,131
+2019,1,Montana,28
+2019,1,Nebraska,29
+2019,1,Nevada,171
+2019,1,New Hampshire,62
+2019,1,New Jersey,379
+2019,1,New Mexico,42
+2019,1,New York,756
+2019,1,North Carolina,431
+2019,1,North Dakota,8
+2019,1,Ohio,256
+2019,1,Oklahoma,100
+2019,1,Oregon,102
+2019,1,Pennsylvania,454
+2019,1,Puerto Rico,27
+2019,1,Rhode Island,24
+2019,1,South Carolina,190
+2019,1,South Dakota,5
+2019,1,Tennessee,251
+2019,1,Texas,"1,550"
+2019,1,Utah,119
+2019,1,Vermont,6
+2019,1,Virginia,273
+2019,1,Washington,166
+2019,1,West Virginia,18
+2019,1,Wisconsin,87
+2019,1,Wyoming,8
+2019,2,Alabama,636
+2019,2,Alaska,34
+2019,2,Arizona,953
+2019,2,Arkansas,284
+2019,2,California,"8,454"
+2019,2,Colorado,649
+2019,2,Connecticut,462
+2019,2,Delaware,186
+2019,2,District of Columbia,117
+2019,2,Florida,"4,687"
+2019,2,Georgia,"3,189"
+2019,2,Hawaii,117
+2019,2,Idaho,113
+2019,2,Illinois,"1,894"
+2019,2,Indiana,509
+2019,2,Iowa,174
+2019,2,Kansas,219
+2019,2,Kentucky,265
+2019,2,Louisiana,743
+2019,2,Maine,105
+2019,2,Maryland,974
+2019,2,Massachusetts,791
+2019,2,Michigan,"1,093"
+2019,2,Minnesota,381
+2019,2,Mississippi,355
+2019,2,Missouri,564
+2019,2,Montana,66
+2019,2,Nebraska,145
+2019,2,Nevada,641
+2019,2,New Hampshire,179
+2019,2,New Jersey,"1,483"
+2019,2,New Mexico,215
+2019,2,New York,"2,946"
+2019,2,North Carolina,"1,437"
+2019,2,North Dakota,53
+2019,2,Ohio,"1,311"
+2019,2,Oklahoma,335
+2019,2,Oregon,398
+2019,2,Pennsylvania,"1,677"
+2019,2,Puerto Rico,120
+2019,2,Rhode Island,110
+2019,2,South Carolina,774
+2019,2,South Dakota,43
+2019,2,Tennessee,878
+2019,2,Texas,"5,297"
+2019,2,Utah,483
+2019,2,Vermont,22
+2019,2,Virginia,920
+2019,2,Washington,663
+2019,2,West Virginia,104
+2019,2,Wisconsin,428
+2019,2,Wyoming,24
+2019,3,Alabama,791
+2019,3,Alaska,64
+2019,3,Arizona,968
+2019,3,Arkansas,290
+2019,3,California,"8,793"
+2019,3,Colorado,717
+2019,3,Connecticut,518
+2019,3,Delaware,180
+2019,3,District of Columbia,132
+2019,3,Florida,"5,344"
+2019,3,Georgia,"3,730"
+2019,3,Hawaii,144
+2019,3,Idaho,114
+2019,3,Illinois,"1,953"
+2019,3,Indiana,553
+2019,3,Iowa,208
+2019,3,Kansas,211
+2019,3,Kentucky,266
+2019,3,Louisiana,841
+2019,3,Maine,102
+2019,3,Maryland,"1,155"
+2019,3,Massachusetts,852
+2019,3,Michigan,"1,291"
+2019,3,Minnesota,365
+2019,3,Mississippi,382
+2019,3,Missouri,662
+2019,3,Montana,67
+2019,3,Nebraska,164
+2019,3,Nevada,683
+2019,3,New Hampshire,143
+2019,3,New Jersey,"2,035"
+2019,3,New Mexico,185
+2019,3,New York,"3,285"
+2019,3,North Carolina,"1,635"
+2019,3,North Dakota,41
+2019,3,Ohio,"1,292"
+2019,3,Oklahoma,372
+2019,3,Oregon,394
+2019,3,Pennsylvania,"1,852"
+2019,3,Puerto Rico,170
+2019,3,Rhode Island,120
+2019,3,South Carolina,957
+2019,3,South Dakota,50
+2019,3,Tennessee,"1,003"
+2019,3,Texas,"6,190"
+2019,3,Utah,405
+2019,3,Vermont,36
+2019,3,Virginia,925
+2019,3,Washington,693
+2019,3,West Virginia,103
+2019,3,Wisconsin,448
+2019,3,Wyoming,30
+2019,4,Alabama,729
+2019,4,Alaska,65
+2019,4,Arizona,964
+2019,4,Arkansas,315
+2019,4,California,"8,927"
+2019,4,Colorado,588
+2019,4,Connecticut,432
+2019,4,Delaware,182
+2019,4,District of Columbia,117
+2019,4,Florida,"5,487"
+2019,4,Georgia,"3,500"
+2019,4,Hawaii,133
+2019,4,Idaho,107
+2019,4,Illinois,"2,101"
+2019,4,Indiana,587
+2019,4,Iowa,221
+2019,4,Kansas,211
+2019,4,Kentucky,250
+2019,4,Louisiana,897
+2019,4,Maine,114
+2019,4,Maryland,"1,149"
+2019,4,Massachusetts,847
+2019,4,Michigan,"1,263"
+2019,4,Minnesota,399
+2019,4,Mississippi,365
+2019,4,Missouri,708
+2019,4,Montana,73
+2019,4,Nebraska,129
+2019,4,Nevada,650
+2019,4,New Hampshire,114
+2019,4,New Jersey,"1,628"
+2019,4,New Mexico,203
+2019,4,New York,"3,281"
+2019,4,North Carolina,"1,617"
+2019,4,North Dakota,35
+2019,4,Ohio,"1,204"
+2019,4,Oklahoma,392
+2019,4,Oregon,383
+2019,4,Pennsylvania,"2,122"
+2019,4,Puerto Rico,166
+2019,4,Rhode Island,132
+2019,4,South Carolina,880
+2019,4,South Dakota,46
+2019,4,Tennessee,916
+2019,4,Texas,"6,367"
+2019,4,Utah,328
+2019,4,Vermont,40
+2019,4,Virginia,931
+2019,4,Washington,724
+2019,4,West Virginia,100
+2019,4,Wisconsin,442
+2019,4,Wyoming,25
+2019,5,Alabama,638
+2019,5,Alaska,54
+2019,5,Arizona,994
+2019,5,Arkansas,309
+2019,5,California,"9,031"
+2019,5,Colorado,557
+2019,5,Connecticut,424
+2019,5,Delaware,176
+2019,5,District of Columbia,136
+2019,5,Florida,"5,424"
+2019,5,Georgia,"3,893"
+2019,5,Hawaii,106
+2019,5,Idaho,97
+2019,5,Illinois,"2,063"
+2019,5,Indiana,674
+2019,5,Iowa,168
+2019,5,Kansas,179
+2019,5,Kentucky,255
+2019,5,Louisiana,933
+2019,5,Maine,94
+2019,5,Maryland,"1,124"
+2019,5,Massachusetts,732
+2019,5,Michigan,"1,159"
+2019,5,Minnesota,396
+2019,5,Mississippi,343
+2019,5,Missouri,683
+2019,5,Montana,39
+2019,5,Nebraska,110
+2019,5,Nevada,614
+2019,5,New Hampshire,98
+2019,5,New Jersey,"1,474"
+2019,5,New Mexico,198
+2019,5,New York,"3,140"
+2019,5,North Carolina,"1,717"
+2019,5,North Dakota,43
+2019,5,Ohio,"1,054"
+2019,5,Oklahoma,329
+2019,5,Oregon,333
+2019,5,Pennsylvania,"2,095"
+2019,5,Puerto Rico,160
+2019,5,Rhode Island,104
+2019,5,South Carolina,"1,076"
+2019,5,South Dakota,32
+2019,5,Tennessee,879
+2019,5,Texas,"6,299"
+2019,5,Utah,415
+2019,5,Vermont,57
+2019,5,Virginia,975
+2019,5,Washington,649
+2019,5,West Virginia,84
+2019,5,Wisconsin,409
+2019,5,Wyoming,43
+2019,6,Alabama,642
+2019,6,Alaska,45
+2019,6,Arizona,832
+2019,6,Arkansas,299
+2019,6,California,"8,287"
+2019,6,Colorado,512
+2019,6,Connecticut,360
+2019,6,Delaware,183
+2019,6,District of Columbia,113
+2019,6,Florida,"5,113"
+2019,6,Georgia,"3,703"
+2019,6,Hawaii,95
+2019,6,Idaho,89
+2019,6,Illinois,"1,891"
+2019,6,Indiana,599
+2019,6,Iowa,132
+2019,6,Kansas,175
+2019,6,Kentucky,216
+2019,6,Louisiana,930
+2019,6,Maine,53
+2019,6,Maryland,"1,001"
+2019,6,Massachusetts,709
+2019,6,Michigan,992
+2019,6,Minnesota,349
+2019,6,Mississippi,346
+2019,6,Missouri,543
+2019,6,Montana,60
+2019,6,Nebraska,116
+2019,6,Nevada,587
+2019,6,New Hampshire,78
+2019,6,New Jersey,"1,348"
+2019,6,New Mexico,150
+2019,6,New York,"2,791"
+2019,6,North Carolina,"1,574"
+2019,6,North Dakota,32
+2019,6,Ohio,"1,044"
+2019,6,Oklahoma,310
+2019,6,Oregon,309
+2019,6,Pennsylvania,"1,880"
+2019,6,Puerto Rico,130
+2019,6,Rhode Island,100
+2019,6,South Carolina,995
+2019,6,South Dakota,21
+2019,6,Tennessee,783
+2019,6,Texas,"5,812"
+2019,6,Utah,406
+2019,6,Vermont,25
+2019,6,Virginia,978
+2019,6,Washington,574
+2019,6,West Virginia,109
+2019,6,Wisconsin,395
+2019,6,Wyoming,22
+2019,7,Alabama,758
+2019,7,Alaska,56
+2019,7,Arizona,"1,030"
+2019,7,Arkansas,427
+2019,7,California,"8,554"
+2019,7,Colorado,561
+2019,7,Connecticut,392
+2019,7,Delaware,173
+2019,7,District of Columbia,165
+2019,7,Florida,"5,888"
+2019,7,Georgia,"4,140"
+2019,7,Hawaii,95
+2019,7,Idaho,97
+2019,7,Illinois,"1,989"
+2019,7,Indiana,584
+2019,7,Iowa,151
+2019,7,Kansas,215
+2019,7,Kentucky,268
+2019,7,Louisiana,"1,002"
+2019,7,Maine,44
+2019,7,Maryland,"1,183"
+2019,7,Massachusetts,710
+2019,7,Michigan,"1,107"
+2019,7,Minnesota,416
+2019,7,Mississippi,428
+2019,7,Missouri,643
+2019,7,Montana,74
+2019,7,Nebraska,104
+2019,7,Nevada,648
+2019,7,New Hampshire,91
+2019,7,New Jersey,"1,619"
+2019,7,New Mexico,154
+2019,7,New York,"3,029"
+2019,7,North Carolina,"1,686"
+2019,7,North Dakota,48
+2019,7,Ohio,"1,197"
+2019,7,Oklahoma,361
+2019,7,Oregon,339
+2019,7,Pennsylvania,"1,831"
+2019,7,Puerto Rico,159
+2019,7,Rhode Island,98
+2019,7,South Carolina,918
+2019,7,South Dakota,39
+2019,7,Tennessee,"1,002"
+2019,7,Texas,"6,676"
+2019,7,Utah,431
+2019,7,Vermont,20
+2019,7,Virginia,848
+2019,7,Washington,655
+2019,7,West Virginia,100
+2019,7,Wisconsin,393
+2019,7,Wyoming,43
+2019,8,Alabama,688
+2019,8,Alaska,48
+2019,8,Arizona,956
+2019,8,Arkansas,402
+2019,8,California,"8,904"
+2019,8,Colorado,460
+2019,8,Connecticut,345
+2019,8,Delaware,146
+2019,8,District of Columbia,154
+2019,8,Florida,"6,060"
+2019,8,Georgia,"4,139"
+2019,8,Hawaii,115
+2019,8,Idaho,157
+2019,8,Illinois,"2,190"
+2019,8,Indiana,581
+2019,8,Iowa,174
+2019,8,Kansas,200
+2019,8,Kentucky,301
+2019,8,Louisiana,988
+2019,8,Maine,64
+2019,8,Maryland,"1,109"
+2019,8,Massachusetts,791
+2019,8,Michigan,"1,245"
+2019,8,Minnesota,424
+2019,8,Mississippi,422
+2019,8,Missouri,635
+2019,8,Montana,99
+2019,8,Nebraska,136
+2019,8,Nevada,758
+2019,8,New Hampshire,84
+2019,8,New Jersey,"1,645"
+2019,8,New Mexico,171
+2019,8,New York,"3,303"
+2019,8,North Carolina,"1,639"
+2019,8,North Dakota,27
+2019,8,Ohio,"1,139"
+2019,8,Oklahoma,286
+2019,8,Oregon,324
+2019,8,Pennsylvania,"1,825"
+2019,8,Puerto Rico,161
+2019,8,Rhode Island,94
+2019,8,South Carolina,"1,030"
+2019,8,South Dakota,40
+2019,8,Tennessee,958
+2019,8,Texas,"6,610"
+2019,8,Utah,416
+2019,8,Vermont,25
+2019,8,Virginia,902
+2019,8,Washington,574
+2019,8,West Virginia,101
+2019,8,Wisconsin,393
+2019,8,Wyoming,26
+2019,9,Alabama,949
+2019,9,Alaska,50
+2019,9,Arizona,"1,009"
+2019,9,Arkansas,532
+2019,9,California,"8,851"
+2019,9,Colorado,533
+2019,9,Connecticut,377
+2019,9,Delaware,169
+2019,9,District of Columbia,142
+2019,9,Florida,"6,576"
+2019,9,Georgia,"4,292"
+2019,9,Hawaii,108
+2019,9,Idaho,170
+2019,9,Illinois,"2,207"
+2019,9,Indiana,569
+2019,9,Iowa,149
+2019,9,Kansas,193
+2019,9,Kentucky,263
+2019,9,Louisiana,"1,106"
+2019,9,Maine,36
+2019,9,Maryland,"1,020"
+2019,9,Massachusetts,762
+2019,9,Michigan,"1,191"
+2019,9,Minnesota,402
+2019,9,Mississippi,460
+2019,9,Missouri,662
+2019,9,Montana,71
+2019,9,Nebraska,100
+2019,9,Nevada,709
+2019,9,New Hampshire,87
+2019,9,New Jersey,"1,712"
+2019,9,New Mexico,180
+2019,9,New York,"3,286"
+2019,9,North Carolina,"1,639"
+2019,9,North Dakota,48
+2019,9,Ohio,"1,304"
+2019,9,Oklahoma,307
+2019,9,Oregon,335
+2019,9,Pennsylvania,"1,818"
+2019,9,Puerto Rico,144
+2019,9,Rhode Island,98
+2019,9,South Carolina,"1,013"
+2019,9,South Dakota,30
+2019,9,Tennessee,975
+2019,9,Texas,"6,881"
+2019,9,Utah,507
+2019,9,Vermont,22
+2019,9,Virginia,874
+2019,9,Washington,584
+2019,9,West Virginia,84
+2019,9,Wisconsin,592
+2019,9,Wyoming,23
+2019,10,Alabama,816
+2019,10,Alaska,33
+2019,10,Arizona,967
+2019,10,Arkansas,579
+2019,10,California,"10,057"
+2019,10,Colorado,568
+2019,10,Connecticut,387
+2019,10,Delaware,180
+2019,10,District of Columbia,140
+2019,10,Florida,"6,759"
+2019,10,Georgia,"4,778"
+2019,10,Hawaii,137
+2019,10,Idaho,170
+2019,10,Illinois,"2,203"
+2019,10,Indiana,567
+2019,10,Iowa,158
+2019,10,Kansas,183
+2019,10,Kentucky,282
+2019,10,Louisiana,"1,083"
+2019,10,Maine,59
+2019,10,Maryland,"1,319"
+2019,10,Massachusetts,743
+2019,10,Michigan,"1,339"
+2019,10,Minnesota,438
+2019,10,Mississippi,525
+2019,10,Missouri,699
+2019,10,Montana,67
+2019,10,Nebraska,106
+2019,10,Nevada,798
+2019,10,New Hampshire,120
+2019,10,New Jersey,"1,865"
+2019,10,New Mexico,204
+2019,10,New York,"3,542"
+2019,10,North Carolina,"1,929"
+2019,10,North Dakota,82
+2019,10,Ohio,"1,343"
+2019,10,Oklahoma,294
+2019,10,Oregon,361
+2019,10,Pennsylvania,"1,875"
+2019,10,Puerto Rico,154
+2019,10,Rhode Island,93
+2019,10,South Carolina,"1,058"
+2019,10,South Dakota,46
+2019,10,Tennessee,"1,035"
+2019,10,Texas,"7,779"
+2019,10,Utah,413
+2019,10,Vermont,25
+2019,10,Virginia,877
+2019,10,Washington,655
+2019,10,West Virginia,90
+2019,10,Wisconsin,517
+2019,10,Wyoming,28
+2019,11,Alabama,793
+2019,11,Alaska,48
+2019,11,Arizona,840
+2019,11,Arkansas,470
+2019,11,California,"9,525"
+2019,11,Colorado,530
+2019,11,Connecticut,366
+2019,11,Delaware,184
+2019,11,District of Columbia,149
+2019,11,Florida,"6,269"
+2019,11,Georgia,"4,269"
+2019,11,Hawaii,138
+2019,11,Idaho,168
+2019,11,Illinois,"2,062"
+2019,11,Indiana,509
+2019,11,Iowa,175
+2019,11,Kansas,207
+2019,11,Kentucky,263
+2019,11,Louisiana,971
+2019,11,Maine,73
+2019,11,Maryland,"1,101"
+2019,11,Massachusetts,752
+2019,11,Michigan,"1,345"
+2019,11,Minnesota,443
+2019,11,Mississippi,548
+2019,11,Missouri,692
+2019,11,Montana,53
+2019,11,Nebraska,88
+2019,11,Nevada,807
+2019,11,New Hampshire,150
+2019,11,New Jersey,"1,679"
+2019,11,New Mexico,174
+2019,11,New York,"3,524"
+2019,11,North Carolina,"1,665"
+2019,11,North Dakota,44
+2019,11,Ohio,"1,267"
+2019,11,Oklahoma,319
+2019,11,Oregon,347
+2019,11,Pennsylvania,"1,698"
+2019,11,Puerto Rico,127
+2019,11,Rhode Island,78
+2019,11,South Carolina,987
+2019,11,South Dakota,31
+2019,11,Tennessee,990
+2019,11,Texas,"7,161"
+2019,11,Utah,453
+2019,11,Vermont,27
+2019,11,Virginia,904
+2019,11,Washington,594
+2019,11,West Virginia,84
+2019,11,Wisconsin,497
+2019,11,Wyoming,24
+2019,12,Alabama,798
+2019,12,Alaska,48
+2019,12,Arizona,975
+2019,12,Arkansas,552
+2019,12,California,"9,903"
+2019,12,Colorado,460
+2019,12,Connecticut,380
+2019,12,Delaware,387
+2019,12,District of Columbia,151
+2019,12,Florida,"5,980"
+2019,12,Georgia,"4,456"
+2019,12,Hawaii,125
+2019,12,Idaho,111
+2019,12,Illinois,"2,099"
+2019,12,Indiana,537
+2019,12,Iowa,168
+2019,12,Kansas,221
+2019,12,Kentucky,284
+2019,12,Louisiana,940
+2019,12,Maine,45
+2019,12,Maryland,"1,257"
+2019,12,Massachusetts,707
+2019,12,Michigan,"1,265"
+2019,12,Minnesota,375
+2019,12,Mississippi,461
+2019,12,Missouri,786
+2019,12,Montana,52
+2019,12,Nebraska,93
+2019,12,Nevada,694
+2019,12,New Hampshire,96
+2019,12,New Jersey,"1,784"
+2019,12,New Mexico,211
+2019,12,New York,"3,452"
+2019,12,North Carolina,"1,613"
+2019,12,North Dakota,57
+2019,12,Ohio,"1,376"
+2019,12,Oklahoma,300
+2019,12,Oregon,382
+2019,12,Pennsylvania,"1,775"
+2019,12,Puerto Rico,102
+2019,12,Rhode Island,94
+2019,12,South Carolina,973
+2019,12,South Dakota,28
+2019,12,Tennessee,998
+2019,12,Texas,"6,938"
+2019,12,Utah,325
+2019,12,Vermont,33
+2019,12,Virginia,880
+2019,12,Washington,580
+2019,12,West Virginia,84
+2019,12,Wisconsin,421
+2019,12,Wyoming,28
+2020,1,Alabama,"1,000"
+2020,1,Alaska,63
+2020,1,Arizona,"1,236"
+2020,1,Arkansas,695
+2020,1,California,"11,335"
+2020,1,Colorado,624
+2020,1,Connecticut,521
+2020,1,Delaware,"1,215"
+2020,1,District of Columbia,210
+2020,1,Florida,"7,835"
+2020,1,Georgia,"5,470"
+2020,1,Hawaii,143
+2020,1,Idaho,168
+2020,1,Illinois,"2,574"
+2020,1,Indiana,658
+2020,1,Iowa,201
+2020,1,Kansas,238
+2020,1,Kentucky,329
+2020,1,Louisiana,"1,106"
+2020,1,Maine,76
+2020,1,Maryland,"1,560"
+2020,1,Massachusetts,"1,025"
+2020,1,Michigan,"1,629"
+2020,1,Minnesota,479
+2020,1,Mississippi,586
+2020,1,Missouri,972
+2020,1,Montana,70
+2020,1,Nebraska,139
+2020,1,Nevada,952
+2020,1,New Hampshire,130
+2020,1,New Jersey,"2,085"
+2020,1,New Mexico,195
+2020,1,New York,"4,271"
+2020,1,North Carolina,"2,347"
+2020,1,North Dakota,52
+2020,1,Ohio,"1,740"
+2020,1,Oklahoma,424
+2020,1,Oregon,382
+2020,1,Pennsylvania,"2,343"
+2020,1,Puerto Rico,121
+2020,1,Rhode Island,121
+2020,1,South Carolina,"1,318"
+2020,1,South Dakota,50
+2020,1,Tennessee,"1,334"
+2020,1,Texas,"8,583"
+2020,1,Utah,495
+2020,1,Vermont,25
+2020,1,Virginia,"1,107"
+2020,1,Washington,720
+2020,1,West Virginia,117
+2020,1,Wisconsin,613
+2020,1,Wyoming,34
+2020,2,Alabama,922
+2020,2,Alaska,59
+2020,2,Arizona,996
+2020,2,Arkansas,750
+2020,2,California,"9,410"
+2020,2,Colorado,564
+2020,2,Connecticut,422
+2020,2,Delaware,306
+2020,2,District of Columbia,165
+2020,2,Florida,"7,018"
+2020,2,Georgia,"4,537"
+2020,2,Hawaii,118
+2020,2,Idaho,122
+2020,2,Illinois,"2,471"
+2020,2,Indiana,607
+2020,2,Iowa,206
+2020,2,Kansas,254
+2020,2,Kentucky,355
+2020,2,Louisiana,981
+2020,2,Maine,69
+2020,2,Maryland,"1,288"
+2020,2,Massachusetts,967
+2020,2,Michigan,"1,503"
+2020,2,Minnesota,424
+2020,2,Mississippi,644
+2020,2,Missouri,886
+2020,2,Montana,61
+2020,2,Nebraska,107
+2020,2,Nevada,774
+2020,2,New Hampshire,149
+2020,2,New Jersey,"1,937"
+2020,2,New Mexico,187
+2020,2,New York,"3,670"
+2020,2,North Carolina,"2,445"
+2020,2,North Dakota,38
+2020,2,Ohio,"1,461"
+2020,2,Oklahoma,374
+2020,2,Oregon,396
+2020,2,Pennsylvania,"2,065"
+2020,2,Puerto Rico,127
+2020,2,Rhode Island,125
+2020,2,South Carolina,"1,380"
+2020,2,South Dakota,54
+2020,2,Tennessee,"1,200"
+2020,2,Texas,"7,477"
+2020,2,Utah,611
+2020,2,Vermont,40
+2020,2,Virginia,"1,051"
+2020,2,Washington,742
+2020,2,West Virginia,130
+2020,2,Wisconsin,577
+2020,2,Wyoming,32
+2020,3,Alabama,"1,180"
+2020,3,Alaska,65
+2020,3,Arizona,"1,033"
+2020,3,Arkansas,763
+2020,3,California,"10,379"
+2020,3,Colorado,610
+2020,3,Connecticut,481
+2020,3,Delaware,287
+2020,3,District of Columbia,177
+2020,3,Florida,"8,181"
+2020,3,Georgia,"5,248"
+2020,3,Hawaii,124
+2020,3,Idaho,160
+2020,3,Illinois,"3,074"
+2020,3,Indiana,652
+2020,3,Iowa,211
+2020,3,Kansas,270
+2020,3,Kentucky,397
+2020,3,Louisiana,"1,281"
+2020,3,Maine,74
+2020,3,Maryland,"1,481"
+2020,3,Massachusetts,909
+2020,3,Michigan,"1,489"
+2020,3,Minnesota,476
+2020,3,Mississippi,739
+2020,3,Missouri,"1,031"
+2020,3,Montana,87
+2020,3,Nebraska,135
+2020,3,Nevada,870
+2020,3,New Hampshire,125
+2020,3,New Jersey,"2,005"
+2020,3,New Mexico,221
+2020,3,New York,"3,923"
+2020,3,North Carolina,"2,520"
+2020,3,North Dakota,41
+2020,3,Ohio,"1,500"
+2020,3,Oklahoma,385
+2020,3,Oregon,458
+2020,3,Pennsylvania,"2,196"
+2020,3,Puerto Rico,116
+2020,3,Rhode Island,148
+2020,3,South Carolina,"1,558"
+2020,3,South Dakota,47
+2020,3,Tennessee,"1,483"
+2020,3,Texas,"8,364"
+2020,3,Utah,631
+2020,3,Vermont,41
+2020,3,Virginia,"1,122"
+2020,3,Washington,815
+2020,3,West Virginia,120
+2020,3,Wisconsin,536
+2020,3,Wyoming,46
+2020,4,Alabama,"1,663"
+2020,4,Alaska,77
+2020,4,Arizona,"1,545"
+2020,4,Arkansas,"1,030"
+2020,4,California,"11,787"
+2020,4,Colorado,818
+2020,4,Connecticut,594
+2020,4,Delaware,283
+2020,4,District of Columbia,234
+2020,4,Florida,"9,100"
+2020,4,Georgia,"6,352"
+2020,4,Hawaii,169
+2020,4,Idaho,183
+2020,4,Illinois,"3,531"
+2020,4,Indiana,947
+2020,4,Iowa,216
+2020,4,Kansas,338
+2020,4,Kentucky,518
+2020,4,Louisiana,"1,705"
+2020,4,Maine,96
+2020,4,Maryland,"1,676"
+2020,4,Massachusetts,"1,239"
+2020,4,Michigan,"1,750"
+2020,4,Minnesota,552
+2020,4,Mississippi,950
+2020,4,Missouri,"1,274"
+2020,4,Montana,111
+2020,4,Nebraska,180
+2020,4,Nevada,"1,323"
+2020,4,New Hampshire,178
+2020,4,New Jersey,"2,328"
+2020,4,New Mexico,272
+2020,4,New York,"4,024"
+2020,4,North Carolina,"2,998"
+2020,4,North Dakota,76
+2020,4,Ohio,"2,032"
+2020,4,Oklahoma,886
+2020,4,Oregon,685
+2020,4,Pennsylvania,"2,690"
+2020,4,Puerto Rico,144
+2020,4,Rhode Island,279
+2020,4,South Carolina,"1,766"
+2020,4,South Dakota,44
+2020,4,Tennessee,"1,804"
+2020,4,Texas,"10,147"
+2020,4,Utah,707
+2020,4,Vermont,50
+2020,4,Virginia,"1,344"
+2020,4,Washington,"1,380"
+2020,4,West Virginia,152
+2020,4,Wisconsin,756
+2020,4,Wyoming,110
+2020,5,Alabama,"1,369"
+2020,5,Alaska,56
+2020,5,Arizona,"1,230"
+2020,5,Arkansas,946
+2020,5,California,"10,667"
+2020,5,Colorado,604
+2020,5,Connecticut,430
+2020,5,Delaware,229
+2020,5,District of Columbia,193
+2020,5,Florida,"7,402"
+2020,5,Georgia,"5,141"
+2020,5,Hawaii,130
+2020,5,Idaho,148
+2020,5,Illinois,"2,627"
+2020,5,Indiana,703
+2020,5,Iowa,162
+2020,5,Kansas,263
+2020,5,Kentucky,449
+2020,5,Louisiana,"1,529"
+2020,5,Maine,363
+2020,5,Maryland,"1,388"
+2020,5,Massachusetts,"1,367"
+2020,5,Michigan,"1,587"
+2020,5,Minnesota,457
+2020,5,Mississippi,892
+2020,5,Missouri,"1,050"
+2020,5,Montana,111
+2020,5,Nebraska,112
+2020,5,Nevada,947
+2020,5,New Hampshire,128
+2020,5,New Jersey,"1,862"
+2020,5,New Mexico,208
+2020,5,New York,"3,818"
+2020,5,North Carolina,"2,138"
+2020,5,North Dakota,73
+2020,5,Ohio,"1,467"
+2020,5,Oklahoma,"1,924"
+2020,5,Oregon,532
+2020,5,Pennsylvania,"1,910"
+2020,5,Puerto Rico,119
+2020,5,Rhode Island,639
+2020,5,South Carolina,"1,488"
+2020,5,South Dakota,35
+2020,5,Tennessee,"1,534"
+2020,5,Texas,"8,203"
+2020,5,Utah,671
+2020,5,Vermont,45
+2020,5,Virginia,"1,102"
+2020,5,Washington,"31,437"
+2020,5,West Virginia,120
+2020,5,Wisconsin,534
+2020,5,Wyoming,35

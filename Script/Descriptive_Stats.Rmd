@@ -15,10 +15,10 @@ library(lubridate) #assists with conversion of text into POIXct dates
 library(ggplot2)
 library(reshape2)
 
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_Code/Data/Other_data/")
+# setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_Code/Data/Other_data/")
 # AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";")
 
-AllSourceClean <- read.table(file = "AllSourceClean.txt", header=TRUE, sep = ";")
+AllSourceClean <- read.table(file = "Data/Other_data/AllSourceClean.txt", header=TRUE, sep = ";")
 
 View(AllSourceClean)
 

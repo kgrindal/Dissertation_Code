@@ -9,6 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 library("tidyverse")
 library("dplyr")
+library("here")
 
 ```
 
@@ -19,9 +20,7 @@ library("dplyr")
 # Enacted: February 17, 2009
 # Enforcement: May 27, 2009
 
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
-
-AllStateClean <- read.table(file="AllStateClean.txt", sep=";")
+AllStateClean <- read.table(here("Data","Other_data","AllStateClean.txt"), sep=";")
 
 AllStateClean$firstdate <- substr(AllStateClean$reported_date, start=1, stop=10) # Use this string for Massachusetts v New Hampshire
 
@@ -34,25 +33,27 @@ HITECH6 <- subset(AllStateClean, AllStateClean$year == 2010)
 
 HITECH <- rbind(HITECH1, HITECH2, HITECH3, HITECH4, HITECH5, HITECH6)
 
-write.csv(HITECH, "HITECH.csv")
+write.csv(HITECH,here("Data","Other_data","HITECH.csv"))
 
 ```
 
 
 ```{r}
 
-HITECH <- read.csv("HITECH.csv")
-DUNS <- read.csv("DUNS_HITECH.csv")
+HITECH <- read.csv(here("Data","Other_data","HITECH.csv"))
+DUNS <- read.csv(here("Data","Other_data","DUNS_HITECH.csv"))
                  
 NAICS <- merge(HITECH, DUNS, by="clean_name", all=TRUE)
 
 NAICS$DUNS_2 <- substr(NAICS$Primary.NAICS.Code, start=1, stop=2)
-colSums(!is.na(NAICS)) # 1741 
+colSums(!is.na(NAICS)) # 1788 
 colSums(is.na(NAICS)) # 215
 1741/1956 # = 89%
 
-write.csv(NAICS, "NAICS_Clean.csv")
+write.csv(NAICS, here("Data","Other_data","NAICS_Clean.csv"))
 
+# View(NAICS)          
+          
 Health <- NAICS[grepl( "62", NAICS$DUNS_2), ]
 Finance <- NAICS[grepl( "52", NAICS$DUNS_2), ]
 Education <- NAICS[grepl( "61", NAICS$DUNS_2), ]
@@ -65,7 +66,7 @@ Non_Health <- NAICS %>%
 ```
 
 ```{r}
-pop <- read.csv("populations.csv")
+pop <- read.csv(here("Data","Other_data","populations.csv"))
 pop <- pop[c(12,20,22,30,42),-c(2:101)] # Hawaii row 12, Maine row 2, Massachusetts row 22, New Hampshire row 30, North Carolina row 34
 pop <- pop[,1:17] # removing the last available month to match length
 pop <- t(as.data.frame(pop))
@@ -91,7 +92,6 @@ dat
 
 ```{r}
 # Create control and treatment populations
-
 
 NAICS$firstdate <- substr(NAICS$reported_date, start=1, stop=10) # Use this string for Massachusetts v New Hampshire
 
@@ -197,8 +197,8 @@ pacfcontrol <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of 
 ccfRes <- ccf(control_ts, treatment_ts, ylab = "cross-correlation")
 
 # adf test is an Augmented Dickey-Fuller Test
-adf.test(control_ts) # p-value < 0.05 indicates the TS is stationary
-kpss.test(control_ts) # Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test
+#adf.test(control_ts) # p-value < 0.05 indicates the TS is stationary
+#kpss.test(control_ts) # Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test
 
 
 
@@ -343,7 +343,7 @@ summary(regTest)
 regTest2 <- lm(incident_permil ~ time + treat + time*treat + z + z*time + z*treat + z*treat*time, AppendITS) 
 summary(regTest2)
 
-View(AppendITS)
+# View(AppendITS)
 
 ```
 

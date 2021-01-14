@@ -18,8 +18,7 @@ library(ggplot2)
 library(reshape2)
 # library(tm)
 
-setwd<-("C:/Users/karl_000/Documents/SpiderOak Hive/Dissertation/Dissertation_BreachesDataset")
-AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";", na.strings="")
+AllStateClean <- read.table(here::here("Data","Other_data","AllStateClean.txt"), sep=";")
 
 ```
 
@@ -27,12 +26,11 @@ AllStateClean <- read.table(file = "AllStateClean.txt", sep = ";", na.strings=""
 ```{r}
 # independent datasets include the privacy rights clearinghouse and HHS
 
-
-clearinghouse <- read.csv(file="Raw_state_data/clearinghouse_092220.csv", col.names= c("reported_date", "clean_name", "city", "state", 
-                                                                                       "breach_type", "org_type", 
-                                                                                       "total_records", "description", "info_type",
-                                                                                       "source_url", "year", "lat", "long"))
-View(clearinghouse)
+clearinghouse <- read.csv(here::here("Data","Other_data","clearinghouse_092220.csv"), 
+                          col.names= c("reported_date", "clean_name", "city", "state", 
+                          "breach_type", "org_type", "total_records", "description", "info_type",
+                          "source_url", "year", "lat", "long"))
+# View(clearinghouse)
 
 # clearinghouse[,"reported_date"]<-dmy(clearinghouse[,"reported_date"])
 # as.POSIXlt(clearinghouse[,"reported_date"], "%Y-%m-%d")
@@ -73,7 +71,7 @@ barplot(counts1, main="Clearinghouse Reported Hacks",
 ## HHS Portal
 ```{r}
 
-hhs_portal <- read.csv(file="Raw_state_data/HHS_breachportal2.csv", 
+hhs_portal <- read.csv(here::here("Data","Other_data","HHS_breachportal2.csv"), 
                        col.names= c("clean_name", "state", "covered_type", "total_affected", "reported_date", "breach_type", 
                                     "data_location", "associate_present", "description", "list"))
 
@@ -94,7 +92,8 @@ counts2
 barplot(counts2, main="HHS Reported Breaches",
    xlab="Years", ylab = "Number of Breach Incidents", col = "darkred") 
 
-state_initial <- read.csv(file="Raw_state_data/state_initial.csv", col.names= c("state", "Full_State"))
+state_initial <- read.csv(here::here("Data","Other_data","state_initial.csv"), col.names= c("state", "Full_State"))
+
 hhs_portal$state <- state_initial$Full_State[match(hhs_portal$state, state_initial$state)]
 
 # Bar Chart of HHS Hacks
@@ -126,7 +125,7 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 AllSource$clean_name<-trim(AllSource$clean_name)
 
 # use this output to create clean name
-clean_name <- read.csv(file="test3.csv", col.names= c("org_name","clean_name"))
+clean_name <- read.csv(here::here("Data","Other_data","test3.csv"), col.names= c("org_name","clean_name"))
 
 AllSource <- merge(AllSource, clean_name, by=c("clean_name"), all.x = FALSE)
 
@@ -200,7 +199,7 @@ AllSource <- subset(AllSource, select= -c(truematch))
 
 # Assign Source to Columns
 ```{r}
-BreachID <- dcast(AllSource, incident_id2 ~ source)
+BreachID <- reshape2::dcast(AllSource, incident_id2 ~ source)
 AllSource <- merge(AllSource, BreachID)
 
 AllSource$Clearinghouse[which(AllSource$Clearinghouse==0)] = NA
@@ -255,7 +254,8 @@ AllSourceClean <- ddply(AllSource, .(incident_id2),
             Clearinghouse= paste(unique(Clearinghouse[!is.na(Clearinghouse)]),collapse=", "), 
             HHS= paste(unique(HHS[!is.na(HHS)]),collapse=", "))
 
-write.table(AllSourceClean, file = "AllSourceClean.txt", sep = ";", row.names = TRUE, col.names = TRUE)
+write.table(AllSourceClean, here::here("Data","Other_data","AllSourceClean.txt"), 
+            sep = ";", row.names = TRUE, col.names = TRUE)
 
 m <- nrow(AllSourceClean)
 m
