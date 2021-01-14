@@ -389,10 +389,8 @@ StateBreach <- as.data.frame(t(StateBreach))
 names(StateBreach) <- as.matrix(StateBreach[1, ])
 StateBreach <- StateBreach[-1, ]
 StateBreach[] <- lapply(StateBreach, function(x) type.convert(as.character(x)))
-View(StateBreach)
 
-# df2 <- setNames(StateBreach[,1])
-View(StateBreach)
+# View(StateBreach)
 ```
 
 

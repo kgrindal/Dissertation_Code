@@ -38,7 +38,7 @@ massachusetts <- massachusetts[,c("incident_id", "hack", "clean_name", "year","d
 
 massachusetts$reported_date <- substr(massachusetts$reported_date, start=1, stop=10)
 
-View(massachusetts)
+# View(massachusetts)
 
 # new_hampshire <- read.csv(here::here("Data","Raw_state_data","new_hampshire_092020.csv"), col.names = 
 #                             c("org_name", "raw_text","reported_date","clean_date","letter_url","name_processing"), 
@@ -52,7 +52,7 @@ new_hampshire <- new_hampshire[,c("incident_id", "hack", "clean_name", "year","d
 
 new_hampshire$reported_date <- substr(new_hampshire$reported_date, start=1, stop=10)
 
-View(new_hampshire)
+# View(new_hampshire)
 
 
 
@@ -249,7 +249,7 @@ summary(regTest)
 regTest2 <- lm(incident_permil ~ time + treat + time*treat + z + z*time + z*treat + z*treat*time, AppendITS) 
 summary(regTest2)
 
-View(AppendITS)
+# View(AppendITS)
 
 ```
 
@@ -302,7 +302,6 @@ names(treatment_ts)[1] <- "yearmonth"
 treatment_ts <- merge(treatment_ts, dat2, by="yearmonth", all=TRUE)
 treatment_ts <- treatment_ts[1:174,] 
 treatment_ts$frequency[is.na(treatment_ts$frequency)]<-0
-
 # Format treatment dates into months
 control[,"reported_date"]<-mdy(control[,"reported_date"])
 
@@ -319,9 +318,9 @@ control_ts$frequency[is.na(control_ts$frequency)]<-0
 comb_ts <- merge(treatment_ts, control_ts, by="yearmonth") # please make sure the length of both your timeseries
 pop<-pop[1:169,]
 comb_ts <- cbind(comb_ts, pop)
-View(comb_ts)
+# View(comb_ts)
 
-write.csv(comb_ts, "comb_ts_test.csv")
+write.csv(comb_ts, here::here("Data","Other_data","comb_ts_test.csv"))
 
 treatment_ts <- ts(treatment_ts$frequency, frequency = 12, start = c(2006,6))
 control_ts <- ts(control_ts$frequency, frequency = 12, start = c(2006,6))

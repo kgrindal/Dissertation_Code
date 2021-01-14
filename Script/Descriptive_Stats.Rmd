@@ -104,18 +104,13 @@ ggplot(AllSourceClean,aes(total_affected))+geom_histogram(bins=500)+xlim(0, 100)
 
 Mass <- subset(AllSourceClean, AllSourceClean$Massachusetts==1)
 
-Oregon <- subset(AllSourceClean, AllSourceClean$Oregon==1)
-View(Oregon)
-
-my.formula = y ~ a*exp(b*X)
+# my.formula = y ~ a*exp(b*X)
 
 ggplot(Mass,aes(total_affected))+geom_histogram(bins=500)+xlim(0, 100000) + 
   geom_function(fun = y ~ 1.631226*exp(1.471129e-09*x), colour = "red")
   
-
-
-
-Oregon$total_affected
+# Oregon <- subset(AllSourceClean, AllSourceClean$Oregon==1)
+# Oregon$total_affected
 
 data = Mass$total_affected
 data = sort(data,decreasing=TRUE)
