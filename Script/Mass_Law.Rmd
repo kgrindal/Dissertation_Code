@@ -22,13 +22,13 @@ library(TTR)
 
 # Case 1: Massachusetts Data Security Law
 
-# massachusetts <- read.csv(here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
+# massachusetts <- read.csv(here::here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
 #                           col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
 #                                       "affected_residents", "SSN_breach", "act_num", "drivers_license", 
 #                                       "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), 
 #                           na.strings=c(""," ","NA"))
 
-AllStateClean <- read.table(here("Data","Other_data","AllStateClean.txt"),sep=";")
+AllStateClean <- read.table(here::here("Data","Other_data","AllStateClean.txt"),sep=";")
 
 massachusetts <- filter(AllStateClean,Massachusetts==1)
 
@@ -40,7 +40,7 @@ massachusetts$reported_date <- substr(massachusetts$reported_date, start=1, stop
 
 View(massachusetts)
 
-# new_hampshire <- read.csv(file="Raw_state_data/new_hampshire_092020.csv", col.names = 
+# new_hampshire <- read.csv(here::here("Data","Raw_state_data","new_hampshire_092020.csv"), col.names = 
 #                             c("org_name", "raw_text","reported_date","clean_date","letter_url","name_processing"), 
 #                           na.strings=c(""," ","NA"))
 
@@ -61,7 +61,7 @@ View(new_hampshire)
 
 
 ```{r}
-pop <- read.csv("populations.csv") # starts at 2000.04.01
+pop <- read.csv(here::here("Data","Other_data","populations.csv")) # starts at 2000.04.01
 pop <- pop[c(22,30,34),-c(2:75)] # Massachusetts row 22, New Hampshire row 30, North Carolina row 34
 pop <- t(as.data.frame(pop))
 colnames(pop) <- pop[1,]
@@ -256,7 +256,7 @@ View(AppendITS)
 
 ```{r}
 
-massachusetts <- read.csv(file="Raw_state_data/massachusetts_092020.csv", header=TRUE,
+massachusetts <- read.csv(here::here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
                           col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
                                       "affected_residents", "SSN_breach", "act_num", "drivers_license", 
                                       "credit_debit", "credit_monitoring", "encrypted", "mobile_device"), na.strings=c(""," ","NA"))
@@ -265,7 +265,7 @@ massachusetts1000 <- subset(massachusetts, massachusetts$affected_residents > 10
 
 massachusetts1000
 
-n_carolina <- read.csv(file="Raw_state_data/north_carolina.csv", row.names=NULL, header=TRUE, col.names = 
+n_carolina <- read.csv(here::here("Data","Raw_state_data","north_carolina.csv"), row.names=NULL, header=TRUE, col.names = 
                          c("org_name","org_type","reported_date","discover_date","breach_type","total_affected",
                            "affected_residents"), na.strings=c(""," ","NA"))
 
@@ -283,7 +283,7 @@ names(dat2) <- "yearmonth"
 dat2 <- format(dat2,  "%Y/%m")
 
 # Population
-pop <- read.csv("populations.csv") # starts at 2000.04.01
+pop <- read.csv(here::here("Data","Other_data","populations.csv")) # starts at 2000.04.01
 pop <- pop[c(22,30,34),-c(2:75)] # Massachusetts row 22, New Hampshire row 30, North Carolina row 34
 pop <- pop[,-c(ncol(pop))] # removing the last available month to match length
 pop <- t(as.data.frame(pop))
