@@ -135,7 +135,7 @@ maryland <- read.csv(here::here("Data","Raw_state_data","maryland_092020.csv"), 
 
 massachusetts <- read.csv(here::here("Data","Raw_state_data","massachusetts_092020.csv"), header=TRUE,
                           col.names=c("breach_no","reported_date","org_name", "breach_type", "at_reporting_entity", 
-                                      "affected_residents", "SSN_breach", "act_num", "drivers_license", 
+                                      "MA_affected_residents", "SSN_breach", "act_num", "drivers_license", 
                                       "credit_debit", "credit_monitoring", "encrypted", "mobile_device"),
                                       na.strings=c(""," ","NA"))
 
@@ -153,7 +153,7 @@ new_jersey <- read.csv(here::here("Data","Raw_state_data","new_jersey_061419.csv
 
 n_carolina <- read.csv(here::here("Data","Raw_state_data","north_carolina.csv"), row.names=NULL, header=TRUE, col.names = 
                          c("org_name","org_type","reported_date","discover_date","breach_type","total_affected",
-                           "affected_residents"), na.strings=c(""," ","NA"))
+                           "NC_affected_residents"), na.strings=c(""," ","NA"))
 
 n_dakota <- read.csv(here::here("Data","Raw_state_data","n_dakota_091920.csv"), header=TRUE, 
                      col.names=c("org_name","dba1","date_of_breach","breach_end","reported_date",
@@ -421,20 +421,19 @@ AllState$total_affected <-   gsub('1.9 million','1900000', AllState$total_affect
 AllState$total_affected <-   gsub('~','',AllState$total_affected)
 AllState$total_affected <-   gsub('>','',AllState$total_affected)
 AllState$total_affected <-   gsub(',','',AllState$total_affected)
-count(is.na(AllState$total_affected)) # 44,199 are NA, 10141 are numbers
-
+length(AllState$total_affected[is.na(AllState$total_affected)]) # 44,199 are NA
 
 #figure out how to fix millions
 AllState$total_affected <- as.numeric(as.character(AllState$total_affected))
-count(is.na(AllState$total_affected)) # 44,273 are NA, 10067 are numbers ... 74 fail to parse
+length(AllState$total_affected[is.na(AllState$total_affected)]) # 44,273 are NA
 datavar <- AllState$total_affected
 datavar <- as.numeric(na.omit(datavar))
 
 # Descriptive statistics
 max(datavar) # 2e+09
-mean(datavar) # 463117.3
+mean(datavar) # 462418.2
 median(datavar) # 581
-sd(datavar) # 22229445
+sd(datavar) # 22230438
 
 # Binning by Millions
 bins <- seq(0,2e+09,by=100000000)
@@ -446,7 +445,6 @@ bins2 <- seq(1,2000,by=25)
 Scores2 <- cut(datavar, bins2)
 tabscore2 <- table(Scores2)
 plot(tabscore2)
-
 
 ```
 
@@ -489,7 +487,7 @@ AllState <- AllState[,c("State", "org_name", "dba", "year", "date_of_breach", "b
                         "reported_date", "affected_residents", "total_affected", "case_no", "breach_type", "info_type", 
                         "SSN_breach", "act_num", "name_lost","address_lost","email_lost", "drivers_license", 
                         "credit_debit", "credit_monitoring", "encrypted", "mobile_device", "letter_url", 
-                        "state", "description")]
+                        "state", "description","MA_affected_residents","NC_affected_residents")]
 
 # Clean Total Affected
 AllState$affected_residents <- gsub(",", "", AllState$affected_residents)
@@ -538,12 +536,10 @@ date_range <- merge(earliestd,latestd,by="State")
 date_range$startyear <- year(date_range$reported_date.x)
 date_range$endyear <- year(date_range$reported_date.y)
 
-is.leapyear=function(year){
-  #http://en.wikipedia.org/wiki/Leap_year
-  return(((year %% 4 == 0) & (year %% 100 != 0)) | (year %% 400 == 0))
-}
-date_range$yeardays1 <- ifelse(is.leapyear(date_range$startyear),366,365)
-date_range$yeardays2 <- ifelse(is.leapyear(date_range$endyear),366,365)
+source(here::here("Script","Functions","is_leapyear.R"))
+
+date_range$yeardays1 <- ifelse(is_leapyear(date_range$startyear),366,365)
+date_range$yeardays2 <- ifelse(is_leapyear(date_range$endyear),366,365)
 
 date_range$startperc <- 1-(as.numeric(format(date_range$reported_date.x, "%j"))/date_range$yeardays1)
 date_range$endperc <- as.numeric(format(date_range$reported_date.y, "%j"))/date_range$yeardays2
@@ -575,7 +571,7 @@ AllState <- merge(AllState, unique(clean_name), by="org_name",all.x= TRUE,all.y=
 AllState <- AllState[,c("cleaned_name", "org_name", "dba", "year", "State", "date_of_breach", "breach_end","discover_date",
                         "reported_date", "affected_residents", "total_affected", "case_no", "breach_type", "info_type", 
                         "act_num", "drivers_license", "credit_debit", "SSN_breach", "credit_monitoring", "encrypted", 
-                        "mobile_device", "letter_url", "state", "description")]
+                        "mobile_device", "letter_url", "state","description","MA_affected_residents","NC_affected_residents")]
 
 AllState<-as.data.frame(AllState[order(AllState$reported_date),])
 AllState<-AllState[order(AllState$cleaned_name),]
@@ -737,6 +733,8 @@ AllStateClean <- ddply(BreachID, .(incident_id),
             breach_type= paste(unique(breach_type[!is.na(breach_type)]),collapse=", "),
             state= paste(unique(state[!is.na(state)]),collapse=", "),
             letter_url= paste(unique(letter_url[!is.na(letter_url)]),collapse=", "),
+            MA_affected_residents= paste(unique(MA_affected_residents[!is.na(MA_affected_residents)]),collapse=", "),
+            NC_affected_residents= paste(unique(NC_affected_residents[!is.na(NC_affected_residents)]),collapse=", "),
             California= paste(unique(California[!is.na(California)]),collapse=", "),
             Connecticut= paste(unique(Connecticut[!is.na(Connecticut)]),collapse=", "),
             Delaware= paste(unique(Delaware[!is.na(Delaware)]),collapse=", "),

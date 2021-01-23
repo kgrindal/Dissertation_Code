@@ -365,9 +365,7 @@ AllState$total_affected <- gsub(",", "", AllState$total_affected)
 
 ```{r}
 
-numextract <- function(string){ 
-  str_extract(string, "\\-*\\d+\\.*\\d*")
-}
+source(here("Script","Functions","numextract.R"))
 
 AllState$affected_residents2 <- numextract(AllState$affected_residents)
 

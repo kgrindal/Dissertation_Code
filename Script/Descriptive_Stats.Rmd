@@ -200,36 +200,13 @@ alpha = 1 + n*(sum(log(z/xmin)))^-1 # get corresponding alpha estimate
 
 alpha
 
-# https://www.stat.berkeley.edu/~aldous/Research/Ugrad/Willy_Lai.pdf
+# Pull functions for statistical tests
 
-dpowerlaw <-function(x, alpha=2, xmin=1, log=F) {
-  if (log)
-    log(alpha-1) -log(xmin) -alpha * log(x / xmin)
-  else
-    ((alpha -1) / xmin) * ((x / xmin) ^ (-alpha))
-  }
-
-ppowerlaw <-function(q, alpha=2, xmin=1, lower.tail=T, log.p = F) {
-  p <-(q / xmin) ^ (-alpha + 1)
-  if (lower.tail)
-    p <-1-p
-  if(log.p)
-  p <-log(p)
-  p
-}
-
-qpowerlaw <-function(p, alpha=2, xmin=1, lower.tail=T, log.p = F) {
-  if (!lower.tail)
-    p <-1-p
-  if (log.p)
-  p <-exp(p)
-  xmin * ((1 -p) ^ (-1 / (alpha -1)))
-  }  
-
-rpowerlaw <-function(n, alpha=2, xmin=1){
-  qpowerlaw(runif(n, 0, 1), alpha, xmin)
-}
-
+source(here("Script","Functions","dpowerlaw.R"))
+source(here("Script","Functions","ppowerlaw.R"))
+source(here("Script","Functions","qpowerlaw.R"))
+source(here("Script","Functions","rpowerlaw.R"))
+  
 testresult = numeric(2500)
 for (i in 1:2500){
   power = rpowerlaw(length(z),alpha,xmin) #randomly generate power law data using the parameters we found

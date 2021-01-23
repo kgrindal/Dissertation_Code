@@ -121,6 +121,7 @@ AllStateClean$year <- substr(AllStateClean$year, start=1, stop=4)
 AllStateClean$reported_date <- substr(AllStateClean$reported_date, start=1, stop=10)
 
 AllSource<-rbind.fill(AllStateClean, USclearinghouse, hhs_portal)
+
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 AllSource$clean_name<-trim(AllSource$clean_name)
 

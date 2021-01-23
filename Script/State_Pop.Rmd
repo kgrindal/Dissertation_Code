@@ -29,10 +29,8 @@ names(year_pop) <- c("States", "2000-04-01","2000-07-01","2001-07-01","2002-07-0
                                "2018-07-01","2019-07-01")
 year_pop[2:ncol(year_pop)] <- sapply(year_pop[, 2:ncol(year_pop)], as.numeric)
 
-Months <- seq(as.Date("2000-04-01"), as.Date("2020-12-01"), by="months")
-Months <- as.Date(Months)
-Blank <- matrix(, nrow = 52, ncol = 249)
-Blank <- as.data.frame(Blank)
+Blank <- as.data.frame(matrix(, nrow = 52, ncol = 249))
+Months <- as.Date(seq(as.Date("2000-04-01"), as.Date("2020-12-01"), by="months"))
 names(Blank) <- Months
 
 States<- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
@@ -60,7 +58,6 @@ monthly_pop <- t(monthly_pop[-1,])
 States <- c("United States")
 monthly_pop <- cbind(States, monthly_pop)
 
-View(Populations)
 Populations <- rbind(Populations, monthly_pop)
 Populations <- t(Populations)
 colnames(Populations) <- Populations[1,]
@@ -71,9 +68,14 @@ View(Populations)
 
 for(i in names(Populations)){
   x <- ts(as.numeric(levels(Populations[[i]]))[Populations[[i]]])
-  Populations[i] <- na_interpolation(x)
+  Populations[i] <- na_interpolation(x, option = "linear")
   }
 
+to_replace <- Populations[apply(Populations, 1,function(x) sum(is.na(x))<2),]
+ t(apply(to_replace,1,function(x) imputeTS::na_interpolation(x)))
+
+to_replace
+ 
 Populations <-  round(Populations, digits = 0) # Rounds digits out to nearest whole person
 Populations <- t(Populations) # Flips the axis to look more like a time series
 View(Populations)
