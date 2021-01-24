@@ -11,7 +11,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r}
+
+# Case 1: Massachusetts Data Security Law 
+```{r, Setup Chunk}
 library(here)
 library(plyr)
 library(tidyr)
@@ -20,13 +22,10 @@ library(lubridate)
 library(tseries)
 library(TTR)
 
-# Case 1: Massachusetts Data Security Law
-
 AllStateClean <- read.table(here::here("Data","Other_data","AllStateClean.txt"),sep=";")
 
 AllStateClean$MA_affected_residents <- gsub("\\,.*","",AllStateClean$MA_affected_residents) # this selects only the first number instance before a comma
 AllStateClean$NC_affected_residents <- gsub("\\,.*","",AllStateClean$NC_affected_residents) # this selects only the first number before a comma
-
 
 massachusetts <- filter(AllStateClean,Massachusetts==1)
 massachusetts$reported_date <- substr(massachusetts$reported_date, start=1, stop=10)
@@ -36,9 +35,8 @@ new_hampshire$reported_date <- substr(new_hampshire$reported_date, start=1, stop
 
 ```
 
-
+# Produce Tables on Overlapping Co-occurance of Breach Incidents
 ```{r}
-# 
 
 CoveredDays <- AllStateClean
 
@@ -64,38 +62,48 @@ table(CoveredDays$Massachusetts,CoveredDays$North_Carolina) # 0 = 99 + 214 ; 1 =
 CoveredDays$MA_affected_residents <- as.numeric(CoveredDays$MA_affected_residents)
 CoveredDays$NC_affected_residents <- as.numeric(CoveredDays$NC_affected_residents)
 
+CoveredDays$MA_BigBreach <- CoveredDays$MA_affected_residents > 1000
+CoveredDays$NC_BigBreech <- CoveredDays$NC_affected_residents > 1000
 
-CoveredDays <- subset(CoveredDays, CoveredDays$NC_affected_residents > 1000)
+# Need to resolve this R issue to get to a fixed solution
 
+# table(CoveredDays$MA_BigBreach,CoveredDays$NC_BigBreach)
 
 ```
-
+# Create Population Time Series for Matching with Incident Frequncy
 ```{r}
 # Creating blank frequency starting with earliest date
 
 dat2 <- data.frame(seq(as.Date("2006-06-01"), by="1 month", length.out=174)) # treatment date
 names(dat2) <- "yearmonth"
 dat2 <- format(dat2,  "%Y/%m")
+dat2
 
 # Population
 pop <- read.csv(here::here("Data","Other_data","populations.csv")) # starts at 2000.04.01
-pop <- pop[c(22,30,34),-c(2:75)] # Massachusetts row 22, New Hampshire row 30, North Carolina row 34
-pop <- pop[,-c(ncol(pop))] # removing the last available month to match length
-pop <- t(as.data.frame(pop))
+pop <- pop[c(22,30,34),] # Massachusetts row 22, New Hampshire row 30, North Carolina row 34 # removes
+
+datforpop <- data.frame(seq(as.Date("2000-04-01"), by="1 month", length.out=(length(pop)-1))) # treatment date
+names(datforpop) <- "yearmonth"
+datforpop <- format(datforpop,  "%Y/%m")
+datforpop <- rbind("yearmonth",datforpop)
+row.names(datforpop) <- 1:nrow(datforpop)
+
+pop <- cbind(datforpop,t(pop))
 colnames(pop) <- pop[1,]
 pop <- pop[-1,]
 rownames(pop) <- seq(1:nrow(pop))
-
+pop <- as.data.frame(pop)
+pop
 ```
 
 
-
+# Experiment 1: Create control and treatment populations (Massachusetts v New Hampshire)
 ```{r}
-# Create control and treatment populations
 treatment <- massachusetts 
 control <- new_hampshire 
 
-# Format control dates into months
+# Format treatment dates into months
 treatment$date_formatted <- format(as.Date(treatment$reported_date, "%Y-%m-%d"), "%Y/%m") # Alternative is "%m/%d/%Y"
 
 treatment_ts <- treatment %>% 
@@ -106,9 +114,7 @@ names(treatment_ts)[1] <- "yearmonth"
 treatment_ts <- merge(treatment_ts, dat2, by="yearmonth", all=TRUE)
 treatment_ts$frequency[is.na(treatment_ts$frequency)]<-0
 
-# Format treatment dates into months
-# control[,"reported_date"]<-mdy(control[,"reported_date"])
-
+# Format control dates into months
 control$date_formatted <- format(as.Date(control$reported_date, "%Y-%m-%d"), "%Y/%m") # Alternative is "%m/%d/%Y"
 control_ts <- control %>% 
   dplyr::group_by(control$date_formatted) %>% 
@@ -119,14 +125,11 @@ control_ts <- merge(control_ts, dat2, by="yearmonth", all=TRUE)
 control_ts <- control_ts[1:172,] 
 control_ts$frequency[is.na(control_ts$frequency)]<-0
 
+# Merge Treatment and Control Together
 comb_ts <- merge(treatment_ts, control_ts, by="yearmonth") # please make sure the length of both your timeseries
-comb_ts
-length(pop) # 516
-length(t(comb_ts)) # 522
-pop <- as.data.frame(pop)
-pop <- pop[1:516,1:3]
-comb_ts <- cbind(comb_ts, pop)
-comb_ts
+
+# Merge Combined Treatment and Control Together with Population Statistics
+comb_ts <- merge(comb_ts,pop, by = "yearmonth")
 
 treatment_ts <- ts(treatment_ts$frequency, frequency = 12, start = c(2006,6))
 control_ts <- ts(control_ts$frequency, frequency = 12, start = c(2006,6))
@@ -139,8 +142,10 @@ ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=c(2006,2020)
 summary(treatment_ts)
 summary(control_ts)
 
-# Create charts with breaches per million residents
+```
 
+## Create charts with breaches per million residents
+```{r}
 class(comb_ts$frequency.x)<-"numeric"
 comb_ts
 
@@ -157,14 +162,10 @@ plot.ts(treatment_tsM, main = "Breaches per Million over time", xlim=c(2006,2020
 plot.ts(control_tsM, main = "Breaches per Million over time", xlim=c(2006,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
 
 ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2006,2020), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
-
 ```
 
-
+## Identifying and subsetting relevant dates
 ```{r}
-
-# Identifying relevant dates
-
 # Legislation H.B. 4144 signed into law August 3, 2007
 # Legislation H.B. 4144 becomes effective on October 31, 2007
 # OCABR finalized the regulation on September 22, 2008
@@ -218,10 +219,19 @@ ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2008,201
 
 ```
 
-
-
+## Decompose the Massachusetts Data to Find Seasonal Patterns
 ```{r}
 
+controltimeseriescomponents <- decompose(control_ts)
+plot(controltimeseriescomponents)
+controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
+plot(controltimeseriesseasonallyadjusted)
+
+```
+
+
+## Run Statistical Tests on Time Series for Stationarity
+```{r}
 # source of statistical tests http://r-statistics.co/Time-Series-Analysis-With-R.html
 
 acfcontrolMA <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
@@ -254,9 +264,11 @@ kpss.test(treatment_ts)
 
 # https://www.sas.com/content/dam/SAS/en_ca/User%20Group%20Presentations/Health-User-Groups/ITS_SAS.pdf
 
+```
 
-# ITS analyses use regression-based techniques
 
+## ITS analyses use regression-based techniques
+```{r}
 experiment2 <- experiment[experiment$type != "test",]
 experiment2
 
@@ -296,8 +308,7 @@ summary(regTest2)
 ```
 
 
-
-
+# Experiment 2: Create control and treatment populations (Massachusetts v North Carolina)
 ```{r}
 
 massachusetts <- filter(CoveredDays,Massachusetts==1)
@@ -386,10 +397,9 @@ ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2006,202
 
 ```
 
+
+## Create charts with breaches per million residents
 ```{r}
-
-# Create charts with breaches per million residents
-
 class(comb_ts$frequency.x)<-"numeric"
 comb_ts$Massachusetts <- as.numeric(as.character(comb_ts$Massachusetts))
 comb_ts$treatpermil <- comb_ts$frequency.x/(comb_ts$Massachusetts/1000000)
@@ -397,9 +407,19 @@ comb_ts$treatpermil <- comb_ts$frequency.x/(comb_ts$Massachusetts/1000000)
 class(comb_ts$frequency.y)<-"numeric"
 comb_ts$`North Carolina` <- as.numeric(as.character(comb_ts$`North Carolina`))
 comb_ts$controlpermil <- comb_ts$frequency.y/(comb_ts$`North Carolina`/1000000)
-comb_ts
 
+treatment_tsM <- ts(comb_ts$treatpermil, frequency = 12, start = c(2006,6))
+control_tsM <- ts(comb_ts$controlpermil, frequency = 12, start = c(2006,6))
 
+plot.ts(treatment_tsM, main = "Breaches per Million over time", xlim=c(2006,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+plot.ts(control_tsM, main = "Breaches per Million over time", xlim=c(2006,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+
+ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2006,2020), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+
+```
+
+## Identifying and subsetting relevant dates
+```{r}
 # Identifying relevant dates
 
 # Legislation H.B. 4144 signed into law August 3, 2007
@@ -408,8 +428,6 @@ comb_ts
 
 treatment_start <- as.Date("09/22/2008", "%m/%d/%Y") # Legislation H.B. 4144 becomes effective
 treatment_end <- as.Date("03/01/2010", "%m/%d/%Y")+30 # moving avg uses 30 days post treatment
-
-
 
 names(comb_ts) <- c("yearmonth","Treatment","Control","Massachusetts","New Hamsphire", "North Carolina","Treatment_per_Mil", "Control_per_Mil")
 comb_ts$match <- as.character(comb_ts$yearmonth)
@@ -452,47 +470,53 @@ control_tsM
 ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2008,2011), 
                     gpars = list(col = c("black", "red")), type = "b", xlab = "Years", ylab = "Count per month")
 
-
 ```
 
-
+## Run Statistical Tests on Time Series for Stationarity
 ```{r}
-
-# command to decompose the control
-controltimeseriescomponents <- decompose(control_ts)
-plot(controltimeseriescomponents)
-
-controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
-
-plot(controltimeseriesseasonallyadjusted)
-
 # source of statistical tests http://r-statistics.co/Time-Series-Analysis-With-R.html
 
-acfcontrol <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
+acfcontrolMA1k <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
+acttreatmentNC1k <- acf(treatment_ts)
 # shows that the control time series is a "stationary time series"
 
-pacfcontrol <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+png(here::here("Output","acfcontrolMA1k.png"))
+plot(acfcontrolMA1k)
+
+png(here::here("Output","acttreatmentNC1k.png"))
+plot(acttreatmentNC1k)
+
+pacfcontrolMA1k <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+pacftreatmentNC1k <- pacf(treatment_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+
+png(here::here("Output","pacfcontrolMA.png"))
+plot(pacfcontrolMA1k)
+
+png(here::here("Output","pacftreatmentNH.png"))
+plot(pacftreatmentNC1k)
 
 ccfRes <- ccf(control_ts, treatment_ts, ylab = "cross-correlation")
+ccfRes
 
 # adf test is an Augmented Dickey-Fuller Test
 adf.test(control_ts) # p-value < 0.05 indicates the TS is stationary
-kpss.test(control_ts) # Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test
+adf.test(treatment_ts)
+kpss.test(control_ts) # Kwiatkowski-Phillips-Schmidt-Shin (KPSS) testz
+kpss.test(treatment_ts)
 
 # https://www.sas.com/content/dam/SAS/en_ca/User%20Group%20Presentations/Health-User-Groups/ITS_SAS.pdf
 
+```
 
-# ITS analyses use regression-based techniques
-
+## ITS analyses use regression-based techniques
+```{r}
 experiment2 <- experiment[experiment$type != "test",]
 experiment2
 
 # ITS analyses use regression-based techniques
 
 # Added dummy variables for ITS
-
 control <- as.data.frame(t(rbind(experiment2$yearmonth,experiment2$Control_per_Mil)))
-
 
 control$treat <- as.vector(rep(0,nrow(control)))                  # Create example vector
 time <- 1:nrow(control)
@@ -525,21 +549,6 @@ AppendITS
 
 ```
 
-
-```{r}
-
-
-# command to decompose the control
-controltimeseriescomponents <- decompose(control_ts)
-plot(controltimeseriescomponents)
-
-controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
-
-plot(controltimeseriesseasonallyadjusted)
-
-
-
-```
 
 
 
