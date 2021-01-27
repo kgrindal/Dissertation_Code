@@ -1,0 +1,341 @@
+---
+title: "NewYorkFS"
+author: "Karl Grindal"
+date: "1/27/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("dplyr")
+library("here")
+library("stringi")
+library("lubridate")
+
+# Case 4: New York Financial Services
+
+maine1 <- read.csv(here::here("Data","Raw_state_data","maine_part1_062619.csv"), header=TRUE,
+                  col.names=c("org_name", "address", "contact_info", "attorney", "breach_dates", "reported_date", 
+                              "date_of_breach", "breach_end", "discover_date", "info_type", "affected_residents")
+                  , na.strings=c(""," ","NA"))
+
+ny_words = c('New York', 'NY', 'NEW YORK', 'new york')
+maine1$new_york <- ifelse(grepl(paste(ny_words, collapse = "|"), maine1$address, ignore.case = T), 1, NA)
+maine1$new_york[is.na(maine1$new_york)] <- 0
+
+
+maine3 <- read.csv(here::here("Data","Raw_state_data","maine_18_20.csv"),
+                   col.names=c("reported_date", "org_name", "street_address", "city", 
+                               "state", "zip_code", "orgtype_educational", "orgtype_financialservices", 
+                               "orgtype_govinmaine", "orgtype_othergov", "orgtype_healthcare", 
+                               "orgtype_othercommercial", "orgtype_not_profit", "orgtype_POS_vendor", "submission_name",
+                               "submission_title", "submission_firm_name", "submission_telephone", 
+                               "submission_email", "submission_relationship", "total_affected", 
+                               "affected_residents",  "consumer_reporting_agencies_notified", "date_of_breach", 
+                               "discover_date", "loss_of_device", "internal_system_breach", "insider_wrongdoing", 
+                               "hacking_incident", "inadvertent_disclosure", "other_type", 
+                               "other_description", "SSN_breach", "drivers_license", "act_num", "written", "electronic", 
+                               "telephone", "substitute_notice", "notification_date", "has_attachment", 
+                               "date_prior_breach", "credit_monitoring", "credit_monitoring_duration", 
+                               "credit_monitoring_provider", "credit_monitoring_description"), na.strings=c(""," ","NA"))
+
+maine3$SSN_breach <- stringr::str_replace_all(maine3$SSN_breach, 'TRUE', '1')
+maine3$SSN_breach <- stringr::str_replace_all(maine3$SSN_breach, 'FALSE', '0')
+maine3$drivers_license <- stringr::str_replace_all(maine3$drivers_license, 'TRUE', '1')
+maine3$drivers_license <- stringr::str_replace_all(maine3$drivers_license, 'FALSE', '0')
+
+
+maine3$state <- stringr::str_replace_all(maine3$state, 'New York|NEW YORK', 'NY')
+
+# Regulations went into effect on February 15, 2018
+# Case 1: Will compare New York Finance to New York Non Finance
+# Case 2: Will compare New York Finance to Non New York Finance
+
+```
+
+
+# Create Population Time Series for Matching with Incident Frequncy
+```{r}
+# Population
+pop <- read.csv(here::here("Data","Other_data","populations.csv"))
+
+popNY <- pop[c(33),] # New York is 33
+pop
+
+datforpop <- data.frame(seq(as.Date("2000-04-01"), by="1 month", length.out=(length(pop)-1)))
+names(datforpop) <- "yearmonth"
+datforpop <- format(datforpop,  "%Y/%m")
+datforpop <- rbind("yearmonth",datforpop)
+row.names(datforpop) <- 1:nrow(datforpop)
+
+pop <- cbind(datforpop,t(pop))
+colnames(pop) <- pop[1,]
+pop <- pop[-1,]
+rownames(pop) <- seq(1:nrow(pop))
+pop <- as.data.frame(pop)
+
+# Create a new column for the total population accross collecting states
+pop[,2:ncol(pop)] <- sapply(pop[,2:ncol(pop)],as.numeric)
+pop$totpop <- pop$`United States` - pop$`New York`
+pop
+
+```
+
+
+# Create Treatment and Control Groups
+```{r}
+
+experiment_start <- as.Date("02/15/2018", "%m/%d/%Y") # NYDFS Cybersecurity Regulation went into effect on February 15, 2018
+experiment_end <- as.Date("08/15/2020", "%m/%d/%Y") # moving avg uses 30 days post treatment
+
+data_start <- as.Date("12/06/2018", "%m/%d/%Y") # date that more extensive data collection begins
+
+datfull <- data.frame(seq(as.Date(data_start), by="1 month", length.out=20))
+names(datfull) <- "yearmonth"
+datfull <- format(datfull,  "%Y/%m")
+datfull
+
+maine3$date_formatted <- format(as.Date(maine3$reported_date, "%m/%d/%Y %H:%M:%S"), "%Y/%m") # Alternative is "%m/%d/%Y"
+
+Maine_ts <- maine3 %>% 
+  dplyr::group_by(maine3$date_formatted) %>% 
+  dplyr::summarise(frequency = n())
+
+names(Maine_ts)[1] <- "yearmonth"
+# Maine_ts <- merge(Maine_ts, pop, by="yearmonth", all.x=TRUE)
+Maine_ts$frequency[is.na(Maine_ts$frequency)]<-0
+Maine_ts
+
+# Look at Raw Frequency Counts
+
+Maine_ts <- ts(Maine_ts$frequency, frequency = 12, start = c(2018,12))
+
+ts.plot(Maine_ts, main = "Breaches over time", xlim=c(2018,2021), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
+
+```
+
+
+# Create potential treatment and population groups
+```{r}
+
+New_York <- maine3[grepl( "NY", maine3$state), ]
+Not_NY <- maine3[!grepl( "NY", maine3$state), ]
+
+New_YorkFin <- New_York[grepl( "true|True", New_York$orgtype_financialservices), ]
+
+New_YorkNotFin <- New_York[!grepl( "true|True", New_York$orgtype_financialservices), ]
+
+Not_NYFin <- Not_NY[grepl( "true|True", Not_NY$orgtype_financialservices), ]
+
+Not_NYNotFin <- Not_NY[!grepl( "true|True", Not_NY$orgtype_financialservices), ]
+
+```
+
+
+# Experiment 1: Create control and treatment populations with Total Incidents
+```{r}
+treatment <-  New_YorkFin # This Must Be Filled in to Work Properly!
+control <-  Not_NYFin  # This Must Be Filled in to Work Properly!
+
+# Format treatment dates into months
+treatment_freq <- treatment %>% 
+  dplyr::group_by(treatment$date_formatted) %>% 
+  dplyr::summarise(frequency = n(),)
+
+names(treatment_freq)[1] <- "yearmonth"
+treatment_freq<- merge(datfull,treatment_freq, by="yearmonth", all=TRUE)
+treatment_freq$frequency[is.na(treatment_freq$frequency)]<-0
+treatment_freq
+
+# Format control dates into months
+control_freq <- control %>% 
+  dplyr::group_by(control$date_formatted) %>% 
+  dplyr::summarise(frequency = n())
+
+names(control_freq)[1] <- "yearmonth"
+control_freq<- merge(datfull,control_freq, by="yearmonth", all=TRUE)
+control_freq$frequency[is.na(control_freq$frequency)]<-0
+
+treatment_ts <- ts(treatment_freq$frequency, frequency = 12, start = c(2018,12))
+control_ts <- ts(control_freq$frequency, frequency = 12, start = c(2018,12))
+
+plot.ts(treatment_ts, main = "Breaches over time", xlim=c(2018,2021), xlab = "Years", ylab = "Count per month")
+plot.ts(control_ts, main = "Breaches over time", xlim=c(2018,2021), xlab = "Years", ylab = "Count per month")
+
+ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=c(2018,2021), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
+
+```
+
+## Decompose the Control to Find Seasonal Patterns
+```{r}
+control_ts
+controltimeseriescomponents <- decompose(control_ts)
+plot(controltimeseriescomponents)
+controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
+plot(controltimeseriesseasonallyadjusted)
+
+```
+
+
+## Create charts with breaches per million residents
+```{r}
+# Merge Treatment and Control Together
+comb_ts <- merge(treatment_freq, control_freq, by="yearmonth", all=TRUE)
+comb_ts
+
+# Merge Combined Treatment and Control Together with Population Statistics
+comb_ts <- merge(comb_ts, pop, by='yearmonth', all.x = TRUE)
+comb_ts$frequency.x[is.na(comb_ts$frequency.x)]<-0
+comb_ts$frequency.y[is.na(comb_ts$frequency.y)]<-0
+
+comb_ts$`New York` <- as.numeric(as.character(comb_ts$`New York`))
+comb_ts$treatpermil <- comb_ts$frequency.x/(comb_ts$`New York`/1000000)
+class(comb_ts$frequency.y)<-"numeric"
+comb_ts$controlpermil <- comb_ts$frequency.y/(comb_ts$totpop/1000000)
+
+treatment_tsM <- ts(comb_ts$treatpermil, frequency = 12, start = c(2018,2))
+control_tsM <- ts(comb_ts$controlpermil, frequency = 12, start = c(2018,2))
+
+plot.ts(treatment_tsM, main = "Breaches per Million over time", xlim=c(2018,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+plot.ts(control_tsM, main = "Breaches per Million over time", xlim=c(2018,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+
+ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2018,2020), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+```
+
+## Identifying and subsetting relevant dates
+```{r}
+# Identifying relevant dates
+
+# HIGH TECH Act regulations become effective on February 17, 2009
+# Enforcement of HIGH TECH Act implement on May 27, 2009
+
+treatment_start <- as.Date("02/17/2009", "%m/%d/%Y") # Legislation H.B. 4144 becomes effective
+treatment_start<- format(as.Date(as.character(treatment_start), origin = "1970-01-01"), "%Y/%m")
+
+treatment_end <- as.Date("05/27/2009", "%m/%d/%Y") # post 6 months after enforcement
+treatment_end<- format(as.Date(as.character(treatment_end), origin = "1970-01-01"), "%Y/%m")
+
+pretreat <- comb_ts[(which(comb_ts$yearmonth==treatment_start)-6):which(comb_ts$yearmonth==treatment_start),]
+pretreat$type <- "pretest"
+
+posttreat <- comb_ts[which(comb_ts$yearmonth==treatment_end):(which(comb_ts$yearmonth==treatment_end)+6),]
+posttreat$type <- "posttest"
+
+mean(posttreat$treatpermil) - mean(pretreat$treatpermil)
+mean(posttreat$controlpermil) - mean(pretreat$controlpermil)
+
+treatment_range <- comb_ts[(which(comb_ts$yearmonth==treatment_start)+1):(which(comb_ts$yearmonth==treatment_end)-1),]
+treatment_range$type <- "test"
+
+experiment <- rbind(pretreat,treatment_range,posttreat)
+experiment$treatpermil[is.na(experiment$treatpermil)]<-0
+experiment$controlpermil[is.na(experiment$controlpermil)]<-0
+experiment
+
+ts.plot(experiment$treatpermil, col = "red")
+ts.plot(experiment$controlpermil, col = "blue")
+
+# Look at Raw Frequency Counts
+
+treatment_ts <- ts(experiment$frequency.x, frequency = 12, start = c(2008,9))
+control_ts <- ts(experiment$frequency.y, frequency = 12, start = c(2008,9))
+ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=c(2008,2011), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
+
+# Look at Treatment and Control per Million
+
+treatment_tsM <- ts(experiment$treatpermil, frequency = 12, start = c(2008,6))
+mean(treatment_tsM)
+sd(treatment_tsM)
+
+control_tsM <- ts(experiment$controlpermil, frequency = 12, start = c(2008,6))
+mean(control_tsM)
+sd(control_tsM)
+
+ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2008,2010), 
+                    gpars = list(col = c("black", "red")), type = "b", xlab = "Years", ylab = "Count per month")
+
+
+```
+
+
+
+
+## Run Statistical Tests on Time Series for Stationarity
+```{r}
+# source of statistical tests http://r-statistics.co/Time-Series-Analysis-With-R.html
+
+acfcontrol <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
+acftreatment <- acf(treatment_ts)
+# shows that the control time series is a "stationary time series"
+
+png(here::here("Output","acfcontrol.png"))
+plot(acfcontrol)
+
+png(here::here("Output","acttreatment.png"))
+plot(acftreatment)
+
+pacfcontrol <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+pacftreatment <- pacf(treatment_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+
+plot(pacfcontrolMA)
+
+png(here::here("Output","pacftreatmentNH.png"))
+plot(pacftreatmentNH)
+
+ccfRes <- ccf(control_ts, treatment_ts, ylab = "cross-correlation")
+ccfRes
+
+# adf test is an Augmented Dickey-Fuller Test
+adf.test(control_ts) # p-value < 0.05 indicates the TS is stationary
+adf.test(treatment_ts)
+kpss.test(control_ts) # Kwiatkowski-Phillips-Schmidt-Shin (KPSS) testz
+kpss.test(treatment_ts)
+
+# https://www.sas.com/content/dam/SAS/en_ca/User%20Group%20Presentations/Health-User-Groups/ITS_SAS.pdf
+
+```
+
+
+## ITS analyses use regression-based techniques
+```{r}
+
+quasiexp <- experiment[experiment$type != "test",]
+quasiexp
+
+# Added dummy variables for ITS
+control <- as.data.frame(t(rbind(quasiexp$yearmonth,quasiexp$controlpermil)))
+control$treat <- as.vector(rep(0,nrow(control)))                  # Create example vector
+time <- 1:nrow(control)
+control$time <- as.vector(time)
+control$z <- c(rep(0,6),1:(nrow(control)-6))
+
+treatment <- as.data.frame(t(rbind(quasiexp$yearmonth,quasiexp$treatpermil)))
+treatment$treat <- as.vector(rep(1,nrow(control)))                  # Create example vector
+time <- 1:nrow(control)
+treatment$time <- as.vector(time)
+treatment$z <- c(rep(0,6),1:(nrow(control)-6))
+treatment
+
+AppendITS <- rbind(treatment,control)
+names(AppendITS) <- c("yearmonth","incident_permil","treat","time","z")
+AppendITS$incident_permil <- as.numeric(as.character(AppendITS$incident_permil))
+AppendITS$time <- as.numeric(as.character(AppendITS$time))
+AppendITS$z <- as.numeric(as.character(AppendITS$z))
+AppendITS
+
+factor_cols <- c("treat","time","z")
+
+sapply(AppendITS, class)
+
+regTest <- lm(incident_permil ~ time + treat + z, AppendITS) 
+summary(regTest)
+
+regTest2 <- lm(incident_permil ~ time + treat + time*treat + z + z*time + z*treat + z*treat*time, AppendITS) 
+summary(regTest2)
+
+AppendITS
+
+# View(AppendITS)
+
+```
