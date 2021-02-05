@@ -12,8 +12,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(here)
 library(tidyverse) # loads the core tidyverse packages: ggplot2, stringr, dplyr, plyr are needed
-library(plyr)
 library(lubridate) #assists with conversion of text into POIXct dates
+library(stringr)
 # library(usmap) # used for map
 # library(reshape2) # used for dcast
 # library(stringdist) computes distance metrics between strings
@@ -88,6 +88,7 @@ library(lubridate) #assists with conversion of text into POIXct dates
 california <- read.csv(here::here("Data","Raw_state_data","california_092020.csv"),  header=TRUE, row.names=NULL,
                        col.names= c("org_name","date_of_breach","breach_end", "breach_dates", 
                                     "reported_date","source_url","letter_url"), na.strings=c(""," ","NA"))
+View(california)
 
 connecticut <- read.csv(here::here("Data","Raw_state_data","connecticut_101819.csv"),  header=TRUE, row.names=NULL,
                         col.names= c("case_no","status","reported_date","ct_category","ct_subcategory","org_name",
@@ -128,6 +129,7 @@ maine2 <- read.csv(here::here("Data","Raw_state_data","maine_part2_092020.csv"),
                                "telephone", "substitute_notice", "notification_date", "has_attachment", 
                                "date_prior_breach", "credit_monitoring", "credit_monitoring_duration", 
                                "credit_monitoring_provider", "credit_monitoring_description"), na.strings=c(""," ","NA"))
+
 
 maryland <- read.csv(here::here("Data","Raw_state_data","maryland_092020.csv"), header=TRUE,
                      col.names=c("id", "case_no","org_name","letter_url","reported_date","affected_residents","info_type","breach_type"),
@@ -254,39 +256,40 @@ names(wisconsin)[names(wisconsin)=="affected"] <- "residents_affected"
 
 ## Add SSN / act num / drivers license / credit_debit
 ```{r}
-connecticut$credit_monitoring <- str_replace_all(connecticut$credit_monitoring, "Y", "1")
-connecticut$credit_monitoring <- str_replace_all(connecticut$credit_monitoring, "N", "0")
-connecticut$notification <- str_replace_all(connecticut$notification, "Y", "1")
-connecticut$notification <- str_replace_all(connecticut$notification, "N", "0")
-connecticut$name_lost <- str_replace_all(connecticut$name_lost, "Y", "1")
-connecticut$name_lost <- str_replace_all(connecticut$name_lost, "N", "0")
-connecticut$address_lost <- str_replace_all(connecticut$address_lost, "Y", "1")
-connecticut$address_lost <- str_replace_all(connecticut$address_lost, "N", "0")
-connecticut$email_lost <- str_replace_all(connecticut$email_lost, "Y", "1")
-connecticut$email_lost <- str_replace_all(connecticut$email_lost, "N", "0")
-connecticut$SSN_breach <- str_replace_all(connecticut$SSN_breach, "Y", "1")
-connecticut$SSN_breach <- str_replace_all(connecticut$SSN_breach, "N", "0")
-connecticut$birth_lost <- str_replace_all(connecticut$birth_lost, "Y", "1")
-connecticut$birth_lost <- str_replace_all(connecticut$birth_lost, "N", "0")
-connecticut$track1 <- str_replace_all(connecticut$track1, "Y", "1")
-connecticut$track1 <- str_replace_all(connecticut$track1, "N", "0")
-connecticut$track2 <- str_replace_all(connecticut$track2, "Y", "1")
-connecticut$track2 <- str_replace_all(connecticut$track2, "N", "0")
-connecticut$credit_debit <- str_replace_all(connecticut$credit_debit, "Y", "1")
-connecticut$credit_debit <- str_replace_all(connecticut$credit_debit, "N", "0")
 
-massachusetts$credit_debit <- str_replace_all(massachusetts$credit_debit, "Yes", "1")
-massachusetts$credit_monitoring <- str_replace_all(massachusetts$credit_monitoring, "Yes", "1")
-massachusetts$encrypted <- str_replace_all(massachusetts$encrypted, "Yes", "1")
-massachusetts$mobile_device <- str_replace_all(massachusetts$mobile_device, "Yes", "1")
-massachusetts$SSN_breach <- str_replace_all(massachusetts$SSN_breach, "Yes", "1")
+connecticut$credit_monitoring <- stringr::str_replace_all(connecticut$credit_monitoring, 'Y|Yes', '1')
+connecticut$credit_monitoring <- stringr::str_replace_all(connecticut$credit_monitoring, 'N|No', "0")
+connecticut$notification <- stringr::str_replace_all(connecticut$notification, 'Y|Yes', '1')
+connecticut$notification <- stringr::str_replace_all(connecticut$notification, 'N|No', '0')
+connecticut$name_lost <- stringr::str_replace_all(connecticut$name_lost, 'Y|Yes', '1')
+connecticut$name_lost <- stringr::str_replace_all(connecticut$name_lost, 'N|No', '0')
+connecticut$address_lost <- stringr::str_replace_all(connecticut$address_lost, 'Y|Yes', '1')
+connecticut$address_lost <- stringr::str_replace_all(connecticut$address_lost, 'N|No', '0')
+connecticut$email_lost <- stringr::str_replace_all(connecticut$email_lost, 'Y|Yes', '1')
+connecticut$email_lost <- stringr::str_replace_all(connecticut$email_lost, 'N|No', '0')
+connecticut$SSN_breach <- stringr::str_replace_all(connecticut$SSN_breach, 'Y|Yes', '1')
+connecticut$SSN_breach <- stringr::str_replace_all(connecticut$SSN_breach, 'N|No', '0')
+connecticut$birth_lost <- stringr::str_replace_all(connecticut$birth_lost, 'Y|Yes', '1')
+connecticut$birth_lost <- stringr::str_replace_all(connecticut$birth_lost, 'N|No', '0')
+connecticut$track1 <- stringr::str_replace_all(connecticut$track1, 'Y|Yes', '1')
+connecticut$track1 <- stringr::str_replace_all(connecticut$track1, 'N|No', '0')
+connecticut$track2 <- stringr::str_replace_all(connecticut$track2, 'Y|Yes', '1')
+connecticut$track2 <- stringr::str_replace_all(connecticut$track2, 'N|No', '0')
+connecticut$credit_debit <- stringr::str_replace_all(connecticut$credit_debit, 'Y|Yes', '1')
+connecticut$credit_debit <- stringr::str_replace_all(connecticut$credit_debit, 'N|No', '0')
 
-maine2$SSN_breach <- str_replace_all(maine2$SSN_breach, "TRUE", "1")
-maine2$SSN_breach <- str_replace_all(maine2$SSN_breach, "FALSE", "0")
-maine2$drivers_license <- str_replace_all(maine2$drivers_license, "TRUE", "1")
-maine2$drivers_license <- str_replace_all(maine2$drivers_license, "FALSE", "0")
+massachusetts$credit_debit <- stringr::str_replace_all(massachusetts$credit_debit, 'Yes', '1')
+massachusetts$credit_monitoring <- stringr::str_replace_all(massachusetts$credit_monitoring, 'Yes', '1')
+massachusetts$encrypted <- stringr::str_replace_all(massachusetts$encrypted, 'Yes', '1')
+massachusetts$mobile_device <- stringr::str_replace_all(massachusetts$mobile_device, 'Yes', '1')
+massachusetts$SSN_breach <- stringr::str_replace_all(massachusetts$SSN_breach, 'Yes', '1')
 
-ssn_words = c("SSN", "Social Security", "SS Nos", "SS#")
+maine2$SSN_breach <- stringr::str_replace_all(maine2$SSN_breach, 'TRUE', '1')
+maine2$SSN_breach <- stringr::str_replace_all(maine2$SSN_breach, 'FALSE', '0')
+maine2$drivers_license <- stringr::str_replace_all(maine2$drivers_license, 'TRUE', '1')
+maine2$drivers_license <- stringr::str_replace_all(maine2$drivers_license, 'FALSE', '0')
+
+ssn_words = c('SSN', 'Social Security', 'SS Nos', 'SS#')
 maine1$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), maine1$info_type, ignore.case = T), 1, NA)
 maryland$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), maryland$info_type, ignore.case = T), 1, NA)
 s_carolina$SSN_breach <- ifelse(grepl(paste(ssn_words, collapse = "|"), s_carolina$info_type, ignore.case = T), 1, NA)
@@ -451,11 +454,12 @@ plot(tabscore2)
 
 
 ```{r}
+
 #conversion of text into dates
-AllState[,"date_of_breach"]<-mdy(AllState[,"date_of_breach"]) # 1315 failed to parse
-AllState[,"breach_end"]<-mdy(AllState[,"breach_end"]) # 106 failed to parse
-AllState[,"discover_date"]<-mdy(AllState[,"discover_date"]) # 815 failed to parse
-AllState[,"reported_date"]<-mdy(AllState[,"reported_date"]) # 267 failed to parse
+AllState[,"date_of_breach"]<-lubridate::mdy(AllState[,"date_of_breach"]) # 1315 failed to parse
+AllState[,"breach_end"]<-lubridate::mdy(AllState[,"breach_end"]) # 106 failed to parse
+AllState[,"discover_date"]<-lubridate::mdy(AllState[,"discover_date"]) # 815 failed to parse
+AllState[,"reported_date"]<-lubridate::mdy(AllState[,"reported_date"]) # 267 failed to parse
 
 # Add years
 AllState$year <- year(AllState$reported_date)
@@ -854,6 +858,8 @@ colnames(State_Incidents) <- c("North_Carolina","New_Hampshire","Hawaii","Massac
 t(State_Incidents)
 
 View(AllStateClean)
+
+
 
 ```
 

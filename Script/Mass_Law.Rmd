@@ -21,75 +21,18 @@ library(dplyr)
 library(lubridate)
 library(tseries)
 library(TTR)
+library(magrittr)
 
 AllStateClean <- read.table(here::here("Data","Other_data","AllStateClean.txt"),sep=";")
 
-AllStateClean$MA_affected_residents <- gsub("\\,.*","",AllStateClean$MA_affected_residents) # this selects only the first number instance before a comma
-AllStateClean$NC_affected_residents <- gsub("\\,.*","",AllStateClean$NC_affected_residents) # this selects only the first number before a comma
+AllStateClean <- AllStateClean %>% 
+  mutate(MA_affected_residents = gsub("\\,.*","",MA_affected_residents)) %>% # this selects only the first number instance before a comma
+  mutate(NC_affected_residents = gsub("\\,.*","",NC_affected_residents)) %>% # this selects only the first number instance before a comma
+  mutate(Massachusetts = replace(Massachusetts, !is.na(Massachusetts), 1)) %>% 
+  mutate(New_Hampshire = replace(New_Hampshire, !is.na(New_Hampshire), 1)) %>% 
+  mutate(North_Carolina = replace(North_Carolina, !is.na(North_Carolina), 1)) %>% 
+  replace_na(list(Massachusetts=0,New_Hampshire=0,North_Carolina=0)) 
 
-AllStateClean$Massachusetts[!is.na(AllStateClean$Massachusetts)]<-1
-AllStateClean$New_Hampshire[!is.na(AllStateClean$New_Hampshire)]<-1
-AllStateClean$North_Carolina[!is.na(AllStateClean$North_Carolina)]<-1
-AllStateClean$Massachusetts[is.na(AllStateClean$Massachusetts)]<-0
-AllStateClean$New_Hampshire[is.na(AllStateClean$New_Hampshire)]<-0
-AllStateClean$North_Carolina[is.na(AllStateClean$North_Carolina)]<-0
-
-```
-
-# Produce Tables on Overlapping Co-occurance of Breach Incidents
-```{r}
-
-CoveredDays <- AllStateClean
-
-CoveredDays$reported_date <- substr(CoveredDays$reported_date, start=1, stop=10)
-
-CoveredDays <- subset(CoveredDays, reported_date > as.Date("2008-03-22") )
-CoveredDays <- subset(CoveredDays, reported_date < as.Date("2010-09-01") )
-
-table(CoveredDays$Massachusetts) # 0 = 313, 1 = 858
-table(CoveredDays$New_Hampshire) # 0 = 949, 1 = 222
-table(CoveredDays$North_Carolina) # 0 = 819, 1 = 352
-
-table(CoveredDays$Massachusetts,CoveredDays$New_Hampshire) # 0 = 205 + 108 ; 1 = 744 + 114
-table(CoveredDays$Massachusetts,CoveredDays$North_Carolina) # 0 = 99 + 214 ; 1 = 720 + 138
-
-CoveredDays$MA_affected_residents <- as.numeric(CoveredDays$MA_affected_residents)
-CoveredDays$NC_affected_residents <- as.numeric(CoveredDays$NC_affected_residents)
-
-CoveredDays$MA_BigBreach <- CoveredDays$MA_affected_residents > 1000
-CoveredDays$NC_BigBreech <- CoveredDays$NC_affected_residents > 1000
-
-# Need to resolve this R issue to get to a fixed solution
-
-# table(CoveredDays$MA_BigBreach,CoveredDays$NC_BigBreach)
-
-```
-
-# Create Population Time Series for Matching with Incident Frequncy
-```{r}
-# Creating blank frequency starting with earliest date
-
-dat2 <- data.frame(seq(as.Date("2006-06-01"), by="1 month", length.out=174)) # treatment date
-names(dat2) <- "yearmonth"
-dat2 <- format(dat2,  "%Y/%m")
-dat2
-
-# Population
-pop <- read.csv(here::here("Data","Other_data","populations.csv")) # starts at 2000.04.01
-pop <- pop[c(22,30,34),] # Massachusetts row 22, New Hampshire row 30, North Carolina row 34 # removes
-
-datforpop <- data.frame(seq(as.Date("2000-04-01"), by="1 month", length.out=(length(pop)-1))) # treatment date
-names(datforpop) <- "yearmonth"
-datforpop <- format(datforpop,  "%Y/%m")
-datforpop <- rbind("yearmonth",datforpop)
-row.names(datforpop) <- 1:nrow(datforpop)
-
-pop <- cbind(datforpop,t(pop))
-colnames(pop) <- pop[1,]
-pop <- pop[-1,]
-rownames(pop) <- seq(1:nrow(pop))
-pop <- as.data.frame(pop)
-pop
 ```
 
 # Identifying treatment and control options
@@ -102,7 +45,6 @@ new_hampshire <- dplyr::filter(AllStateClean,New_Hampshire==1)
 new_hampshire$reported_date <- substr(new_hampshire$reported_date, start=1, stop=10)
 
 # Case 1: Experiment 2
-massachusetts <- dplyr::filter(AllStateClean,Massachusetts==1)
 massachusetts$MA_affected_residents <- as.numeric(massachusetts$MA_affected_residents)
 massachusetts1000 <- subset(massachusetts, massachusetts$MA_affected_residents > 1000)
 
@@ -112,36 +54,120 @@ n_carolina1000 <- subset(n_carolina, n_carolina$NC_affected_residents > 1000)
 
 ```
 
-# Experiment 1: Create control and treatment populations (Massachusetts v New Hampshire) with Total Incidents
+# Specifying Treatment and Control Variables
 ```{r}
+Treat_Name <- 'Massachusetts'
+Ctrl_Name <- 'North Carolina'
+
 treatment <- massachusetts1000 # This Must Be Filled in to Work Properly!
 control <- n_carolina1000  # This Must Be Filled in to Work Properly!
+```
 
-# Format treatment dates into months
-treatment$date_formatted <- format(as.Date(treatment$reported_date, "%Y-%m-%d"), "%Y/%m") # Alternative is "%m/%d/%Y"
+# Specifying Time Variables
+```{r}
+first_breach_date <- as.Date("2006-06-01")
+
+pop_start <- c(2000,4)
+# data_start <- c(2006,6) # New Hampshire
+data_start	<- c(2005,12)	# North Carolina
+data_range <- c(2006,2021)
+exp_start <- c(2008,4)
+exp_range <- c(2008,2011)
+first_pop_date <- as.Date("2000-04-01")
+last_pop_date <- as.Date("2020-12-01")
+no_months_out <- 174
+
+months_prior <- 5 # months before treatment start
+months_after <- 5 # months after treatment start
+
+# Legislation H.B. 4144 signed into law August 3, 2007
+# Legislation H.B. 4144 becomes effective on October 31, 2007
+# OCABR finalized the regulation on September 22, 2008
+
+treatment_start <- as.Date("09/22/2008", "%m/%d/%Y") # Legislation H.B. 4144 becomes effective
+treatment_end <- as.Date("03/01/2010", "%m/%d/%Y") # post 6 months after enforcement
+```
+
+# Produce Tables on Overlapping Co-occurance of Breach Incidents
+```{r}
+AllStateClean <- AllStateClean %>% 
+    mutate(reported_date = substr(reported_date, start=1, stop=10)) %>%
+    filter(reported_date > "2008-03-22" & reported_date < "2010-09-01") %>%
+    mutate(MA_affected_residents = as.numeric(MA_affected_residents)) %>%
+    mutate(NC_affected_residents = as.numeric(NC_affected_residents)) %>%
+    mutate(MA_BigBreach = MA_affected_residents > 1000) %>%
+    mutate(NC_BigBreach = NC_affected_residents > 1000)
+
+AllStateClean
+
+table(AllStateClean$Massachusetts) # 0 = 313, 1 = 858
+table(AllStateClean$New_Hampshire) # 0 = 949, 1 = 222
+table(AllStateClean$North_Carolina) # 0 = 819, 1 = 352
+
+table(AllStateClean$Massachusetts,AllStateClean$New_Hampshire) # 0 = 205 + 108 ; 1 = 744 + 114
+table(AllStateClean$Massachusetts,AllStateClean$North_Carolina) # 0 = 99 + 214 ; 1 = 720 + 138
+
+# Need to resolve this R issue to get to a fixed solution
+table(AllStateClean$MA_BigBreach,AllStateClean$NC_BigBreach)
+
+```
+
+# Create Population Time Series for Matching with Incident Frequncy
+```{r}
+# Population
+pop <- read.csv(here::here("Data","Other_data","populations.csv")) # starts at 2000.04.01
+datforpop <- data.frame(seq(first_pop_date, last_pop_date, by="1 month"))
+
+datforpop <- datforpop %>%
+  set_colnames(c("yearmonth")) %>%
+  mutate(yearmonth=format(as.Date(yearmonth), "%Y/%m"))
+
+pop <- pop %>%
+  t() %>%
+  as.data.frame() %>%
+  set_colnames(pop[,1])
+
+pop <- pop[-1,]
+pop <- cbind(datforpop,pop)
+rownames(pop) <- seq(1:nrow(pop))
+
+freq_dat <- data.frame(seq(first_breach_date, last_pop_date, by="1 month"))
+freq_dat <- freq_dat %>%
+  set_colnames(c("yearmonth")) %>%
+  mutate(yearmonth=format(as.Date(yearmonth), "%Y/%m"))
+
+```
+
+
+# Experiment 1: Create control and treatment populations with Total Incidents
+```{r}
+
 treatment_freq <- treatment %>% 
-  dplyr::group_by(treatment$date_formatted) %>% 
-  dplyr::summarise(frequency = n(),)
+  dplyr::mutate(date_formatted=format(as.Date(reported_date), "%Y/%m")) %>% 
+  dplyr::group_by(date_formatted)  %>% 
+  dplyr::summarise(frequency = n()) %>% 
+  set_colnames(c("yearmonth","frequency")) %>% 
+  replace_na(list(frequency=0))
 
-names(treatment_freq)[1] <- "yearmonth"
-treatment_freq$frequency[is.na(treatment_freq$frequency)]<-0
-
-# Format control dates into months
-control$date_formatted <- format(as.Date(control$reported_date, "%Y-%m-%d"), "%Y/%m") # Alternative is "%m/%d/%Y"
 control_freq <- control %>% 
-  dplyr::group_by(control$date_formatted) %>% 
-  dplyr::summarise(frequency = n())
+  dplyr::mutate(date_formatted=format(as.Date(reported_date), "%Y/%m")) %>% 
+  dplyr::group_by(date_formatted)  %>% 
+  dplyr::summarise(frequency = n()) %>% 
+  set_colnames(c("yearmonth","frequency")) %>% 
+  replace_na(list(frequency=0))
 
-names(control_freq)[1] <- "yearmonth"
+treatment_freq <- merge(treatment_freq,freq_dat, by="yearmonth", all.y=TRUE)
+control_freq <- merge(control_freq,freq_dat, by="yearmonth", all.y=TRUE)
+treatment_freq$frequency[is.na(treatment_freq$frequency)]<-0
 control_freq$frequency[is.na(control_freq$frequency)]<-0
 
-treatment_ts <- ts(treatment_freq$frequency, frequency = 12, start = c(2006,6))
-control_ts <- ts(control_freq$frequency, frequency = 12, start = c(2006,6))
+treatment_ts <- ts(treatment_freq$frequency, frequency = 12, start = data_start)
+control_ts <- ts(control_freq$frequency, frequency = 12, start = data_start)
 
-plot.ts(treatment_ts, main = "Breaches over time", xlim=c(2006,2020), xlab = "Years", ylab = "Count per month")
-plot.ts(control_ts, main = "Breaches over time", xlim=c(2006,2020), xlab = "Years", ylab = "Count per month")
+plot.ts(treatment_ts, main = "Breaches over time", xlim=data_range, xlab = "Years", ylab = "Count per month")
+plot.ts(control_ts, main = "Breaches over time", xlim=data_range, xlab = "Years", ylab = "Count per month")
 
-ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=c(2006,2020), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
+ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=data_range, gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
 
 summary(treatment_ts)
 summary(control_ts)
@@ -156,40 +182,51 @@ comb_ts <- merge(treatment_freq, control_freq, by="yearmonth", all=TRUE)
 
 # Merge Combined Treatment and Control Together with Population Statistics
 comb_ts <- merge(comb_ts, pop, by='yearmonth', all.x = TRUE)
-comb_ts$frequency.x[is.na(comb_ts$frequency.x)]<-0
-comb_ts$frequency.y[is.na(comb_ts$frequency.y)]<-0
+comb_ts[2:ncol(comb_ts)] <- sapply(comb_ts[2:ncol(comb_ts)],as.numeric)
 
-comb_ts$Massachusetts <- as.numeric(as.character(comb_ts$Massachusetts))
-comb_ts$treatpermil <- comb_ts$frequency.x/(comb_ts$Massachusetts/1000000)
-class(comb_ts$frequency.y)<-"numeric"
-comb_ts$`New Hampshire` <- as.numeric(as.character(comb_ts$`New Hampshire`))
-comb_ts$controlpermil <- comb_ts$frequency.y/(comb_ts$`New Hampshire`/1000000)
+comb_ts <- comb_ts %>% 
+  replace_na(list(frequency.x=0,frequency.y=0)) %>% 
+  dplyr::mutate(treatpermil = frequency.x/(Massachusetts/1000000)) %>% 
+  dplyr::mutate(controlpermil = frequency.y/(`North Carolina`/1000000)) %>% 
+  mutate(yearmonth2 = gsub("/","",comb_ts$yearmonth)) %>% 
+  dplyr::filter(yearmonth2 > 200605) %>% 
+  select(-("yearmonth2"))
 
-treatment_tsM <- ts(comb_ts$treatpermil, frequency = 12, start = c(2006,6))
-control_tsM <- ts(comb_ts$controlpermil, frequency = 12, start = c(2006,6))
+treatment_tsM <- ts(comb_ts$treatpermil, frequency = 12, start = data_start)
+control_tsM <- ts(comb_ts$controlpermil, frequency = 12, start = data_start)
 
-plot.ts(treatment_tsM, main = "Breaches per Million over time", xlim=c(2006,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
-plot.ts(control_tsM, main = "Breaches per Million over time", xlim=c(2006,2020), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+plot.ts(treatment_tsM, main = "Breaches per Million over time", xlim=data_range, xlab = "Years", ylab = "Breaches per Million Resident During Month")
+plot.ts(control_tsM, main = "Breaches per Million over time", xlim=data_range, xlab = "Years", ylab = "Breaches per Million Resident During Month")
 
-ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2006,2020), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=data_range, gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+```
+
+## Decompose the data to find seasonal patterns
+```{r}
+controltimeseriescomponents <- decompose(control_tsM)
+plot(controltimeseriescomponents)
+controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
+plot(controltimeseriesseasonallyadjusted)
+
+treatmenttimeseriescomponents <- decompose(treatment_tsM)
+plot(treatmenttimeseriescomponents)
+treatmenttimeseriesseasonallyadjusted <- treatment_ts - treatmenttimeseriescomponents$seasonal
+plot(treatmenttimeseriesseasonallyadjusted)
+
+ts.plot(controltimeseriesseasonallyadjusted, treatmenttimeseriesseasonallyadjusted, main = "Breaches over time", xlim=exp_range, gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Breaches per Million Resident During Month")
+
 ```
 
 ## Identifying and subsetting relevant dates
 ```{r}
-# Legislation H.B. 4144 signed into law August 3, 2007
-# Legislation H.B. 4144 becomes effective on October 31, 2007
-# OCABR finalized the regulation on September 22, 2008
 
-treatment_start <- as.Date("09/22/2008", "%m/%d/%Y") # Legislation H.B. 4144 becomes effective
 treatment_start<- format(as.Date(as.character(treatment_start), origin = "1970-01-01"), "%Y/%m")
-
-treatment_end <- as.Date("03/01/2010", "%m/%d/%Y")+180 # post 6 months after enforcement
 treatment_end<- format(as.Date(as.character(treatment_end), origin = "1970-01-01"), "%Y/%m")
 
-pretreat <- comb_ts[(which(comb_ts$yearmonth==treatment_start)-5):which(comb_ts$yearmonth==treatment_start),]
+pretreat <- comb_ts[(which(comb_ts$yearmonth==treatment_start)-months_prior):which(comb_ts$yearmonth==treatment_start),]
 pretreat$type <- "pretest"
 
-posttreat <- comb_ts[which(comb_ts$yearmonth==treatment_end):(which(comb_ts$yearmonth==treatment_end)+5),]
+posttreat <- comb_ts[which(comb_ts$yearmonth==treatment_end):(which(comb_ts$yearmonth==treatment_end)+months_after),]
 posttreat$type <- "posttest"
 
 mean(posttreat$treatpermil) - mean(pretreat$treatpermil)
@@ -201,66 +238,57 @@ treatment_range$type <- "test"
 experiment <- rbind(pretreat,treatment_range,posttreat)
 experiment$treatpermil[is.na(experiment$treatpermil)]<-0
 experiment$controlpermil[is.na(experiment$controlpermil)]<-0
-experiment
 
 ts.plot(experiment$treatpermil, col = "red")
 ts.plot(experiment$controlpermil, col = "blue")
 
 # Look at Raw Frequency Counts
 
-treatment_ts <- ts(experiment$frequency.x, frequency = 12, start = c(2008,4))
-control_ts <- ts(experiment$frequency.y, frequency = 12, start = c(2008,4))
-ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=c(2008,2011), gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
+treatment_ts <- ts(experiment$frequency.x, frequency = 12, start = exp_start)
+control_ts <- ts(experiment$frequency.y, frequency = 12, start = exp_start)
+ts.plot(control_ts, treatment_ts, main = "Breaches over time", xlim=exp_range, gpars = list(col = c("black", "red")), xlab = "Years", ylab = "Count per month")
 
 # Look at Treatment and Control per Million
 
-treatment_tsM <- ts(experiment$treatpermil, frequency = 12, start = c(2008,4))
+treatment_tsM <- ts(experiment$treatpermil, frequency = 12, start = exp_start)
 mean(treatment_tsM)
 sd(treatment_tsM)
 
-control_tsM <- ts(experiment$controlpermil, frequency = 12, start = c(2008,4))
+control_tsM <- ts(experiment$controlpermil, frequency = 12, start = exp_start)
 mean(control_tsM)
 sd(control_tsM)
 
-ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=c(2008,2011), 
+ts.plot(control_tsM, treatment_tsM, main = "Breaches over time", xlim=exp_range, 
                     gpars = list(col = c("black", "red")), type = "b", xlab = "Years", ylab = "Count per month")
 
 
 ```
 
-## Decompose the Massachusetts Data to Find Seasonal Patterns
-```{r}
 
-controltimeseriescomponents <- decompose(control_ts)
-plot(controltimeseriescomponents)
-controltimeseriesseasonallyadjusted <- control_ts - controltimeseriescomponents$seasonal
-plot(controltimeseriesseasonallyadjusted)
-
-```
 
 
 ## Run Statistical Tests on Time Series for Stationarity
 ```{r}
 # source of statistical tests http://r-statistics.co/Time-Series-Analysis-With-R.html
 
-acfcontrolMA <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
-acttreatmentNH <- acf(treatment_ts)
+acfcontrol <- acf(control_ts) # autocorrelation (i.e. a Time Series with lags of itself)
+acftreatment <- acf(treatment_ts)
 # shows that the control time series is a "stationary time series"
 
-png(here::here("Output","acfcontrolMA.png"))
-plot(acfcontrolMA)
+png(here::here("Output","acfcontrol.png"))
+plot(acfcontrol)
 
-png(here::here("Output","acttreatmentNH.png"))
-plot(acttreatmentNH)
+png(here::here("Output","acftreatmentNH.png"))
+plot(acftreatment)
 
-pacfcontrolMA <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
-pacftreatmentNH <- pacf(treatment_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+pacfcontrolNH <- pacf(control_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
+pacftreatmentMA <- pacf(treatment_ts)  # partial autocorrelation (i.e. correlation of the time series with a lag of itself, with the linear dependence of all the lags between them removed.)
 
-png(here::here("Output","pacfcontrolMA.png"))
-plot(pacfcontrolMA)
+png(here::here("Output","pacfcontrolNH.png"))
+plot(pacfcontrolNH)
 
-png(here::here("Output","pacftreatmentNH.png"))
-plot(pacftreatmentNH)
+png(here::here("Output","pacftreatmentMA.png"))
+plot(pacftreatmentMA)
 
 ccfRes <- ccf(control_ts, treatment_ts, ylab = "cross-correlation")
 ccfRes
@@ -280,7 +308,6 @@ kpss.test(treatment_ts)
 ```{r}
 
 quasiexp <- experiment[experiment$type != "test",]
-quasiexp
 
 # Added dummy variables for ITS
 control <- as.data.frame(t(rbind(quasiexp$yearmonth,quasiexp$controlpermil)))
@@ -310,8 +337,10 @@ sapply(AppendITS, class)
 regTest <- lm(incident_permil ~ time + treat + z, AppendITS) 
 summary(regTest)
 
-regTest2 <- lm(incident_permil ~ time + treat + time*treat + z + z*time + z*treat + z*treat*time, AppendITS) 
+regTest2 <- lm(incident_permil ~ time * treat * z, AppendITS) 
 summary(regTest2)
+
+AppendITS
 
 # View(AppendITS)
 
