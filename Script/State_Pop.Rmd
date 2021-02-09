@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 # Install and load the R packages
-library(imputeTS)
+library(zoo)
 
 #Sources
 # National Intercensal Tables: 2000-2010
@@ -35,7 +35,6 @@ names(Blank) <- Months
 
 States<- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
 "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
-
 
 Populations <- cbind(States,Blank)
 
@@ -62,25 +61,19 @@ Populations <- rbind(Populations, monthly_pop)
 Populations <- t(Populations)
 colnames(Populations) <- Populations[1,]
 Populations <- Populations[-1,]
-
 Populations <- as.data.frame(Populations)
-View(Populations)
+Populations <- na.approx(Populations, rule = 2)
 
-for(i in names(Populations)){
-  x <- ts(as.numeric(levels(Populations[[i]]))[Populations[[i]]])
-  Populations[i] <- na_interpolation(x, option = "linear")
-  }
+Populations <- as.data.frame(cbind(MonthsList[-1],Populations))
 
-to_replace <- Populations[apply(Populations, 1,function(x) sum(is.na(x))<2),]
- t(apply(to_replace,1,function(x) imputeTS::na_interpolation(x)))
+Populations[2:ncol(Populations)] <- sapply(Populations[2:ncol(Populations)],as.numeric)
 
-to_replace
- 
-Populations <-  round(Populations, digits = 0) # Rounds digits out to nearest whole person
-Populations <- t(Populations) # Flips the axis to look more like a time series
-View(Populations)
+Populations <- Populations %>% 
+  mutate_if(is.numeric, round, 2)
 
-# write.csv(Populations,here("Data","Other_data","Populations.csv")
+as.data.frame(Populations)
+
+write.csv(Populations,here("Data","Other_data","Populations.csv")
 
 ```
 
